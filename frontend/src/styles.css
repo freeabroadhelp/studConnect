@@ -10,7 +10,7 @@ a { color:var(--primary); text-decoration:none; }
 .section.alt { background:var(--bg-alt); }
 .section__title { font-size:2.25rem; margin:0 0 2.5rem; text-align:center; letter-spacing:-.5px; }
 
-.hero { padding:7rem 0 5rem; background:radial-gradient(at 70% 20%,rgba(255,255,255,.15),transparent 70%),linear-gradient(120deg,#1e3a8a,#2563eb,#3b82f6); color:#fff; position:relative; overflow:hidden; }
+.hero { padding:8rem 0 6rem; background:radial-gradient(at 70% 20%,rgba(255,255,255,.15),transparent 70%),linear-gradient(120deg,#1e3a8a,#2563eb,#3b82f6); color:#fff; position:relative; overflow:hidden; min-height:82vh; }
 .hero__bg { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 .blob { position:absolute; width:580px; height:580px; background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.65),rgba(255,255,255,0)); filter:blur(60px); opacity:.18; animation: float 18s linear infinite; }
 .blob--1 { top:-120px; left:-160px; }
@@ -138,6 +138,10 @@ body::-webkit-scrollbar-thumb { background:linear-gradient(var(--primary),var(--
 @media (max-width:740px){
   .hero h1 { font-size:2.3rem; }
   .section { padding:3.75rem 0; }
+  .hero {
+    padding:6.25rem 0 5rem;
+    min-height:auto;
+  }
 }
 
 /* Chips */
@@ -199,5 +203,43 @@ body::-webkit-scrollbar-thumb { background:linear-gradient(var(--primary),var(--
   .timeline { flex-direction:column; }
   .timeline__rail { display:none; }
   .timeline__item { width:100%; }
+}
+
+/* Pastel globe hero variant */
+.hero--globe { position:relative; }
+.hero--globe .pastel-globe-scene canvas {
+  width:100% !important;
+  height:100% !important;
+  display:block;
+  mix-blend-mode:screen;
+  filter:brightness(.9) saturate(1.1);
+}
+.hero--globe:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 55% 45%, rgba(96,165,250,.18), rgba(0,0,0,0) 60%),
+    linear-gradient(160deg, rgba(30,58,138,.45), rgba(15,23,42,0) 60%),
+    radial-gradient(circle at 50% 120%, rgba(15,23,42,.65), rgba(15,23,42,0) 55%);
+  opacity:.85;
+  mix-blend-mode:normal;
+}
+@keyframes globeFadeIn {
+  from { opacity:0; transform:scale(1.03); }
+  to { opacity:1; transform:scale(1); }
+}
+.hero--globe:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 60% 40%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),
+    linear-gradient(120deg,rgba(186,230,253,.35),rgba(221,214,254,.2),rgba(255,255,255,0));
+  mix-blend-mode:overlay;
+  opacity:.8;
+  z-index:4;
 }
 

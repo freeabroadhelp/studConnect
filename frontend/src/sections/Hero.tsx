@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PastelGlobeScene from '../components/PastelGlobeScene';
 
 export const Hero: React.FC = () => {
   useEffect(() => {
@@ -11,7 +12,8 @@ export const Hero: React.FC = () => {
     return () => link?.removeEventListener('click', handler);
   }, []);
   return (
-    <header className="hero">
+    <header className="hero hero--cinematic hero--globe">
+      <PastelGlobeScene />
       <div className="hero__bg">
         <div className="blob blob--1" />
         <div className="blob blob--2" />
