@@ -1,9 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
+from sqlalchemy.orm import Session
+import random, string
+
 from models.models import (
     Service, University, Scholarship, ShortlistPreference, ShortlistItem, LeadIn, LeadOut, Booking, BookingCreate
 )
+from db import Base, engine, get_db
+from models_user import User
+from schemas_user import UserRegister, UserLogin, UserVerify, UserOut, TokenResponse
+from crud_user import get_user_by_email, create_user
+from auth_utils import hash_password, verify_password, create_token, decode_token
+from email_service import send_otp
 
 app = FastAPI()
 
@@ -40,6 +49,90 @@ LEADS: list[LeadOut] = []
 BOOKINGS: list[Booking] = [
     Booking(id=1, topic="Peer Counselling", scheduled_for=datetime.utcnow()+timedelta(days=3), status="upcoming"),
 ]
+
+Base.metadata.create_all(bind=engine)
+
+def generate_otp(length: int = 6) -> str:
+    return "".join(random.choices(string.digits, k=length))
+
+@app.post("/auth/register", response_model=dict, tags=["auth"], summary="Register & send OTP")
+def register(payload: UserRegister, db_session=Depends(get_db)):
+    db: Session
+    with db_session as db:
+        existing = get_user_by_email(db, payload.email.lower())
+        if existing:
+            raise HTTPException(status_code=400, detail="Email already registered")
+        user = create_user(
+            db,
+            email=payload.email,
+            full_name=payload.full_name,
+            role=payload.role,
+            password_hash=hash_password(payload.password),
+        )
+        code = generate_otp()
+        user.set_otp(code)
+        send_otp(user.email, code)
+        return {"message": "OTP sent to email for verification"}
+
+@app.post("/auth/verify", response_model=TokenResponse, tags=["auth"], summary="Verify OTP & get token")
+def verify_otp(payload: UserVerify, db_session=Depends(get_db)):
+    db: Session
+    with db_session as db:
+        user = get_user_by_email(db, payload.email.lower())
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        if user.is_verified:
+            return TokenResponse(access_token=create_token(str(user.id)))
+        if not user.otp_code or not user.otp_expires:
+            raise HTTPException(status_code=400, detail="No OTP pending")
+        if datetime.utcnow() > user.otp_expires:
+            raise HTTPException(status_code=400, detail="OTP expired")
+        if payload.code != user.otp_code:
+            raise HTTPException(status_code=400, detail="Invalid OTP")
+        user.is_verified = True
+        user.otp_code = None
+        user.otp_expires = None
+        return TokenResponse(access_token=create_token(str(user.id)))
+
+@app.post("/auth/login", response_model=TokenResponse, tags=["auth"], summary="Login (requires verified)")
+def login(payload: UserLogin, db_session=Depends(get_db)):
+    db: Session
+    with db_session as db:
+        user = get_user_by_email(db, payload.email.lower())
+        if not user or not verify_password(payload.password, user.password_hash):
+            raise HTTPException(status_code=401, detail="Invalid credentials")
+        if not user.is_verified:
+            raise HTTPException(status_code=403, detail="Email not verified")
+        return TokenResponse(access_token=create_token(str(user.id)))
+
+def auth_user(authorization: str | None = Header(default=None), db_session=Depends(get_db)) -> UserOut:
+    if not authorization or not authorization.lower().startswith("bearer "):
+        raise HTTPException(status_code=401, detail="Missing token")
+    token = authorization.split(" ",1)[1]
+    try:
+        data = decode_token(token)
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    user_id = data.get("sub")
+    db: Session
+    with db_session as db:
+        user = db.get(User, user_id)
+        if not user:
+            raise HTTPException(status_code=401, detail="User not found")
+        # Build response dict while session is active & cast UUID -> str
+        payload = {
+            "id": str(user.id),
+            "email": user.email,
+            "full_name": user.full_name,
+            "role": user.role,
+            "is_verified": user.is_verified,
+            "created_at": user.created_at
+        }
+        return UserOut.model_validate(payload)
+
+@app.get("/users/me", response_model=UserOut, tags=["users"], summary="Current user")
+def me(current: UserOut = Depends(auth_user)):
+    return current
 
 
 @app.get("/health", tags=["meta"], summary="Health check")

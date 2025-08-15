@@ -1,8 +1,7 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './SiteNav.css';
 import { useAuth } from '../context/AuthContext';
-import { Modal } from './Modal';
 
 const ThemeToggle: React.FC = () => {
   const [theme, setTheme] = useState<string>(() => localStorage.getItem('theme') || 'light');
@@ -19,32 +18,14 @@ const ThemeToggle: React.FC = () => {
 
 export const SiteNav: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
-  const { user, login, register, logout, loading } = useAuth();
-  const [form, setForm] = useState({ email:'', password:'', full_name:'', role:'student' as 'student'|'counsellor' });
-  const [error, setError] = useState<string | null>(null);
+  const { user, logout } = useAuth();
+
   useEffect(() => {
     const close = () => setOpen(false);
     window.addEventListener('resize', close);
     return () => window.removeEventListener('resize', close);
   }, []);
 
-  async function onSubmit(e:FormEvent){
-    e.preventDefault();
-    setError(null);
-    try {
-      if(isRegister){
-        await register(form.email, form.password, form.role, form.full_name);
-      } else {
-        await login(form.email, form.password);
-      }
-      setAuthOpen(false);
-      setForm({ email:'', password:'', full_name:'', role:'student' });
-    } catch (err:any) {
-      setError(err.message || 'Auth failed');
-    }
-  }
   return (
     <nav className="site-nav" role="navigation" aria-label="Main Navigation">
       <div className="container site-nav__inner">
@@ -69,35 +50,14 @@ export const SiteNav: React.FC = () => {
               <button className="btn btn-small" type="button" onClick={logout}>Logout</button>
             </div>
           ) : (
-            <button className="btn btn-small" type="button" onClick={()=>{ setIsRegister(false); setAuthOpen(true);} }>Login</button>
+            <div style={{display:'flex', gap:'.5rem'}}>
+              <NavLink to="/auth/login" className="btn btn-small" onClick={()=>setOpen(false)}>Login</NavLink>
+              <NavLink to="/auth/register" className="btn btn-small btn-primary" onClick={()=>setOpen(false)}>Sign Up</NavLink>
+            </div>
           )}
         </div>
       </div>
-      <Modal open={authOpen} onClose={()=>setAuthOpen(false)} title={isRegister ? 'Create Account' : 'Login'}>
-        <form onSubmit={onSubmit} className="auth-form" style={{display:'flex',flexDirection:'column',gap:'.7rem'}}>
-          {isRegister && (
-            <>
-              <input required placeholder="Full name" value={form.full_name} onChange={e=>setForm(f=>({...f, full_name:e.target.value}))} />
-              <div style={{display:'flex',gap:'.5rem'}}>
-                <label style={{fontSize:'.75rem'}}>
-                  Role:
-                  <select value={form.role} onChange={e=>setForm(f=>({...f, role:e.target.value as any}))} style={{marginLeft:'.4rem'}}>
-                    <option value="student">Student</option>
-                    <option value="counsellor">Counsellor</option>
-                  </select>
-                </label>
-              </div>
-            </>
-          )}
-          <input required type="email" placeholder="Email" value={form.email} onChange={e=>setForm(f=>({...f, email:e.target.value}))} />
-            <input required minLength={4} type="password" placeholder="Password" value={form.password} onChange={e=>setForm(f=>({...f, password:e.target.value}))} />
-          {error && <div style={{color:'#dc2626', fontSize:'.75rem'}}>{error}</div>}
-          <button className="btn btn-primary" type="submit" disabled={loading}>{loading ? 'Please wait...' : (isRegister? 'Create account' : 'Login')}</button>
-          <button type="button" className="btn btn-small" onClick={()=>setIsRegister(r=>!r)} style={{alignSelf:'center',background:'transparent'}}>
-            {isRegister ? 'Have an account? Login' : 'Need an account? Register'}
-          </button>
-        </form>
-      </Modal>
     </nav>
   );
 };
+          

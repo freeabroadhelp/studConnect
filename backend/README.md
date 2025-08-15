@@ -39,3 +39,19 @@ Visit http://127.0.0.1:8000/docs for interactive API docs.
 - Content/blog management
 - Messaging / chat & real-time presence
 - Analytics dashboard
+
+## User Auth / Verification (New)
+1. Set env vars (example):
+   ```
+   DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST/dbname?sslmode=require
+   JWT_SECRET=change_me_long_random
+   OTP_SENDER=debug
+   ```
+2. Endpoints:
+   - POST /auth/register  -> sends OTP
+   - POST /auth/verify    -> verify code, returns JWT
+   - POST /auth/login     -> login (after verification)
+   - GET  /users/me       -> requires Bearer token
+3. OTP is 6 digits, expires in 5 minutes.
+
+## Install extra deps
