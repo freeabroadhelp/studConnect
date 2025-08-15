@@ -51,8 +51,16 @@ export const SiteNav: React.FC = () => {
             </div>
           ) : (
             <div style={{display:'flex', gap:'.5rem'}}>
-              <NavLink to="/auth/login" className="btn btn-small" onClick={()=>setOpen(false)}>Login</NavLink>
-              <NavLink to="/auth/register" className="btn btn-small btn-primary" onClick={()=>setOpen(false)}>Sign Up</NavLink>
+              <NavLink
+                to="/auth/login"
+                onClick={()=>setOpen(false)}
+                className={({isActive}) => 'btn btn-small' + (isActive ? ' btn-primary' : '')}
+              >Login</NavLink>
+              <NavLink
+                to="/auth/register"
+                onClick={()=>setOpen(false)}
+                className={({isActive}) => 'btn btn-small' + (isActive ? ' btn-primary' : '')}
+              >Sign Up</NavLink>
             </div>
           )}
         </div>
@@ -60,4 +68,3 @@ export const SiteNav: React.FC = () => {
     </nav>
   );
 };
-          

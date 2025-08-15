@@ -119,7 +119,6 @@ def auth_user(authorization: str | None = Header(default=None), db_session=Depen
         user = db.get(User, user_id)
         if not user:
             raise HTTPException(status_code=401, detail="User not found")
-        # Build response dict while session is active & cast UUID -> str
         payload = {
             "id": str(user.id),
             "email": user.email,
