@@ -10,6 +10,7 @@ import { CounsellorDashboard } from './pages/CounsellorDashboard';
 import { FinancialServicesPage } from './pages/FinancialServicesPage';
 import { SiteNav } from './components/SiteNav';
 import { AuthProvider } from './context/AuthContext';
+import PeerCounsellingPage from './pages/PeerCounsellingPage';
 
 export const App: React.FC = () => (
   <AuthProvider>
@@ -19,6 +20,7 @@ export const App: React.FC = () => (
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/peer-counselling" element={<PeerCounsellingPage />} />
         <Route path="/universities" element={<UniversitiesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/student" element={<StudentDashboard />} />

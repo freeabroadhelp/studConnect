@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface Service { code:string; name:string; category:string; description:string }
 
@@ -10,13 +11,14 @@ const categoryLabels: Record<string,string> = {
 };
 
 export const ServicesPage: React.FC = () => {
-  const { token } = useAuth(); // reserved for future booking action
+  const { token } = useAuth();
   const api = useApi(token);
   const [data,setData] = useState<Service[]>([]);
   const [loading,setLoading] = useState(true);
   const [error,setError] = useState<string|null>(null);
   const [category,setCategory] = useState('');
   const [selected,setSelected] = useState<Service | null>(null);
+  const nav = useNavigate();
 
   useEffect(() => {
     setLoading(true); setError(null);
@@ -42,18 +44,40 @@ export const ServicesPage: React.FC = () => {
       {error && <div style={{marginTop:'2rem', color:'#dc2626'}}>Error: {error}</div>}
       {!loading && !error && (
         <div className="grid services__grid" style={{marginTop:'1.5rem'}}>
-          {data.map(s => (
-            <div key={s.code} className="card service" onClick={()=>setSelected(s)} style={{cursor:'pointer'}}>
-              <h3>{s.name}</h3>
-              <p>{s.description}</p>
-              <span style={{fontSize:'.6rem', textTransform:'uppercase', letterSpacing:'1px', opacity:.65}}>{categoryLabels[s.category] || s.category}</span>
-            </div>
-          ))}
+          {data.map(s => {
+            const isPeer = s.code === 'peer';
+            return (
+              <div
+                key={s.code}
+                className="card service"
+                onClick={()=> isPeer ? nav('/services/peer-counselling') : setSelected(s)}
+                style={{cursor:'pointer'}}
+                role="button"
+                aria-label={s.name}
+              >
+                <h3>{s.name}</h3>
+                <p>{s.description}</p>
+                <span style={{fontSize:'.6rem', textTransform:'uppercase', letterSpacing:'1px', opacity:.65}}>
+                  {categoryLabels[s.category] || s.category}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
-      <Modal open={!!selected} onClose={()=>setSelected(null)} title={selected?.name}>
-        <p style={{marginTop:0}}>{selected?.description}</p>
-        <p style={{fontSize:'.7rem', letterSpacing:'1px', textTransform:'uppercase', opacity:.6}}>Category: {selected ? categoryLabels[selected.category] || selected.category : ''}</p>
+      <Modal
+        open={!!selected && selected.code !== 'peer'}
+        onClose={()=>setSelected(null)}
+        title={selected?.name}
+      >
+        {selected && selected.code !== 'peer' && (
+          <>
+            <p style={{marginTop:0}}>{selected.description}</p>
+            <p style={{fontSize:'.7rem', letterSpacing:'1px', textTransform:'uppercase', opacity:.6}}>
+              Category: {categoryLabels[selected.category] || selected.category}
+            </p>
+          </>
+        )}
       </Modal>
     </main>
   );
