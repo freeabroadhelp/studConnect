@@ -351,7 +351,7 @@ body::-webkit-scrollbar-thumb { background:linear-gradient(var(--primary),var(--
 .universities-page { padding:4rem 0 5rem; }
 .universities-page__header { max-width:1180px; margin:0 auto 2rem; padding:0 1.25rem; display:flex; flex-direction:column; gap:1.2rem; }
 .uni-toolbar { display:flex; flex-wrap:wrap; gap:.9rem; align-items:center; justify-content:space-between; }
-.uni-search { flex:1 1 360px; position:relative; }
+.uni-search { position:relative; }
 .uni-search input { width:100%; padding:.85rem 1rem .85rem 2.6rem; border:1px solid var(--border); border-radius:14px; background:var(--surface); font:500 .95rem 'Inter',sans-serif; }
 .uni-search:before { content:"🔍"; position:absolute; left:.9rem; top:50%; transform:translateY(-50%); opacity:.6; }
 .uni-filters { display:flex; flex-wrap:wrap; gap:.55rem; }
