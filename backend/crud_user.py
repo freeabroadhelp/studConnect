@@ -9,3 +9,9 @@ def create_user(db: Session, *, email: str, full_name: str | None, role: str, pa
     user = User(email=email.lower(), full_name=full_name, role=role, password_hash=password_hash)
     db.add(user)
     return user
+
+def update_user_status(db: Session, email: str, is_verified: bool) -> None:
+    user = get_user_by_email(db, email)
+    if user:
+        user.is_verified = is_verified
+        db.commit()

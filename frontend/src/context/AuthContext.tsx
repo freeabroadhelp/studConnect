@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useApi } from '../hooks/useApi';
 
-export interface User { id:number; email:string; full_name?:string|null; role:'student'|'counsellor'; }
+export interface User { id:string; email:string; full_name?:string|null; role:'student'|'counsellor'; } // changed id to string
 
 interface AuthContextValue {
 	user: User | null;
@@ -26,13 +26,15 @@ export const AuthProvider: React.FC<{children:React.ReactNode}> = ({ children })
 	// Fetch current user when token changes
 	useEffect(() => {
 		let cancelled = false;
-		if (token) {
-			api.get<User>('/users/me').then(u => { if(!cancelled) setUser(u); }).catch(() => { if(!cancelled) setUser(null); });
-		} else {
+		if (token && !user) { // added !user guard to prevent duplicate fetch & early 401
+			api.get<User>('/users/me')
+				.then(u => { if(!cancelled) setUser(u); })
+				.catch(() => { if(!cancelled) setUser(null); });
+		} else if(!token) {
 			setUser(null);
 		}
 		return () => { cancelled = true; };
-	}, [token]);
+	}, [token]); // unchanged dependency
 
 	async function login(email:string, password:string) {
 		setLoading(true);

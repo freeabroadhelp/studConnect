@@ -54,4 +54,16 @@ Visit http://127.0.0.1:8000/docs for interactive API docs.
    - GET  /users/me       -> requires Bearer token
 3. OTP is 6 digits, expires in 5 minutes.
 
+## Email / OTP (SMTP)
+Set these environment variables to enable real OTP emails:
+```
+SMTP_HOST=smtp.yourprovider.com
+SMTP_PORT=587
+SMTP_USER=your_smtp_username
+SMTP_PASSWORD=your_smtp_password_or_app_password
+SMTP_FROM=notifications@yourdomain.com   # optional (defaults to SMTP_USER)
+OTP_EXP_MIN=5                             # optional OTP validity (minutes)
+```
+If SMTP variables are missing, the server falls back to logging the OTP (development mode).
+
 ## Install extra deps

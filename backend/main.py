@@ -12,7 +12,7 @@ from models_user import User
 from schemas_user import UserRegister, UserLogin, UserVerify, UserOut, TokenResponse
 from crud_user import get_user_by_email, create_user
 from auth_utils import hash_password, verify_password, create_token, decode_token
-from email_service import send_otp
+from email_service import send_otp, smtp_diagnostics
 
 app = FastAPI()
 
@@ -61,17 +61,24 @@ def register(payload: UserRegister, db_session=Depends(get_db)):
     with db_session as db:
         existing = get_user_by_email(db, payload.email.lower())
         if existing:
-            raise HTTPException(status_code=400, detail="Email already registered")
-        user = create_user(
-            db,
-            email=payload.email,
-            full_name=payload.full_name,
-            role=payload.role,
-            password_hash=hash_password(payload.password),
-        )
+            if existing.is_verified:
+                raise HTTPException(status_code=400, detail="Email already registered")
+            user = existing
+            user.full_name = payload.full_name
+            user.role = payload.role
+            user.password_hash = hash_password(payload.password)
+        else:
+            user = create_user(
+                db,
+                email=payload.email,
+                full_name=payload.full_name,
+                role=payload.role,
+                password_hash=hash_password(payload.password),
+            )
         code = generate_otp()
         user.set_otp(code)
-        send_otp(user.email, code)
+        if not send_otp(user.email, code):
+            raise HTTPException(status_code=500, detail="Could not send verification email (check SMTP settings)")
         return {"message": "OTP sent to email for verification"}
 
 @app.post("/auth/verify", response_model=TokenResponse, tags=["auth"], summary="Verify OTP & get token")
@@ -199,3 +206,10 @@ def create_booking(payload: BookingCreate):
     b = Booking(id=len(BOOKINGS)+1, topic=payload.topic, scheduled_for=payload.scheduled_for, status="upcoming")
     BOOKINGS.append(b)
     return b
+
+
+@app.get("/debug/smtp", tags=["meta"], summary="SMTP diagnostics (protected)")
+def smtp_debug(current: UserOut = Depends(auth_user)):
+    if current.role != "counsellor":
+        raise HTTPException(status_code=403, detail="Not authorized")
+    return smtp_diagnostics()
