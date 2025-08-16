@@ -1,6 +1,91 @@
 import React, { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
-import { API_BASE_URL } from '../apiBase'; // <-- use global API base
+import { API_BASE_URL } from '../apiBase';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
+
+// 3D Animated Airplane flying from left to right
+function AnimatedAirplane() {
+  const meshRef = React.useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    if (meshRef.current) {
+      // Move from left (-10) to right (+10), loop every 10 seconds
+      const t = (clock.getElapsedTime() % 10) / 10;
+      meshRef.current.position.x = -10 + t * 20;
+      meshRef.current.position.y = Math.sin(t * Math.PI * 2) * 1.2 + 1.2;
+      meshRef.current.rotation.z = Math.sin(t * Math.PI * 2) * 0.12;
+      meshRef.current.rotation.y = Math.PI / 2;
+    }
+  });
+
+  return (
+    <group ref={meshRef}>
+      {/* Fuselage */}
+      <mesh>
+        <cylinderGeometry args={[0.22, 0.32, 2.2, 24]} />
+        <meshStandardMaterial color="#2563eb" metalness={0.8} roughness={0.22} />
+      </mesh>
+      {/* Nose */}
+      <mesh position={[0, 0, 1.1]}>
+        <sphereGeometry args={[0.32, 18, 18]} />
+        <meshStandardMaterial color="#fbbf24" metalness={0.8} roughness={0.22} />
+      </mesh>
+      {/* Tail */}
+      <mesh position={[0, 0.32, -1.05]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.13, 0.38, 16]} />
+        <meshStandardMaterial color="#60a5fa" metalness={0.8} roughness={0.22} />
+      </mesh>
+      {/* Wings */}
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[1.2, 0.08, 0.38]} />
+        <meshStandardMaterial color="#a21caf" metalness={0.7} roughness={0.3} />
+      </mesh>
+      {/* Windows */}
+      {[...Array(3)].map((_, i) => (
+        <mesh key={i} position={[0, 0.18, 0.5 - i * 0.5]}>
+          <sphereGeometry args={[0.06, 12, 12]} />
+          <meshStandardMaterial color="#fff" metalness={0.2} roughness={0.1} />
+        </mesh>
+      ))}
+      {/* Colorful contrail */}
+      <mesh position={[-0.01, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.04, 0.13, 2.5, 32, 1, true]} />
+        <meshStandardMaterial color="#f472b6" transparent opacity={0.38} />
+      </mesh>
+      <mesh position={[0.09, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.03, 0.09, 2.2, 32, 1, true]} />
+        <meshStandardMaterial color="#60a5fa" transparent opacity={0.32} />
+      </mesh>
+      <mesh position={[-0.09, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.03, 0.09, 2.2, 32, 1, true]} />
+        <meshStandardMaterial color="#fbbf24" transparent opacity={0.32} />
+      </mesh>
+    </group>
+  );
+}
+
+function FloatingAirplane() {
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      zIndex: 0,
+      pointerEvents: 'none',
+      opacity: 0.17
+    }}>
+      <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[2, 2, 2]} intensity={0.7} />
+        <AnimatedAirplane />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate={false} />
+      </Canvas>
+    </div>
+  );
+}
 
 export const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
@@ -87,8 +172,10 @@ export const Contact: React.FC = () => {
   }
 
   return (
-    <section className="section reveal" id="contact" ref={ref as any}>
-      <div className="container">
+    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1 }}>
+      {/* 3D Animated Airplane */}
+      <FloatingAirplane />
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <h2 className="section__title">Book Your Consultation</h2>
         <form className="consultation" onSubmit={handleSubmit} noValidate>
           <div className="consultation__grid">
