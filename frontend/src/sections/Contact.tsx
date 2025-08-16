@@ -7,17 +7,43 @@ export const Contact: React.FC = () => {
   const [phone, setPhone] = useState("");
   const ref = useReveal();
 
+  // Add state for form fields
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    dial_code: '+91',
+    nationality: 'India'
+  });
+
+  async function submitConsultationToExcel(data: Record<string, any>) {
+    const apiUrl =
+      import.meta.env.DEV
+        ? 'http://localhost:8000/api/consultation-excel'
+        : '/api/consultation-excel';
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...data,
+        timestamp: new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error('Failed to submit consultation');
+    return await res.json();
+  }
+
   function validateEmail(email: string){
-    // Basic RFC5322-ish light check
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
   }
 
   function validatePhone(phone: string, dial: string){
     const digits = phone.replace(/\D/g,'');
     if(dial === '+91') {
-      return /^[6-9]\d{9}$/.test(digits); // Indian mobile format
+      return /^[6-9]\d{9}$/.test(digits);
     }
-    return digits.length >= 7; // generic minimum length
+    return digits.length >= 7;
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -27,9 +53,17 @@ export const Contact: React.FC = () => {
     const phoneInput = form.elements.namedItem('phone') as HTMLInputElement;
     const dialInput = form.elements.namedItem('dial_code') as HTMLSelectElement;
     const emailInput = form.elements.namedItem('email') as HTMLInputElement;
-    const phoneVal = phone.trim();
+    const firstNameInput = form.elements.namedItem('first_name') as HTMLInputElement;
+    const lastNameInput = form.elements.namedItem('last_name') as HTMLInputElement;
+    const nationalityInput = form.elements.namedItem('nationality') as HTMLSelectElement;
+
+    const phoneVal = phoneInput.value.trim();
     const emailVal = emailInput.value.trim();
     const dialVal = dialInput.value;
+    const firstNameVal = firstNameInput.value.trim();
+    const lastNameVal = lastNameInput.value.trim();
+    const nationalityVal = nationalityInput.value;
+
     const nextErrors: { phone?: string; email?: string } = {};
     if(!validatePhone(phoneVal, dialVal)) {
       nextErrors.phone = dialVal === '+91' ? 'Enter a valid 10-digit Indian mobile starting 6-9' : 'Enter a valid phone number';
@@ -39,9 +73,19 @@ export const Contact: React.FC = () => {
     }
     setErrors(nextErrors);
     if(Object.keys(nextErrors).length) return; // abort
+
     setStatus('submitting');
-    // Simulated async submit
-    setTimeout(() => setStatus('submitted'), 900);
+    // Send to backend for Excel storage
+    submitConsultationToExcel({
+      first_name: firstNameVal,
+      last_name: lastNameVal,
+      email: emailVal,
+      phone: phoneVal,
+      dial_code: dialVal,
+      nationality: nationalityVal
+    })
+      .then(() => setStatus('submitted'))
+      .catch(() => setStatus('idle'));
   }
 
   return (
@@ -191,7 +235,43 @@ export const Contact: React.FC = () => {
             </div>
           </div>
           <div className="consultation__actions" style={{display:'flex', justifyContent:'center', marginTop:'1.2rem'}}>
-            <button className="btn btn-primary" disabled={status !== 'idle'}>
+            <button
+              className="btn btn-primary"
+              disabled={status !== 'idle'}
+              type="submit"
+              onClick={async (e) => {
+                if (status !== 'idle') return;
+                const form = (e.target as HTMLElement).closest('form');
+                if (!form) return;
+                e.preventDefault();
+                const formDataObj: Record<string, any> = {};
+                Array.from(form.elements).forEach((el: any) => {
+                  if (el.name) formDataObj[el.name] = el.value;
+                });
+                const phoneVal = formDataObj.phone?.trim() || '';
+                const dialVal = formDataObj.dial_code || '';
+                const emailVal = formDataObj.email?.trim() || '';
+                const nextErrors: { phone?: string; email?: string } = {};
+                if(!validatePhone(phoneVal, dialVal)) {
+                  nextErrors.phone = dialVal === '+91' ? 'Enter a valid 10-digit Indian mobile starting 6-9' : 'Enter a valid phone number';
+                }
+                if(!validateEmail(emailVal)) {
+                  nextErrors.email = 'Enter a valid email address';
+                }
+                setErrors(nextErrors);
+                if(Object.keys(nextErrors).length) return;
+                setStatus('submitting');
+                try {
+                  await submitConsultationToExcel({
+                    ...formDataObj,
+                    timestamp: new Date().toISOString()
+                  });
+                  setStatus('submitted');
+                } catch {
+                  setStatus('idle');
+                }
+              }}
+            >
               {status === 'submitting' ? 'Submitting...' : status === 'submitted' ? 'Submitted!' : 'Submit'}
             </button>
           </div>

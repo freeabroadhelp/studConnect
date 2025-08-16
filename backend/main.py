@@ -1,22 +1,18 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, Query, Path
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Query, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 import random, string
 from typing import Optional
 import os
-import csv
 import psycopg2
-import requests
-import ast
-import urllib.parse
-import json
 import boto3
-from fastapi.encoders import jsonable_encoder
+from google.oauth2 import service_account
+import gspread
 from fastapi.responses import JSONResponse
 
 from models.models import (
-    Service, University, Scholarship, ShortlistPreference, ShortlistItem, LeadIn, LeadOut, Booking, BookingCreate
+    Service, Scholarship, LeadIn, LeadOut, Booking, BookingCreate
 )
 from db import Base, engine, get_db
 from models.models_user import User
@@ -289,6 +285,45 @@ def get_university(
         conn.close()
         return d
     except Exception as e:
-        # Return a JSON error with CORS headers
-        from fastapi.responses import JSONResponse
-        return JSONResponse(status_code=500, content={"error": str(e)})
+        import traceback
+        return JSONResponse(status_code=500, content={"error": str(e), "trace": traceback.format_exc()})
+
+
+@app.post("/api/consultation-excel")
+async def consultation_to_excel(request: Request):
+    try:
+        data = await request.json()
+        if "timestamp" not in data:
+            data["timestamp"] = datetime.utcnow().isoformat()
+
+        row = [
+            data.get("first_name", ""),
+            data.get("last_name", ""),
+            data.get("email", ""),
+            data.get("phone", ""),
+            data.get("dial_code", ""),
+            data.get("nationality", ""),
+            data.get("timestamp", "")
+        ]
+
+        GOOGLE_SERVICE_ACCOUNT_FILE = os.environ.get("GOOGLE_SERVICE_ACCOUNT_FILE")
+        SPREADSHEET_ID = os.environ.get("EXCEL_FILE_ID")
+
+        creds = service_account.Credentials.from_service_account_file(
+            GOOGLE_SERVICE_ACCOUNT_FILE,
+            scopes=["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+        )
+
+        gc = gspread.authorize(creds)
+
+        sh = gc.open_by_key(SPREADSHEET_ID)
+
+        worksheet = sh.sheet1
+
+        worksheet.append_row(row)
+
+        return {"status": "ok", "message": "Consultation saved to Google Sheet"}
+
+    except Exception as e:
+        import traceback
+        return JSONResponse(status_code=500, content={"error": str(e), "trace": traceback.format_exc()})

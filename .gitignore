@@ -30,3 +30,5 @@ build/
 
 # Frontend
 *.env
+
+backend/service_account.json
