@@ -32,7 +32,7 @@ export const App: React.FC = () => (
         <Route path="/auth/register" element={<AuthRegisterPage />} />
         <Route path="/auth/verify" element={<AuthVerifyPage />} />
         <Route path="/auth/login" element={<AuthLoginPage />} />
-        <Route path="/universities/:id" element={<UniversityDetailPage />} />
+        <Route path="/universityDetailPage/:id" element={<UniversityDetailPage />} />
         <Route path="/financial-services" element={<FinancialServicesPage />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
