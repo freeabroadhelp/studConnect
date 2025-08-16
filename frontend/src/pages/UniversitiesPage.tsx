@@ -4,6 +4,8 @@ import { Modal } from '../components/Modal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import programsData from './programs.json';
 import countriesData from './countries.json';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 
 const PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 200;
@@ -40,6 +42,35 @@ interface UniversityFull {
 }
 
 interface ShortlistItem { university:string; country:string; tuition:number; programs:string[]; match_score:number }
+
+function UniversitiesGlobe() {
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      zIndex: 0,
+      pointerEvents: 'none',
+      opacity: 0.13
+    }}>
+      <Canvas camera={{ position: [0, 0, 18], fov: 60 }}>
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[2, 2, 2]} intensity={0.7} />
+        <mesh rotation={[0.3, 0.7, 0]}>
+          <sphereGeometry args={[7, 64, 48]} />
+          <meshStandardMaterial color="#2563eb" roughness={0.25} metalness={0.7} transparent opacity={0.7} />
+        </mesh>
+        <mesh rotation={[0.2, 0.2, 0]}>
+          <torusKnotGeometry args={[9, 0.22, 180, 16]} />
+          <meshStandardMaterial color="#fbbf24" roughness={0.15} metalness={0.8} transparent opacity={0.18} />
+        </mesh>
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+      </Canvas>
+    </div>
+  );
+}
 
 export const UniversitiesPage: React.FC = () => {
   const api = useApi();
@@ -106,7 +137,9 @@ export const UniversitiesPage: React.FC = () => {
   const filteredItems = items;
 
   return (
-    <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem'}}>
+    <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem', position:'relative', zIndex:1}}>
+      {/* 3D Globe background */}
+      <UniversitiesGlobe />
       <div style={{
         maxWidth: 1280,
         margin: '0 auto',
@@ -115,7 +148,8 @@ export const UniversitiesPage: React.FC = () => {
         background: '#fff',
         boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
         padding: '2.2rem 2.2rem 1.5rem 2.2rem',
-        position: 'relative'
+        position: 'relative',
+        zIndex: 2
       }}>
         {/* Header */}
         <div style={{
@@ -230,12 +264,21 @@ export const UniversitiesPage: React.FC = () => {
                 alignItems:'center',
                 padding:'1.2rem 1.2rem 1.2rem 1.2rem',
                 borderRadius:'18px',
-                background:'#f9fafb',
+                background:'rgba(255,255,255,0.85)',
                 boxShadow:'0 2px 12px 0 #e5e7eb',
                 border:'1px solid #e0e7ef',
-                transition:'box-shadow .18s',
+                transition:'box-shadow .18s, transform .18s',
                 minHeight: '180px',
-                position:'relative'
+                position:'relative',
+                zIndex: 2
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.03) rotateY(3deg)';
+                (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px 0 #2563eb, 0 2px 12px 0 #fbbf24';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.transform = '';
+                (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 12px 0 #e5e7eb';
               }}
               onClick={()=>navigate(`/universities/${u.id}`)}
             >
