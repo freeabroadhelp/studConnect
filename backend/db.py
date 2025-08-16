@@ -2,6 +2,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from dotenv import load_dotenv
+from contextlib import contextmanager
 
 load_dotenv()
 
@@ -15,17 +16,15 @@ class Base(DeclarativeBase):
 engine = create_engine(DATABASE_URL, future=True, pool_pre_ping=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 
+@contextmanager
 def get_db():
-    from contextlib import contextmanager
-    @contextmanager
-    def _session():
-        db = SessionLocal()
-        try:
-            yield db
-            db.commit()
-        except:
-            db.rollback()
-            raise
-        finally:
-            db.close()
-    return _session()
+    """Yield a SQLAlchemy session, commit on success, rollback on exception."""
+    db = SessionLocal()
+    try:
+        yield db
+        db.commit()  # commit changes for Neon visibility
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()

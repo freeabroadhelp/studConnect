@@ -1,45 +1,50 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 20;
 const COUNTRY_FILTERS = [
   'United States','Canada','United Kingdom','Germany','France','Australia','Singapore','India','Netherlands','Sweden'
 ];
 
-interface CatalogUni {
+interface UniversityFull {
   id: string;
   name: string;
   country: string;
-  website?: string;
-  rank?: number | null;
-}
-
-interface CatalogListResponse {
-  items: CatalogUni[];
-  page: number;
-  limit: number;
-  total: number;
-}
-
-interface CatalogDetail {
-  id: string;
-  name: string;
-  country: string;
-  website?: string;
-  domains?: string[];
-  state_province?: string;
-  rankings?: {provider:string; year:number; world_rank:number}[];
-  programs?: {id:number; name:string; discipline:string; level:string; annual_fee:number; currency:string}[];
-  images?: {kind:string; original_url:string; r2_key:string}[];
-  extra?: any;
+  url?: string;
+  province?: string;
+  thumbnail?: string;
+  average_tuition?: string;
+  average_tuition_currency?: string;
+  logo?: string;
+  type?: string;
+  number_of_students?: string;
+  international_students?: string;
+  university_type?: string;
+  number_of_academician?: string;
+  erasmus?: string;
+  scholarship_ratio?: string;
+  urap_standings?: string;
+  placement_rate?: string;
+  technology_office?: string;
+  student_academician?: string;
+  entrepreneurship_index_score?: string;
+  library_area?: string;
+  ar_ge_expense?: string;
+  programs?: string;
+  features?: string;
+  address?: string;
+  thumbnail_r2?: string;
+  logo_r2?: string;
 }
 
 interface ShortlistItem { university:string; country:string; tuition:number; programs:string[]; match_score:number }
 
 export const UniversitiesPage: React.FC = () => {
   const api = useApi();
-  const [items,setItems] = useState<CatalogUni[]>([]);
+  const navigate = useNavigate();
+  const [items,setItems] = useState<UniversityFull[]>([]);
   const [total,setTotal] = useState(0);
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState<string|null>(null);
@@ -68,23 +73,25 @@ export const UniversitiesPage: React.FC = () => {
 
   const [refreshKey,setRefreshKey] = useState(0);
 
-  // Fetch catalog list
+  // Fetch paginated universities (full data)
   useEffect(() => {
     setLoading(true); setError(null);
-    const params = new URLSearchParams();
-    params.set('page', String(page));
-    params.set('limit', String(PAGE_SIZE));
-    params.set('sort', sort);
-    if (country) params.set('country', country);
-    if (search) params.set('q', search);
-    api.get<CatalogListResponse>(`/catalog/universities?${params.toString()}`)
+    const params: Record<string, string|number> = {
+      page,
+      page_size: PAGE_SIZE,
+    };
+    if (country) params.country = country;
+    if (search) params.q = search;
+    api.get<{items: UniversityFull[], total: number, page: number, page_size: number, total_pages: number}>(
+      '/api/universities/all?' + new URLSearchParams(params as any).toString()
+    )
       .then(res => {
         setItems(res.items);
         setTotal(res.total);
       })
       .catch(e => setError(e.message || 'Failed loading universities'))
       .finally(()=>setLoading(false));
-  }, [country, search, page, sort, refreshKey]);
+  }, [refreshKey, page, country, search]);
 
   // Fetch all programs for filter (client-side, from details of first 30 unis on page)
   useEffect(() => {
@@ -108,11 +115,7 @@ export const UniversitiesPage: React.FC = () => {
 
   // Program filter (client-side)
   const filteredItems = program
-    ? items.filter(u => u.id && u.name && u.country) // only valid
-        .filter(u => {
-          // naive: fetch detail for each, but for perf, just filter by name match
-          return u.name.toLowerCase().includes(program.toLowerCase());
-        })
+    ? items.filter(u => u.name && u.programs && u.programs.toLowerCase().includes(program.toLowerCase()))
     : items;
 
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
@@ -196,56 +199,36 @@ export const UniversitiesPage: React.FC = () => {
       {!loading && !error && filteredItems.length===0 && (
         <div className="uni-empty">
           No universities found.<br />
-          <button
-            style={{marginTop:'1rem'}}
-            className="btn btn-small"
-            type="button"
-            onClick={()=> {
-              const params = new URLSearchParams({ page:'1', limit:String(PAGE_SIZE), sort:'rank', seed_if_empty:'true' });
-              api.get<CatalogListResponse>(`/catalog/universities?${params.toString()}`)
-                .then(r=> { setItems(r.items); setTotal(r.total); if(!r.items.length) alert('Seeding may have failed. Check backend logs.'); })
-                .catch(()=>{})
-                .finally(()=> setRefreshKey(k=>k+1));
-            }}
-          >Seed & Retry</button>
-          <span style={{fontSize:'.6rem',display:'block',marginTop:'.75rem'}}>
-            Ensure backend env FULL_AUTO_SEED=1 or run manual ingestion endpoints.
-          </span>
         </div>
       )}
 
       {!loading && !error && filteredItems.length>0 && (
         <div className="unilist">
-          {filteredItems.map(u => {
-            const acronym = u.name.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();
-            return (
-              <div key={u.id} className="uni-card" role="article" aria-label={u.name}>
-                {typeof u.rank === 'number' && <div className="uni-rank-badge"><span>#{u.rank}</span></div>}
-                <div className="uni-head">
-                  <div className="uni-logo" aria-hidden>{acronym}</div>
-                  <div>
-                    <h3 className="uni-name">{u.name}</h3>
-                    <p className="uni-location">{u.country}</p>
-                  </div>
-                </div>
-                <div style={{fontSize:'.55rem', letterSpacing:'.6px', opacity:.6}}>
-                  ID: {u.id.slice(0,8)}
-                </div>
-                <div className="uni-actions">
-                  <button className="btn btn-small" type="button" onClick={()=>setShortlistOpen(true)}>Shortlist</button>
-                  <button className="btn btn-small" type="button" onClick={()=>setDetailId(u.id)}>View Details</button>
-                  {u.website && (
-                    <a
-                      className="btn btn-small"
-                      href={u.website.startsWith('http') ? u.website : `https://${u.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >Visit</a>
-                  )}
+          {filteredItems.map(u => (
+            <div
+              key={u.id}
+              className="uni-card"
+              role="article"
+              aria-label={u.name}
+              style={{cursor:'pointer', display:'flex', alignItems:'center', gap:'1rem', padding:'.8rem 1rem'}}
+              onClick={()=>navigate(`/universities/${u.id}`)}
+            >
+              {/* Thumbnail */}
+              <div style={{width:56, height:56, borderRadius:12, background:'#f3f4f6', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden'}}>
+                {u.thumbnail_r2
+                  ? <img src={u.thumbnail_r2} alt={u.name} style={{width:'100%', height:'100%', objectFit:'cover'}} />
+                  : <span style={{fontSize:'2rem', color:'#888'}}>{u.name[0]}</span>
+                }
+              </div>
+              {/* Name and Type */}
+              <div style={{flex:1, minWidth:0}}>
+                <div style={{fontWeight:600, fontSize:'1.1rem', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{u.name}</div>
+                <div style={{fontSize:'.95rem', color:'#555', marginTop:'.2rem'}}>
+                  {u.type ? u.type : <span style={{opacity:.5}}>Type N/A</span>}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       )}
 
@@ -362,3 +345,4 @@ export const UniversitiesPage: React.FC = () => {
     </main>
   );
 };
+         

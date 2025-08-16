@@ -1,18 +1,28 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 import random, string
+from typing import Optional
+import os
+import csv
+import psycopg2
+import requests
+import boto3
+from fastapi.responses import JSONResponse
 
 from models.models import (
     Service, University, Scholarship, ShortlistPreference, ShortlistItem, LeadIn, LeadOut, Booking, BookingCreate
 )
 from db import Base, engine, get_db
-from models_user import User
-from schemas_user import UserRegister, UserLogin, UserVerify, UserOut, TokenResponse
-from crud_user import get_user_by_email, create_user
-from auth_utils import hash_password, verify_password, create_token, decode_token
-from email_service import send_otp, smtp_diagnostics
+from models.models_user import User
+from models.schemas_user import UserRegister, UserLogin, UserVerify, UserOut, TokenResponse
+from utils.crud_user import get_user_by_email, create_user
+from utils.auth_utils import hash_password, verify_password, create_token, decode_token
+from utils.email_service import send_otp, smtp_diagnostics
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -33,12 +43,6 @@ SERVICES = [
     Service(code="scholarship", name="Scholarship Assistance", category="funding", description="Identify & apply for scholarships."),
 ]
 
-UNIVERSITIES = [
-    University(id=1, name="University of Toronto", country="Canada", tuition=32000, programs=["CS", "Business", "Biology"]),
-    University(id=2, name="NUS", country="Singapore", tuition=28000, programs=["Engineering", "Data Science"]),
-    University(id=3, name="TU Munich", country="Germany", tuition=1500, programs=["Robotics", "Mechanical"]),
-]
-
 SCHOLARSHIPS = [
     Scholarship(id=1, name="Global Excellence Scholarship", country="Canada", amount="$10,000", level="Masters", deadline="2025-11-01"),
     Scholarship(id=2, name="STEM Innovators Grant", country="USA", amount="$8,000", level="Bachelors", deadline="2025-12-15"),
@@ -51,6 +55,9 @@ BOOKINGS: list[Booking] = [
 ]
 
 Base.metadata.create_all(bind=engine)
+
+DB_URL = os.environ.get("DATABASE_URL")
+session = boto3.session.Session()
 
 def generate_otp(length: int = 6) -> str:
     return "".join(random.choices(string.digits, k=length))
@@ -152,19 +159,10 @@ def list_services(category: str | None = None):
         return [s for s in SERVICES if s.category == category]
     return SERVICES
 
-
-@app.get("/universities", response_model=list[University], tags=["universities"], summary="List universities")
-def list_universities(country: str | None = None, q: str | None = None):
-    data = UNIVERSITIES
-    if country:
-        data = [u for u in data if u.country.lower() == country.lower()]
-    if q:
-        data = [u for u in data if q.lower() in u.name.lower()]
-    return data
-
+    
 
 @app.get("/scholarships", response_model=list[Scholarship], tags=["scholarships"], summary="List scholarships")
-def list_scholarships(country: str | None = None, level: str | None = None):
+def list_scholarships(country: Optional[str] = None, level: Optional[str] = None):
     data = SCHOLARSHIPS
     if country:
         data = [s for s in data if s.country.lower() == country.lower()]
@@ -172,21 +170,6 @@ def list_scholarships(country: str | None = None, level: str | None = None):
         data = [s for s in data if s.level.lower() == level.lower()]
     return data
 
-
-@app.post("/shortlist", response_model=list[ShortlistItem], tags=["shortlist"], summary="Generate shortlist")
-def generate_shortlist(prefs: ShortlistPreference):
-    base = UNIVERSITIES
-    items: list[ShortlistItem] = []
-    for u in base:
-        score = 0.5
-        if prefs.country and prefs.country.lower() == u.country.lower():
-            score += 0.2
-        if prefs.program and prefs.program in u.programs:
-            score += 0.2
-        if prefs.budget and u.tuition <= prefs.budget:
-            score += 0.1
-        items.append(ShortlistItem(university=u.name, country=u.country, tuition=u.tuition, programs=u.programs, match_score=round(score,2)))
-    return sorted(items, key=lambda x: x.match_score, reverse=True)
 
 
 @app.post("/leads", response_model=LeadOut, status_code=201, tags=["leads"], summary="Create lead")
@@ -213,3 +196,93 @@ def smtp_debug(current: UserOut = Depends(auth_user)):
     if current.role != "counsellor":
         raise HTTPException(status_code=403, detail="Not authorized")
     return smtp_diagnostics()
+
+
+@app.get("/api/universities")
+def list_universities(
+    country: Optional[str] = Query(None),
+    q: Optional[str] = Query(None),
+    limit: int = Query(100, ge=1, le=200)
+):
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    sql = "SELECT id, name, country, url, average_tuition, average_tuition_currency, type, thumbnail_r2, logo_r2 FROM universities"
+    params = []
+    where = []
+    if country:
+        where.append("country = %s")
+        params.append(country)
+    if q:
+        where.append("name ILIKE %s")
+        params.append(f"%{q}%")
+    if where:
+        sql += " WHERE " + " AND ".join(where)
+    sql += " ORDER BY name ASC LIMIT %s"
+    params.append(limit)
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    keys = ["id", "name", "country", "url", "average_tuition", "average_tuition_currency", "type", "thumbnail_r2", "logo_r2"]
+    # Format thumbnail/logo URLs for frontend
+    formatted = []
+    for r in rows:
+        d = dict(zip(keys, r))
+        if d.get("thumbnail_r2"):
+            d["thumbnail_url"] = d["thumbnail_r2"]
+        else:
+            d["thumbnail_url"] = None
+        if d.get("logo_r2"):
+            d["logo_url"] = d["logo_r2"]
+        else:
+            d["logo_url"] = None
+        formatted.append(d)
+    return formatted
+
+@app.get("/api/universities/all")
+def get_all_universities(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=200),
+    country: Optional[str] = Query(None),
+    q: Optional[str] = Query(None)
+):
+    offset = (page - 1) * page_size
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    sql = "SELECT * FROM universities"
+    params = []
+    where = []
+    if country:
+        where.append("country = %s")
+        params.append(country)
+    if q:
+        where.append("name ILIKE %s")
+        params.append(f"%{q}%")
+    if where:
+        sql += " WHERE " + " AND ".join(where)
+    sql += " ORDER BY name ASC LIMIT %s OFFSET %s"
+    params.extend([page_size, offset])
+    cur.execute(sql, params)
+    rows = cur.fetchall()
+    colnames = [desc[0] for desc in cur.description]
+    # Format thumbnail/logo URLs for frontend
+    formatted = []
+    for row in rows:
+        d = dict(zip(colnames, row))
+        d["thumbnail_url"] = d.get("thumbnail_r2") or None
+        d["logo_url"] = d.get("logo_r2") or None
+        formatted.append(d)
+    count_sql = "SELECT COUNT(*) FROM universities"
+    if where:
+        count_sql += " WHERE " + " AND ".join(where)
+    cur.execute(count_sql, params[:-2])
+    total = cur.fetchone()[0]
+    cur.close()
+    conn.close()
+    return {
+        "items": formatted,
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": (total + page_size - 1) // page_size
+    }

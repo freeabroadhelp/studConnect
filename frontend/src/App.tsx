@@ -14,6 +14,7 @@ import PeerCounsellingPage from './pages/PeerCounsellingPage';
 import AuthRegisterPage from './pages/AuthRegisterPage';
 import AuthVerifyPage from './pages/AuthVerifyPage';
 import AuthLoginPage from './pages/AuthLoginPage';
+import { UniversityDetailPage } from './pages/UniversityDetailPage';
 
 export const App: React.FC = () => (
   <AuthProvider>
@@ -32,6 +33,7 @@ export const App: React.FC = () => (
         <Route path="/auth/register" element={<AuthRegisterPage />} />
         <Route path="/auth/verify" element={<AuthVerifyPage />} />
         <Route path="/auth/login" element={<AuthLoginPage />} />
+        <Route path="/universities/:id" element={<UniversityDetailPage />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>
     </BrowserRouter>
