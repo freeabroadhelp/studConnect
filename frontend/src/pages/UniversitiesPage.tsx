@@ -1,7 +1,7 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useRef } from 'react';
 import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import programsData from './programs.json';
 import countriesData from './countries.json';
 
@@ -44,6 +44,10 @@ interface ShortlistItem { university:string; country:string; tuition:number; pro
 export const UniversitiesPage: React.FC = () => {
   const api = useApi();
   const navigate = useNavigate();
+  const location = useLocation();
+  const loadedRef = useRef(false);
+  const [hasFetched, setHasFetched] = useState(false);
+
   const [items,setItems] = useState<UniversityFull[]>([]);
   const [total,setTotal] = useState(0);
   const [loading,setLoading] = useState(false);
@@ -75,6 +79,8 @@ export const UniversitiesPage: React.FC = () => {
   );
 
   useEffect(() => {
+    // Only fetch if not already loaded in this session and not a refresh
+    if (loadedRef.current && location.action === 'POP' && !refreshKey) return;
     setLoading(true); setError(null);
     const params: Record<string, string|number> = {
       page: 1,
@@ -82,7 +88,6 @@ export const UniversitiesPage: React.FC = () => {
     };
     if (country) params.country = country;
     if (search) params.q = search;
-    // if (sort) params.sort = sort;
     api.get<{items: UniversityFull[], total: number}>(
       '/api/universities/all?' + new URLSearchParams(params as any).toString()
     )
@@ -90,9 +95,12 @@ export const UniversitiesPage: React.FC = () => {
         setItems(res.items);
         setTotal(res.total);
         setShowCount(PAGE_SIZE);
+        loadedRef.current = true;
+        setHasFetched(true);
       })
       .catch(e => setError(e.message || 'Failed loading universities'))
       .finally(()=>setLoading(false));
+  // eslint-disable-next-line
   }, [refreshKey, country, search]);
 
   const filteredItems = items;
