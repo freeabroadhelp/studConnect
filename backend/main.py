@@ -12,7 +12,7 @@ import gspread
 from fastapi.responses import JSONResponse
 
 from models.models import (
-    Service, Scholarship, LeadIn, LeadOut, Booking, BookingCreate
+    Service, Scholarship, LeadIn, LeadOut, Booking, BookingCreate, AustraliaScholarship
 )
 from db import Base, engine, get_db
 from models.models_user import User
@@ -327,3 +327,20 @@ async def consultation_to_excel(request: Request):
     except Exception as e:
         import traceback
         return JSONResponse(status_code=500, content={"error": str(e), "trace": traceback.format_exc()})
+
+@app.get("/api/australia-scholarships", tags=["scholarships"])
+def get_australia_scholarships(db_session=Depends(get_db)):
+    db: Session
+    with db_session as db:
+        results = db.query(AustraliaScholarship).all()
+        return [
+            {
+                "university": result.university,
+                "state": result.state,
+                "type": result.type,
+                "scholarships": result.scholarships,
+                "common_programs": result.common_programs,
+                "updated_at": result.updated_at
+            }
+            for result in results
+        ]

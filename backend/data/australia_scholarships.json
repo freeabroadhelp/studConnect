@@ -1,0 +1,1277 @@
+[
+  {
+    "university": "Australian National University",
+    "state": "ACT",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "ANU Chancellor’s International Scholarship (India category)",
+        "value": "25%–50% tuition",
+        "level": "UG/PG",
+        "notes": "Auto-assessed; India stream"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202900Z"
+  },
+  {
+    "university": "University of Canberra",
+    "state": "ACT",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202916Z"
+  },
+  {
+    "university": "University of Sydney",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Sydney Scholars India Scholarship Program",
+        "value": "Up to AUD 40,000 incl. full & partial tuition awards",
+        "level": "UG/PG coursework",
+        "notes": "Separate application; Indian citizens"
+      },
+      {
+        "scholarship_name": "Vice-Chancellor’s International Scholarship",
+        "value": "Up to AUD 40,000–60,000 (typically year 1)",
+        "level": "UG/PG coursework",
+        "notes": "Auto-assessed on offer timeline"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202919Z"
+  },
+  {
+    "university": "UNSW Sydney",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "India Future of Change Scholarship",
+        "value": "Varies (tuition support)",
+        "level": "UG/PG",
+        "notes": "India-focused award (periodically offered)"
+      },
+      {
+        "scholarship_name": "International Scientia Coursework Scholarship",
+        "value": "Full tuition or partial",
+        "level": "UG/PG",
+        "notes": "Competitive, application required"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202922Z"
+  },
+  {
+    "university": "University of Technology Sydney",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202924Z"
+  },
+  {
+    "university": "Macquarie University",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Early Acceptance Scholarship (India)",
+        "value": "AUD 10,000 / year",
+        "level": "UG/PG",
+        "notes": "Early offer acceptance required"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202927Z"
+  },
+  {
+    "university": "Western Sydney University",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202929Z"
+  },
+  {
+    "university": "University of Newcastle",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202933Z"
+  },
+  {
+    "university": "University of Wollongong",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202936Z"
+  },
+  {
+    "university": "Charles Sturt University",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202939Z"
+  },
+  {
+    "university": "Southern Cross University",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202942Z"
+  },
+  {
+    "university": "University of New England",
+    "state": "NSW",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202944Z"
+  },
+  {
+    "university": "Avondale University",
+    "state": "NSW",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202947Z"
+  },
+  {
+    "university": "The University of Notre Dame Australia (Sydney & Fremantle)",
+    "state": "NSW/WA",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202949Z"
+  },
+  {
+    "university": "The University of Melbourne",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Melbourne International Undergraduate Scholarship",
+        "value": "25%–100% fee remission (most common 25%)",
+        "level": "UG",
+        "notes": "Auto-assessed for high achievers"
+      },
+      {
+        "scholarship_name": "Graduate Research Scholarships (RTP/MIRS)",
+        "value": "Full tuition + stipend (approx.)",
+        "level": "Master/PhD",
+        "notes": "Research applicants only"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202952Z"
+  },
+  {
+    "university": "Monash University",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Monash International Merit Scholarship",
+        "value": "Up to AUD 50,000",
+        "level": "UG/PG",
+        "notes": "Merit-based"
+      },
+      {
+        "scholarship_name": "Monash International Leadership Scholarship",
+        "value": "100% course fees",
+        "level": "UG/PG",
+        "notes": "Very competitive; excludes medicine"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202954Z"
+  },
+  {
+    "university": "RMIT University",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202957Z"
+  },
+  {
+    "university": "Deakin University",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202959Z"
+  },
+  {
+    "university": "La Trobe University",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202961Z"
+  },
+  {
+    "university": "Swinburne University of Technology",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202964Z"
+  },
+  {
+    "university": "Victoria University",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202966Z"
+  },
+  {
+    "university": "Federation University Australia",
+    "state": "VIC",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202968Z"
+  },
+  {
+    "university": "University of Divinity",
+    "state": "VIC",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202971Z"
+  },
+  {
+    "university": "The University of Queensland",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "UQ International Excellence Scholarships",
+        "value": "Up to 25% tuition",
+        "level": "UG/PG",
+        "notes": "Merit-based; some India-targeted initiatives historically"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202973Z"
+  },
+  {
+    "university": "Queensland University of Technology",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202975Z"
+  },
+  {
+    "university": "Griffith University",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202978Z"
+  },
+  {
+    "university": "James Cook University",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202980Z"
+  },
+  {
+    "university": "Central Queensland University (CQUniversity)",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202983Z"
+  },
+  {
+    "university": "University of the Sunshine Coast (UniSC)",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202985Z"
+  },
+  {
+    "university": "University of Southern Queensland (UniSQ)",
+    "state": "QLD",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202987Z"
+  },
+  {
+    "university": "Bond University",
+    "state": "QLD",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202990Z"
+  },
+  {
+    "university": "The University of Adelaide",
+    "state": "SA",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Global Citizens Scholarship",
+        "value": "Up to 30% tuition",
+        "level": "UG/PG",
+        "notes": "Merit-based"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202992Z"
+  },
+  {
+    "university": "University of South Australia",
+    "state": "SA",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202994Z"
+  },
+  {
+    "university": "Flinders University",
+    "state": "SA",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202997Z"
+  },
+  {
+    "university": "Torrens University Australia",
+    "state": "SA",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.202999Z"
+  },
+  {
+    "university": "Carnegie Mellon University Australia",
+    "state": "SA",
+    "type": "Private (International)",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203001Z"
+  },
+  {
+    "university": "The University of Western Australia",
+    "state": "WA",
+    "type": "Public",
+    "scholarships": [
+      {
+        "scholarship_name": "Global Excellence Scholarship",
+        "value": "Up to AUD 48,000 (UG) / AUD 24,000 (PG)",
+        "level": "UG/PG",
+        "notes": "Merit-based fee reduction"
+      }
+    ],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203004Z"
+  },
+  {
+    "university": "Curtin University",
+    "state": "WA",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203006Z"
+  },
+  {
+    "university": "Murdoch University",
+    "state": "WA",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203008Z"
+  },
+  {
+    "university": "Edith Cowan University",
+    "state": "WA",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203011Z"
+  },
+  {
+    "university": "The University of Notre Dame Australia (Fremantle & Sydney)",
+    "state": "WA/NSW",
+    "type": "Private",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203013Z"
+  },
+  {
+    "university": "University of Tasmania",
+    "state": "TAS",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203016Z"
+  },
+  {
+    "university": "Charles Darwin University",
+    "state": "NT",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203019Z"
+  },
+  {
+    "university": "Australian Catholic University (ACU)",
+    "state": "National",
+    "type": "Public",
+    "scholarships": [],
+    "common_programs": [
+      {
+        "scholarship_name": "Australia Awards Scholarships (DFAT)",
+        "value": "Full funding incl. tuition, stipend, OSHC, travel",
+        "level": "Specified PG programs",
+        "notes": "Country eligibility varies by year"
+      },
+      {
+        "scholarship_name": "Research Training Program (RTP)",
+        "value": "Tuition offset + stipend (via universities)",
+        "level": "Master/PhD",
+        "notes": "Apply via university; competitive"
+      },
+      {
+        "scholarship_name": "Destination Australia",
+        "value": "Up to AUD 15,000 per year",
+        "level": "UG/PG",
+        "notes": "Regional campuses only"
+      }
+    ],
+    "updated_at": "2025-08-16T11:07:17.203021Z"
+  }
+]

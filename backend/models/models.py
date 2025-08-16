@@ -1,6 +1,24 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import List, Optional
+from sqlalchemy import JSON, Column, Integer, String
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.dialects.postgresql import JSONB
+
+Base = declarative_base()
+
+
+class AustraliaScholarship(Base):
+    __tablename__ = "australia_scholarships"
+    __table_args__ = {'extend_existing': True}  # Ensures CREATE TABLE IF NOT EXISTS behavior
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    university = Column(String, nullable=False, unique=True)
+    state = Column(String)
+    type = Column(String)
+    scholarships = Column(JSONB)
+    common_programs = Column(JSONB)
+    updated_at = Column(String)
 
 
 class Service(BaseModel):

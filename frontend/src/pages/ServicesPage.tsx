@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useApi } from '../hooks/useApi';
-import { Modal } from '../components/Modal';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +8,64 @@ interface Service { code:string; name:string; category:string; description:strin
 const categoryLabels: Record<string,string> = {
   counselling:'Counselling', planning:'Planning', application:'Application', compliance:'Compliance', funding:'Funding'
 };
+
+// Define all unique services as per requirements
+const services = [
+  {
+    code: 'peer-counselling',
+    name: 'Main Counsellor Counselling & Peer Counselling',
+    desc: 'Talk to experienced counsellors and real international students for authentic guidance.',
+    path: '/services/peer-counselling'
+  },
+  {
+    code: 'university-representative',
+    name: 'University Representative Counselling',
+    desc: 'Official sessions with university representatives for program clarity.',
+    path: '/services/university-representative'
+  },
+  {
+    code: 'university-shortlisting',
+    name: 'University Shortlisting',
+    desc: 'Get a strategic shortlist of universities tailored to your profile.',
+    path: '/services/university-shortlisting'
+  },
+  {
+    code: 'application-assistance',
+    name: 'Application Assistance',
+    desc: 'End-to-end help with SOPs, LORs, resumes, and application tracking.',
+    path: '/services/application-assistance'
+  },
+  {
+    code: 'visa-guidance',
+    name: 'Visa Guidance',
+    desc: 'Personalized document checklists, mock interviews, and compliance support.',
+    path: '/services/visa-guidance'
+  },
+  {
+    code: 'pre-departure-support',
+    name: 'Pre-Departure Support',
+    desc: 'Orientation, packing, travel, and last-mile guidance before you fly.',
+    path: '/services/pre-departure-support'
+  },
+  {
+    code: 'accommodation-assistance',
+    name: 'Accommodation Assistance',
+    desc: 'Find and secure student accommodation in your destination country.',
+    path: '/services/accommodation-assistance'
+  },
+  {
+    code: 'airport-pickup',
+    name: 'Airport Pickup',
+    desc: 'Book airport pickup and arrival support for a smooth landing.',
+    path: '/services/airport-pickup'
+  },
+  {
+    code: 'financial',
+    name: 'Financial Services / Education Loans',
+    desc: 'Get help with education loans, scholarships, and funding options.',
+    path: '/financial-services'
+  }
+];
 
 export const ServicesPage: React.FC = () => {
   const { token } = useAuth();
@@ -33,52 +90,22 @@ export const ServicesPage: React.FC = () => {
   return (
     <main className="page container">
       <h1>Services</h1>
-      <p>Choose the right level of support across every stage of your study abroad journey.</p>
-      <div className="chips" style={{marginTop:'1.25rem'}}>
-        <button className={`chip ${!category?'chip--active':''}`} onClick={()=>setCategory('')}>All</button>
-        {categories.map(c => (
-          <button key={c} className={`chip ${category===c?'chip--active':''}`} onClick={()=>setCategory(c)}>{categoryLabels[c] || c}</button>
+      <p>Explore our full range of support for your study abroad journey.</p>
+      <div className="grid services__grid" style={{marginTop:'2rem'}}>
+        {services.map(s => (
+          <div
+            key={s.code}
+            className="card service"
+            style={{cursor:'pointer'}}
+            onClick={()=>nav(s.path)}
+            role="button"
+            aria-label={s.name}
+          >
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+          </div>
         ))}
       </div>
-      {loading && <div style={{marginTop:'2rem'}}>Loading services...</div>}
-      {error && <div style={{marginTop:'2rem', color:'#dc2626'}}>Error: {error}</div>}
-      {!loading && !error && (
-        <div className="grid services__grid" style={{marginTop:'1.5rem'}}>
-          {data.map(s => {
-            const isPeer = s.code === 'peer';
-            return (
-              <div
-                key={s.code}
-                className="card service"
-                onClick={()=> isPeer ? nav('/services/peer-counselling') : setSelected(s)}
-                style={{cursor:'pointer'}}
-                role="button"
-                aria-label={s.name}
-              >
-                <h3>{s.name}</h3>
-                <p>{s.description}</p>
-                <span style={{fontSize:'.6rem', textTransform:'uppercase', letterSpacing:'1px', opacity:.65}}>
-                  {categoryLabels[s.category] || s.category}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      )}
-      <Modal
-        open={!!selected && selected.code !== 'peer'}
-        onClose={()=>setSelected(null)}
-        title={selected?.name}
-      >
-        {selected && selected.code !== 'peer' && (
-          <>
-            <p style={{marginTop:0}}>{selected.description}</p>
-            <p style={{fontSize:'.7rem', letterSpacing:'1px', textTransform:'uppercase', opacity:.6}}>
-              Category: {categoryLabels[selected.category] || selected.category}
-            </p>
-          </>
-        )}
-      </Modal>
     </main>
   );
 };

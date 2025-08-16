@@ -40,7 +40,6 @@ export const SiteNav: React.FC = () => {
           <NavLink to="/services" onClick={()=>setOpen(false)}>Services</NavLink>
           <NavLink to="/universities" onClick={()=>setOpen(false)}>Universities</NavLink>
           <NavLink to="/contact" onClick={()=>setOpen(false)}>Contact</NavLink>
-          <NavLink to="/financial" onClick={()=>setOpen(false)}>Financial</NavLink>
           <NavLink to="/student" onClick={()=>setOpen(false)}>Student</NavLink>
           <NavLink to="/counsellor" onClick={()=>setOpen(false)}>Counsellor</NavLink>
           <ThemeToggle />

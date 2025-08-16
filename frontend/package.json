@@ -14,7 +14,11 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.8.0",
-    "three": "^0.165.0"
+    "three": "^0.165.0",
+    "framer-motion": "^11.0.17",
+    "@react-three/fiber": "^8.15.15",
+    "@react-three/drei": "^9.89.7",
+    "lucide-react": "^0.367.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.23",

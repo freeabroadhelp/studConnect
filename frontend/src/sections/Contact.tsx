@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import { API_BASE_URL } from '../apiBase'; // <-- use global API base
 
 export const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
@@ -18,10 +19,7 @@ export const Contact: React.FC = () => {
   });
 
   async function submitConsultationToExcel(data: Record<string, any>) {
-    const apiUrl =
-      import.meta.env.DEV
-        ? 'http://localhost:8000/api/consultation-excel'
-        : '/api/consultation-excel';
+    const apiUrl = `${API_BASE_URL}/api/consultation-excel`;
     const res = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -333,3 +331,4 @@ export const Contact: React.FC = () => {
     </section>
   );
 };
+

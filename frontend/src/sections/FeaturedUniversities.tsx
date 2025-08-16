@@ -17,15 +17,6 @@ export const FeaturedUniversities: React.FC = () => {
   const ref = useReveal();
   const api = useApi();
   const [unis,setUnis] = useState<typeof fallback>(fallback);
-  useEffect(() => {
-    api.get<{items:ApiUni[]}>('/catalog/universities?limit=6&sort=rank')
-      .then(r => {
-        if (r.items?.length) {
-          setUnis(r.items.map(u => ({ name:u.name, country:u.country })));
-        }
-      })
-      .catch(()=>{/* ignore, keep fallback */});
-  }, []);
   return (
     <section className="section alt reveal" id="universities" ref={ref as any}>
       <div className="container">

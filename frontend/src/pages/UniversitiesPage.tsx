@@ -105,15 +105,6 @@ export const UniversitiesPage: React.FC = () => {
 
   const filteredItems = items;
 
-  useEffect(() => {
-    if (!detailId) { setDetail(null); return; }
-    setDetailLoading(true);
-    api.get<any>(`/catalog/universities/${detailId}`)
-      .then(setDetail)
-      .catch(()=>setDetail(null))
-      .finally(()=>setDetailLoading(false));
-  }, [detailId]);
-
   return (
     <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem'}}>
       <div style={{

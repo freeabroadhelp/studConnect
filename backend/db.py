@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from dotenv import load_dotenv
 from contextlib import contextmanager
+from models.models import AustraliaScholarship
 
 load_dotenv()
 
@@ -15,6 +16,8 @@ class Base(DeclarativeBase):
 
 engine = create_engine(DATABASE_URL, future=True, pool_pre_ping=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
+
+Base.metadata.create_all(bind=engine)
 
 @contextmanager
 def get_db():

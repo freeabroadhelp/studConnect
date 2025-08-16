@@ -6,8 +6,8 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 import json
 from db import Base, engine, get_db
-from sqlalchemy import text
-
+from sqlalchemy import text, inspect
+from models.models import AustraliaScholarship
 
 load_dotenv()
 
@@ -239,3 +239,28 @@ def update_features_and_address():
                     db.commit()
         db.commit()
         print("Finished updating all universities.")
+        
+def ensure_australia_scholarships_table():
+    # Use the AustraliaScholarship.__table__ object directly to avoid KeyError
+    AustraliaScholarship.__table__.create(bind=engine, checkfirst=True)
+
+def import_data():
+    data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "backend/data/australia_scholarships.json")
+    with open(data_path, "r") as f:
+        data = json.load(f)
+    ensure_australia_scholarships_table()
+    Base.metadata.create_all(bind=engine)
+    with get_db() as db:
+        for entry in data:
+            obj = AustraliaScholarship(
+                university=entry["university"],
+                state=entry.get("state"),
+                type=entry.get("type"),
+                scholarships=entry.get("scholarships", []),
+                common_programs=entry.get("common_programs", []),
+                updated_at=entry.get("updated_at")
+            )
+            db.add(obj)
+    db.commit()
+    db.close()
+
