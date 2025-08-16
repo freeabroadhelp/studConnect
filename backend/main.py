@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, Query
+from fastapi import FastAPI, Depends, HTTPException, status, Header, Query, Path
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -8,6 +8,9 @@ import os
 import csv
 import psycopg2
 import requests
+import ast
+import urllib.parse
+import json
 import boto3
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
@@ -199,157 +202,93 @@ def smtp_debug(current: UserOut = Depends(auth_user)):
     return smtp_diagnostics()
 
 
-@app.get("/api/universities")
-def list_universities(
-    country: Optional[str] = Query(None),
-    q: Optional[str] = Query(None),
-    limit: int = Query(100, ge=1, le=200)
-):
-    conn = psycopg2.connect(DB_URL)
-    cur = conn.cursor()
-    sql = "SELECT id, name, country, url, average_tuition, average_tuition_currency, type, thumbnail_r2, logo_r2 FROM universities"
-    params = []
-    where = []
-    if country:
-        where.append("country = %s")
-        params.append(country)
-    if q:
-        where.append("name ILIKE %s")
-        params.append(f"%{q}%")
-    if where:
-        sql += " WHERE " + " AND ".join(where)
-    sql += " ORDER BY name ASC LIMIT %s"
-    params.append(limit)
-    cur.execute(sql, params)
-    rows = cur.fetchall()
-    cur.close()
-    conn.close()
-    keys = ["id", "name", "country", "url", "average_tuition", "average_tuition_currency", "type", "thumbnail_r2", "logo_r2"]
-    # Format thumbnail/logo URLs for frontend
-    formatted = []
-    for r in rows:
-        d = dict(zip(keys, r))
-        if d.get("thumbnail_r2"):
-            d["thumbnail_url"] = d["thumbnail_r2"]
-        else:
-            d["thumbnail_url"] = None
-        if d.get("logo_r2"):
-            d["logo_url"] = d["logo_r2"]
-        else:
-            d["logo_url"] = None
-        formatted.append(d)
-    return formatted
-
 @app.get("/api/universities/all")
 def get_all_universities(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=200),
-    country: Optional[str] = Query(None),
-    q: Optional[str] = Query(None),
-    sort: Optional[str] = Query("rank")
+    country: str | None = Query(None),
+    q: str | None = Query(None),
+    sort: str = Query("rank")
 ):
     offset = (page - 1) * page_size
-    conn = psycopg2.connect(DB_URL)
-    cur = conn.cursor()
-    # Always sort by rank (urap_standings as integer), fallback to name
-    # This ensures default and explicit sort=rank both use rank sorting
-    order_by = (
-        "CASE WHEN urap_standings ~ '^[0-9]+$' THEN urap_standings::int ELSE NULL END ASC NULLS LAST, name ASC"
-        if sort == "rank" or not sort else "name ASC"
-    )
-    sql = f"SELECT * FROM universities"
-    params = []
-    where = []
-    if country:
-        where.append("country = %s")
-        params.append(country)
-    if q:
-        where.append("name ILIKE %s")
-        params.append(f"%{q}%")
-    if where:
-        sql += " WHERE " + " AND ".join(where)
-    sql += f" ORDER BY {order_by} LIMIT %s OFFSET %s"
-    params.extend([page_size, offset])
+
+    conn = None
     try:
+        conn = psycopg2.connect(DB_URL)
+        cur = conn.cursor()
+
+        where_clauses = []
+        params: list = []
+
+        if country:
+            where_clauses.append("country = %s")
+            params.append(country.strip())
+
+        if q:
+            where_clauses.append("name ILIKE %s")
+            params.append(f"%{q.strip()}%")
+
+        sql = "SELECT * FROM universities"
+        if where_clauses:
+            sql += " WHERE " + " AND ".join(where_clauses)
+
+        # sorting
+        if sort == "rank":
+            order_by = "CASE WHEN urap_standings ~ '^[0-9]+$' THEN urap_standings::int END ASC NULLS LAST, name ASC"
+        else:
+            order_by = "name ASC"
+
+        sql += f" ORDER BY {order_by} LIMIT %s OFFSET %s"
+        params.extend([page_size, offset])
+
         cur.execute(sql, params)
         rows = cur.fetchall()
         colnames = [desc[0] for desc in cur.description]
+
         formatted = []
         for row in rows:
             d = dict(zip(colnames, row))
-            d["thumbnail_url"] = d.get("thumbnail_r2") or None
-            d["logo_url"] = d.get("logo_r2") or None
+            d["thumbnail_url"] = d.get("thumbnail_r2") or d.get("thumbnail")
+            d["logo_url"] = d.get("logo_r2") or d.get("logo")
+
             formatted.append(d)
-        count_sql = "SELECT COUNT(*) FROM universities"
-        if where:
-            count_sql += " WHERE " + " AND ".join(where)
-        cur.execute(count_sql, params[:-2])
-        total = cur.fetchone()[0]
+
+        total = len(formatted)
+        return {
+            "items": formatted,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+
     except Exception as e:
-        cur.close()
-        conn.close()
         return JSONResponse(status_code=500, content={"error": str(e)})
-    cur.close()
-    conn.close()
-    return {
-        "items": formatted,
-        "total": total,
-        "page": page,
-        "page_size": page_size,
-        "total_pages": (total + page_size - 1) // page_size
-    }
-
-@app.get("/api/universities/countries")
-def get_university_countries():
-    conn = psycopg2.connect(DB_URL)
-    cur = conn.cursor()
-    cur.execute("SELECT DISTINCT country FROM universities WHERE country IS NOT NULL AND country <> '' ORDER BY country ASC")
-    countries = [row[0] for row in cur.fetchall()]
-    cur.close()
-    conn.close()
-    return {"countries": countries}
-
-@app.get("/api/universities/by-name/{name_slug}")
-def get_university_by_name(name_slug: str):
-    """
-    Fetch university details by slugified name (case-insensitive, spaces/underscores/hyphens ignored).
-    """
-    conn = psycopg2.connect(DB_URL)
-    cur = conn.cursor()
-    # Normalize the name for matching (replace -/_/space with space, lower)
-    cur.execute("""
-        SELECT * FROM universities
-        WHERE
-            LOWER(REPLACE(REPLACE(REPLACE(name, '-', ' '), '_', ' '), '  ', ' ')) = %s
-        LIMIT 1
-    """, (name_slug.replace('-', ' ').replace('_', ' ').lower(),))
-    row = cur.fetchone()
-    if not row:
-        cur.close()
-        conn.close()
-        raise HTTPException(status_code=404, detail="University not found")
-    colnames = [desc[0] for desc in cur.description]
-    d = dict(zip(colnames, row))
-    d["thumbnail_url"] = d.get("thumbnail_r2") or None
-    d["logo_url"] = d.get("logo_r2") or None
-    cur.close()
-    conn.close()
-    return JSONResponse(content=jsonable_encoder(d))
+    finally:
+        if conn:
+            conn.close()
 
 @app.get("/api/universities/{uni_id}")
-def get_university(uni_id: int):
-    conn = psycopg2.connect(DB_URL)
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM universities WHERE id = %s", (uni_id,))
-    row = cur.fetchone()
-    if not row:
+def get_university(
+    uni_id: int = Path(..., description="University ID")
+):
+    try:
+        conn = psycopg2.connect(DB_URL)
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM universities WHERE id = %s", (uni_id,))
+        row = cur.fetchone()
+        if not row:
+            cur.close()
+            conn.close()
+            raise HTTPException(status_code=404, detail="University not found")
+        colnames = [desc[0] for desc in cur.description]
+        d = dict(zip(colnames, row))
+        d["thumbnail_url"] = d.get("thumbnail_r2") or None
+        d["logo_url"] = d.get("logo_r2") or None
         cur.close()
         conn.close()
-        raise HTTPException(status_code=404, detail="University not found")
-    colnames = [desc[0] for desc in cur.description]
-    d = dict(zip(colnames, row))
-    d["thumbnail_url"] = d.get("thumbnail_r2") or None
-    d["logo_url"] = d.get("logo_r2") or None
-    cur.close()
-    conn.close()
-    return d
+        return d
+    except Exception as e:
+        # Return a JSON error with CORS headers
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=500, content={"error": str(e)})

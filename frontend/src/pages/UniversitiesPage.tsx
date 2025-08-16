@@ -2,6 +2,8 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { useApi } from '../hooks/useApi';
 import { Modal } from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
+import programsData from './programs.json';
+import countriesData from './countries.json';
 
 const PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 200;
@@ -49,16 +51,9 @@ export const UniversitiesPage: React.FC = () => {
 
   const [search,setSearch] = useState('');
   const [country,setCountry] = useState('');
-  const [sort,setSort] = useState<'rank'|'name'|'updated'>('rank');
-  const [program,setProgram] = useState('');
+  // const [sort,setSort] = useState<'rank'|'name'|'updated'>('rank');
+  // const [program,setProgram] = useState('');
   const [showCount, setShowCount] = useState(PAGE_SIZE);
-
-  // Shortlist modal
-  const [shortlistOpen,setShortlistOpen] = useState(false);
-  const [prefs,setPrefs] = useState({ country:'', budget:'', program:'' });
-  const [shortlist,setShortlist] = useState<ShortlistItem[]|null>(null);
-  const [shortlistLoading,setShortlistLoading] = useState(false);
-  const [shortlistError,setShortlistError] = useState<string|null>(null);
 
   // Detail modal
   const [detailId,setDetailId] = useState<string|null>(null);
@@ -67,8 +62,17 @@ export const UniversitiesPage: React.FC = () => {
 
   const [refreshKey,setRefreshKey] = useState(0);
 
-  // Country options
-  const [countryOptions, setCountryOptions] = useState<string[]>([]);
+  // Use static JSON for programs and countries
+  const [allPrograms] = useState<string[]>(
+    Array.isArray(programsData)
+      ? programsData
+      : (programsData.program_names || [])
+  );
+  const [countryOptions] = useState<string[]>(
+    Array.isArray(countriesData)
+      ? countriesData
+      : (countriesData.countries || [])
+  );
 
   useEffect(() => {
     setLoading(true); setError(null);
@@ -78,6 +82,7 @@ export const UniversitiesPage: React.FC = () => {
     };
     if (country) params.country = country;
     if (search) params.q = search;
+    // if (sort) params.sort = sort;
     api.get<{items: UniversityFull[], total: number}>(
       '/api/universities/all?' + new URLSearchParams(params as any).toString()
     )
@@ -90,32 +95,7 @@ export const UniversitiesPage: React.FC = () => {
       .finally(()=>setLoading(false));
   }, [refreshKey, country, search]);
 
-  useEffect(() => {
-    api.get<{countries: string[]}>('/api/universities/countries')
-      .then(res => setCountryOptions(res.countries))
-      .catch(() => setCountryOptions([]));
-  }, []);
-
-  const filteredItems = items.filter(u =>
-    (!program || (u.programs && u.programs.toLowerCase().includes(program.toLowerCase())))
-  );
-
-  async function generateShortlist(e:FormEvent){
-    e.preventDefault();
-    setShortlistError(null); setShortlistLoading(true); setShortlist(null);
-    try {
-      const result = await api.post<ShortlistItem[]>('/shortlist', {
-        country: prefs.country || null,
-        budget: prefs.budget ? Number(prefs.budget) : null,
-        program: prefs.program || null
-      });
-      setShortlist(result);
-    } catch (err:any){
-      setShortlistError(err.message || 'Failed generating shortlist');
-    } finally {
-      setShortlistLoading(false);
-    }
-  }
+  const filteredItems = items;
 
   useEffect(() => {
     if (!detailId) { setDetail(null); return; }
@@ -188,7 +168,7 @@ export const UniversitiesPage: React.FC = () => {
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
-            <select value={sort} onChange={e=>setSort(e.target.value as any)}
+            {/* <select value={sort} onChange={e=>setSort(e.target.value as any)}
               style={{
                 padding:'.55rem 1.1rem',
                 borderRadius:'10px',
@@ -199,32 +179,21 @@ export const UniversitiesPage: React.FC = () => {
               }}>
               <option value="rank">Sort by Rank</option>
               <option value="name">Sort by Name</option>
-            </select>
-            <select value={program} onChange={e=>setProgram(e.target.value)}
-            style={{
-              padding:'.55rem .9rem',
-              borderRadius:'10px',
-              border:'1px solid #e5e7eb',
-              fontWeight:500,
-              minWidth:180,
-              background:'#f8fafc'
-            }}>
-            <option value="">Any Program</option>
-            {/* You can populate with static or dynamic options if needed */}
-          </select>
-            <button
-              className="btn btn-small"
-              type="button"
-              onClick={()=>setShortlistOpen(true)}
+            </select> */}
+            {/* <select value={program} onChange={e=>setProgram(e.target.value)}
               style={{
-                background:'#2563eb',
-                color:'#fff',
-                borderRadius:'8px',
-                padding:'.6rem 1.2rem',
-                fontWeight:600,
-                border:'none'
-              }}
-            >Shortlist</button>
+                padding:'.55rem .9rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontWeight:500,
+                minWidth:180,
+                background:'#f8fafc'
+              }}>
+              <option value="">Any Program</option>
+              {allPrograms.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select> */}
             <button
               className="btn btn-small"
               type="button"
@@ -376,43 +345,6 @@ export const UniversitiesPage: React.FC = () => {
                 <pre style={{fontSize:'.7em', background:'#f5f7fb', padding:'.7em', borderRadius:'8px', overflow:'auto'}}>{JSON.stringify(detail.extra, null, 2)}</pre>
               </details>
             )}
-          </div>
-        )}
-      </Modal>
-      {/* Shortlist Modal */}
-      <Modal open={shortlistOpen} onClose={()=>setShortlistOpen(false)} title="Generate Shortlist">
-        <form onSubmit={generateShortlist} style={{display:'flex', flexDirection:'column', gap:'.7rem'}}>
-          <select value={prefs.country} onChange={e=>setPrefs(p=>({...p, country:e.target.value}))}>
-            <option value="">Preferred Country (optional)</option>
-            {countryOptions.map(c=> <option key={c}>{c}</option>)}
-          </select>
-          <input
-            placeholder="Budget (USD)"
-            value={prefs.budget}
-            onChange={e=>setPrefs(p=>({...p, budget:e.target.value.replace(/\D/g,'')}))}
-          />
-          <input
-            placeholder="Program (e.g. CS)"
-            value={prefs.program}
-            onChange={e=>setPrefs(p=>({...p, program:e.target.value}))}
-          />
-          <button className="btn btn-primary" type="submit" disabled={shortlistLoading}>
-            {shortlistLoading? 'Generating...' : 'Generate'}
-          </button>
-        </form>
-        {shortlistError && <div style={{marginTop:'1rem', color:'#dc2626'}}>Error: {shortlistError}</div>}
-        {shortlist && (
-          <div style={{marginTop:'1.2rem', maxHeight:'260px', overflow:'auto', display:'flex', flexDirection:'column', gap:'.55rem'}}>
-            {shortlist.map(item => (
-              <div key={item.university} style={{border:'1px solid var(--border)', padding:'.6rem .7rem', borderRadius:'12px'}}>
-                <strong style={{fontSize:'.8rem'}}>{item.university}</strong>
-                <div style={{display:'flex', gap:'.4rem', flexWrap:'wrap', marginTop:'.3rem'}}>
-                  <span className="chip" style={{fontSize:'.55rem'}}>Score {item.match_score}</span>
-                  <span className="chip" style={{fontSize:'.55rem'}}>{item.country}</span>
-                  <span className="chip" style={{fontSize:'.55rem'}}>Tuition ${item.tuition.toLocaleString()}</span>
-                </div>
-              </div>
-            ))}
           </div>
         )}
       </Modal>
