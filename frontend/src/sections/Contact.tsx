@@ -1,230 +1,65 @@
 import React, { useState } from 'react';
+import { useReveal } from '../hooks/useReveal';
+import { API_BASE_URL } from '../apiBase';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Realistic 3D Airplane with proper proportions and materials
-function RealisticAirplane() {
+// 3D Animated Airplane flying from left to right
+function AnimatedAirplane() {
   const meshRef = React.useRef<THREE.Group>(null);
-  
   useFrame(({ clock }) => {
     if (meshRef.current) {
-      const t = (clock.getElapsedTime() % 12) / 12;
-      meshRef.current.position.x = -12 + t * 24;
-      meshRef.current.position.y = Math.sin(t * Math.PI * 2) * 0.8 + 2;
-      meshRef.current.position.z = Math.cos(t * Math.PI * 2) * 1.5;
-      meshRef.current.rotation.z = Math.sin(t * Math.PI * 2) * 0.08;
-      meshRef.current.rotation.y = Math.PI / 2 + Math.sin(t * Math.PI * 4) * 0.1;
+      // Move from left (-10) to right (+10), loop every 10 seconds
+      const t = (clock.getElapsedTime() % 10) / 10;
+      meshRef.current.position.x = -10 + t * 20;
+      meshRef.current.position.y = Math.sin(t * Math.PI * 2) * 1.2 + 1.2;
+      meshRef.current.rotation.z = Math.sin(t * Math.PI * 2) * 0.12;
+      meshRef.current.rotation.y = Math.PI / 2;
     }
   });
 
   return (
-    <group ref={meshRef} scale={[0.8, 0.8, 0.8]}>
-      {/* Main Fuselage - elongated and tapered */}
+    <group ref={meshRef}>
+      {/* Fuselage */}
       <mesh>
-        <cylinderGeometry args={[0.25, 0.35, 6, 32]} />
-        <meshStandardMaterial 
-          color="#f8fafc" 
-          metalness={0.7} 
-          roughness={0.2}
-          envMapIntensity={0.5}
-        />
+        <cylinderGeometry args={[0.22, 0.32, 2.2, 24]} />
+        <meshStandardMaterial color="#2563eb" metalness={0.8} roughness={0.22} />
       </mesh>
-      
-      {/* Nose Section - more pointed and realistic */}
-      <mesh position={[0, 0, 3.2]}>
-        <coneGeometry args={[0.25, 0.8, 32]} />
-        <meshStandardMaterial 
-          color="#e2e8f0" 
-          metalness={0.8} 
-          roughness={0.15}
-        />
+      {/* Nose */}
+      <mesh position={[0, 0, 1.1]}>
+        <sphereGeometry args={[0.32, 18, 18]} />
+        <meshStandardMaterial color="#fbbf24" metalness={0.8} roughness={0.22} />
       </mesh>
-      
-      {/* Cockpit Windows - larger and more realistic */}
-      <mesh position={[0, 0.15, 2.8]} rotation={[0.2, 0, 0]}>
-        <sphereGeometry args={[0.18, 24, 16, 0, Math.PI, 0, Math.PI * 0.6]} />
-        <meshStandardMaterial 
-          color="#1e293b" 
-          metalness={0.1} 
-          roughness={0.05} 
-          transparent 
-          opacity={0.3}
-          envMapIntensity={1}
-        />
+      {/* Tail */}
+      <mesh position={[0, 0.32, -1.05]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.13, 0.38, 16]} />
+        <meshStandardMaterial color="#60a5fa" metalness={0.8} roughness={0.22} />
       </mesh>
-      
-      {/* Main Wings - swept back design */}
-      <group position={[0, -0.05, 0.5]}>
-        {/* Left wing */}
-        <mesh position={[-1.8, 0, -0.3]} rotation={[0, 0.3, 0.05]}>
-          <boxGeometry args={[2.2, 0.12, 0.6]} />
-          <meshStandardMaterial 
-            color="#f1f5f9" 
-            metalness={0.6} 
-            roughness={0.25}
-          />
-        </mesh>
-        {/* Right wing */}
-        <mesh position={[1.8, 0, -0.3]} rotation={[0, -0.3, -0.05]}>
-          <boxGeometry args={[2.2, 0.12, 0.6]} />
-          <meshStandardMaterial 
-            color="#f1f5f9" 
-            metalness={0.6} 
-            roughness={0.25}
-          />
-        </mesh>
-      </group>
-      
-      {/* Wing Engines - realistic turbofan design */}
-      <mesh position={[-1.2, -0.4, 0.3]}>
-        <cylinderGeometry args={[0.18, 0.22, 0.8, 32]} />
-        <meshStandardMaterial 
-          color="#374151" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
+      {/* Wings */}
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[1.2, 0.08, 0.38]} />
+        <meshStandardMaterial color="#a21caf" metalness={0.7} roughness={0.3} />
       </mesh>
-      <mesh position={[1.2, -0.4, 0.3]}>
-        <cylinderGeometry args={[0.18, 0.22, 0.8, 32]} />
-        <meshStandardMaterial 
-          color="#374151" 
-          metalness={0.9} 
-          roughness={0.1}
-        />
-      </mesh>
-      
-      {/* Engine Intakes */}
-      <mesh position={[-1.2, -0.4, 0.7]}>
-        <cylinderGeometry args={[0.15, 0.18, 0.1, 32]} />
-        <meshStandardMaterial 
-          color="#1f2937" 
-          metalness={0.3} 
-          roughness={0.8}
-        />
-      </mesh>
-      <mesh position={[1.2, -0.4, 0.7]}>
-        <cylinderGeometry args={[0.15, 0.18, 0.1, 32]} />
-        <meshStandardMaterial 
-          color="#1f2937" 
-          metalness={0.3} 
-          roughness={0.8}
-        />
-      </mesh>
-      
-      {/* Vertical Tail (Rudder) */}
-      <mesh position={[0, 0.6, -2.8]} rotation={[0, 0, Math.PI / 2]}>
-        <coneGeometry args={[0.8, 0.15, 4]} />
-        <meshStandardMaterial 
-          color="#e2e8f0" 
-          metalness={0.6} 
-          roughness={0.3}
-        />
-      </mesh>
-      
-      {/* Horizontal Stabilizers */}
-      <mesh position={[0, 0.1, -2.6]}>
-        <boxGeometry args={[1.4, 0.08, 0.35]} />
-        <meshStandardMaterial 
-          color="#e2e8f0" 
-          metalness={0.6} 
-          roughness={0.3}
-        />
-      </mesh>
-      
-      {/* Passenger Windows - realistic spacing and size */}
-      {[...Array(12)].map((_, i) => (
-        <mesh key={i} position={[0, 0.2, 2.2 - i * 0.4]}>
-          <cylinderGeometry args={[0.06, 0.06, 0.02, 16]} />
-          <meshStandardMaterial 
-            color="#1e293b" 
-            metalness={0.1} 
-            roughness={0.05} 
-            transparent 
-            opacity={0.4}
-          />
+      {/* Windows */}
+      {[...Array(3)].map((_, i) => (
+        <mesh key={i} position={[0, 0.18, 0.5 - i * 0.5]}>
+          <sphereGeometry args={[0.06, 12, 12]} />
+          <meshStandardMaterial color="#fff" metalness={0.2} roughness={0.1} />
         </mesh>
       ))}
-      
-      {/* Wing Navigation Lights */}
-      <mesh position={[-3.8, -0.05, 0.2]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial 
-          color="#ef4444" 
-          emissive="#ef4444"
-          emissiveIntensity={0.3}
-        />
+      {/* Colorful contrail */}
+      <mesh position={[-0.01, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.04, 0.13, 2.5, 32, 1, true]} />
+        <meshStandardMaterial color="#f472b6" transparent opacity={0.38} />
       </mesh>
-      <mesh position={[3.8, -0.05, 0.2]}>
-        <sphereGeometry args={[0.04, 16, 16]} />
-        <meshStandardMaterial 
-          color="#22c55e" 
-          emissive="#22c55e"
-          emissiveIntensity={0.3}
-        />
+      <mesh position={[0.09, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.03, 0.09, 2.2, 32, 1, true]} />
+        <meshStandardMaterial color="#60a5fa" transparent opacity={0.32} />
       </mesh>
-      
-      {/* Airline Stripe */}
-      <mesh position={[0, 0.1, 1]}>
-        <cylinderGeometry args={[0.255, 0.355, 4, 32, 1, true, 0, Math.PI * 0.6]} />
-        <meshStandardMaterial 
-          color="#2563eb" 
-          metalness={0.7} 
-          roughness={0.2}
-        />
-      </mesh>
-      
-      {/* Landing Gear */}
-      <mesh position={[0, -0.45, 1.5]}>
-        <boxGeometry args={[0.08, 0.3, 0.05]} />
-        <meshStandardMaterial 
-          color="#374151" 
-          metalness={0.8} 
-          roughness={0.3}
-        />
-      </mesh>
-      <mesh position={[-0.8, -0.5, 0.3]}>
-        <boxGeometry args={[0.06, 0.25, 0.04]} />
-        <meshStandardMaterial 
-          color="#374151" 
-          metalness={0.8} 
-          roughness={0.3}
-        />
-      </mesh>
-      <mesh position={[0.8, -0.5, 0.3]}>
-        <boxGeometry args={[0.06, 0.25, 0.04]} />
-        <meshStandardMaterial 
-          color="#374151" 
-          metalness={0.8} 
-          roughness={0.3}
-        />
-      </mesh>
-      
-      {/* Wing Flaps */}
-      <mesh position={[-1.2, -0.08, 0.8]} rotation={[0, 0, -0.1]}>
-        <boxGeometry args={[0.8, 0.06, 0.15]} />
-        <meshStandardMaterial 
-          color="#cbd5e1" 
-          metalness={0.5} 
-          roughness={0.4}
-        />
-      </mesh>
-      <mesh position={[1.2, -0.08, 0.8]} rotation={[0, 0, 0.1]}>
-        <boxGeometry args={[0.8, 0.06, 0.15]} />
-        <meshStandardMaterial 
-          color="#cbd5e1" 
-          metalness={0.5} 
-          roughness={0.4}
-        />
-      </mesh>
-      
-      {/* Subtle Contrails */}
-      <mesh position={[0, 0.05, -4]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.02, 0.08, 2.5, 16, 1, true]} />
-        <meshStandardMaterial 
-          color="#f8fafc" 
-          transparent 
-          opacity={0.1}
-        />
+      <mesh position={[-0.09, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.03, 0.09, 2.2, 32, 1, true]} />
+        <meshStandardMaterial color="#fbbf24" transparent opacity={0.32} />
       </mesh>
     </group>
   );
@@ -240,33 +75,47 @@ function FloatingAirplane() {
       height: '100vh',
       zIndex: 0,
       pointerEvents: 'none',
-      opacity: 0.15
+      opacity: 0.17
     }}>
-      <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={0.8} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.3} />
-        <RealisticAirplane />
+      <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[2, 2, 2]} intensity={0.7} />
+        <AnimatedAirplane />
+        <OrbitControls enableZoom={false} enablePan={false} autoRotate={false} />
       </Canvas>
     </div>
   );
 }
 
-// Mock functions for the form functionality
-function useReveal() {
-  return React.useRef();
-}
-
-async function submitConsultationToExcel(data: Record<string, any>) {
-  // Mock API call
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return { success: true };
-}
-
-export default function Contact() {
+export const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'submitted'>('idle');
   const [errors, setErrors] = useState<{ phone?: string; email?: string }>({});
   const [phone, setPhone] = useState("");
+  const ref = useReveal();
+
+  // Add state for form fields
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    dial_code: '+91',
+    nationality: 'India'
+  });
+
+  async function submitConsultationToExcel(data: Record<string, any>) {
+    const apiUrl = `${API_BASE_URL}/api/consultation-excel`;
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...data,
+        timestamp: new Date().toISOString()
+      })
+    });
+    if (!res.ok) throw new Error('Failed to submit consultation');
+    return await res.json();
+  }
 
   function validateEmail(email: string){
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
@@ -280,10 +129,23 @@ export default function Contact() {
     return digits.length >= 7;
   }
 
-  const handleSubmit = async (formData: Record<string, string>) => {
-    const phoneVal = formData.phone?.trim() || '';
-    const emailVal = formData.email?.trim() || '';
-    const dialVal = formData.dial_code || '';
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if(status !== 'idle') return;
+    const form = e.currentTarget;
+    const phoneInput = form.elements.namedItem('phone') as HTMLInputElement;
+    const dialInput = form.elements.namedItem('dial_code') as HTMLSelectElement;
+    const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+    const firstNameInput = form.elements.namedItem('first_name') as HTMLInputElement;
+    const lastNameInput = form.elements.namedItem('last_name') as HTMLInputElement;
+    const nationalityInput = form.elements.namedItem('nationality') as HTMLSelectElement;
+
+    const phoneVal = phoneInput.value.trim();
+    const emailVal = emailInput.value.trim();
+    const dialVal = dialInput.value;
+    const firstNameVal = firstNameInput.value.trim();
+    const lastNameVal = lastNameInput.value.trim();
+    const nationalityVal = nationalityInput.value;
 
     const nextErrors: { phone?: string; email?: string } = {};
     if(!validatePhone(phoneVal, dialVal)) {
@@ -293,121 +155,99 @@ export default function Contact() {
       nextErrors.email = 'Enter a valid email address';
     }
     setErrors(nextErrors);
-    if(Object.keys(nextErrors).length) return;
+    if(Object.keys(nextErrors).length) return; // abort
 
     setStatus('submitting');
-    try {
-      await submitConsultationToExcel(formData);
-      setStatus('submitted');
-    } catch {
-      setStatus('idle');
-    }
-  };
+    // Send to backend for Excel storage
+    submitConsultationToExcel({
+      first_name: firstNameVal,
+      last_name: lastNameVal,
+      email: emailVal,
+      phone: phoneVal,
+      dial_code: dialVal,
+      nationality: nationalityVal
+    })
+      .then(() => setStatus('submitted'))
+      .catch(() => setStatus('idle'));
+  }
 
   return (
-    <div style={{ 
-      position: 'relative', 
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-      padding: '4rem 2rem'
-    }}>
+    <section className="section reveal" id="contact" ref={ref as any} style={{ position: 'relative', zIndex: 1 }}>
+      {/* 3D Animated Airplane */}
       <FloatingAirplane />
-      
-      <div style={{ 
-        maxWidth: '800px', 
-        margin: '0 auto', 
-        position: 'relative', 
-        zIndex: 2 
-      }}>
-        <h2 style={{
-          textAlign: 'center',
-          fontSize: '2.5rem',
-          fontWeight: '700',
-          color: '#1e293b',
-          marginBottom: '3rem'
-        }}>
-          Book Your Consultation
-        </h2>
-        
-        <div 
-          style={{
-            background: '#ffffff',
-            borderRadius: '16px',
-            padding: '3rem',
-            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-            marginBottom: '2rem'
-          }}
-        >
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '1.5rem',
-            marginBottom: '2rem'
-          }}>
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#374151' }}>
-                First Name <span style={{color: '#ef4444'}}>*</span>
-              </label>
-              <input 
-                required 
-                name="first_name" 
-                placeholder="John"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  transition: 'border-color 0.2s'
-                }}
-              />
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        <h2 className="section__title">Book Your Consultation</h2>
+        <form className="consultation" onSubmit={handleSubmit} noValidate>
+          <div className="consultation__grid">
+            <div className="field">
+              <label>First Name<span>*</span></label>
+              <input required name="first_name" placeholder="John" />
             </div>
-            
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#374151' }}>
-                Last Name <span style={{color: '#ef4444'}}>*</span>
-              </label>
-              <input 
-                required 
-                name="last_name" 
-                placeholder="Doe"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  transition: 'border-color 0.2s'
-                }}
-              />
+            <div className="field">
+              <label>Last Name<span>*</span></label>
+              <input required name="last_name" placeholder="Doe" />
             </div>
-            
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#374151' }}>
-                Phone Number <span style={{color: '#ef4444'}}>*</span>
-              </label>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <select 
-                  name="dial_code" 
-                  defaultValue="+91"
-                  style={{
-                    padding: '0.75rem',
-                    border: '2px solid #e5e7eb',
-                    borderRadius: '8px',
-                    fontSize: '1rem',
-                    minWidth: '80px'
-                  }}
-                >
+            <div className="field phone">
+              <label>Phone Number<span>*</span></label>
+              <div className="phone__inner">
+                <select name="dial_code" defaultValue="+91" aria-label="Country code">
                   <option value="+91">+91</option>
                   <option value="+1">+1</option>
                   <option value="+44">+44</option>
                   <option value="+61">+61</option>
                   <option value="+65">+65</option>
+                  <option value="+49">+49</option>
+                  <option value="+33">+33</option>
+                  <option value="+31">+31</option>
+                  <option value="+46">+46</option>
+                  <option value="+81">+81</option>
+                  <option value="+86">+86</option>
+                  <option value="+82">+82</option>
+                  <option value="+7">+7</option>
+                  <option value="+39">+39</option>
+                  <option value="+34">+34</option>
+                  <option value="+351">+351</option>
+                  <option value="+41">+41</option>
+                  <option value="+43">+43</option>
+                  <option value="+32">+32</option>
+                  <option value="+420">+420</option>
+                  <option value="+48">+48</option>
+                  <option value="+358">+358</option>
+                  <option value="+47">+47</option>
+                  <option value="+45">+45</option>
+                  <option value="+36">+36</option>
+                  <option value="+386">+386</option>
+                  <option value="+420">+420</option>
+                  <option value="+421">+421</option>
+                  <option value="+353">+353</option>
+                  <option value="+380">+380</option>
+                  <option value="+90">+90</option>
+                  <option value="+971">+971</option>
+                  <option value="+966">+966</option>
+                  <option value="+62">+62</option>
+                  <option value="+63">+63</option>
+                  <option value="+60">+60</option>
+                  <option value="+64">+64</option>
+                  <option value="+27">+27</option>
+                  <option value="+234">+234</option>
+                  <option value="+254">+254</option>
+                  <option value="+20">+20</option>
+                  <option value="+55">+55</option>
+                  <option value="+52">+52</option>
+                  <option value="+54">+54</option>
+                  <option value="+353">+353</option>
+                  <option value="+380">+380</option>
+                  <option value="+351">+351</option>
+                  <option value="+386">+386</option>
+                  <option value="+420">+420</option>
+                  <option value="+421">+421</option>
+                  {/* ...add more as needed */}
                 </select>
                 <input
                   required
                   name="phone"
                   placeholder="99999 99999"
+                  aria-invalid={!!errors.phone}
                   inputMode="numeric"
                   pattern="[0-9]*"
                   maxLength={10}
@@ -419,65 +259,18 @@ export default function Contact() {
                     setPhone(digits);
                     setErrors(prev => ({...prev, phone: undefined}));
                   }}
-                  style={{
-                    flex: 1,
-                    padding: '0.75rem 1rem',
-                    border: `2px solid ${errors.phone ? '#ef4444' : '#e5e7eb'}`,
-                    borderRadius: '8px',
-                    fontSize: '1rem',
-                    transition: 'border-color 0.2s'
-                  }}
                 />
               </div>
-              {errors.phone && (
-                <span style={{color: '#ef4444', fontSize: '0.875rem', marginTop: '0.25rem', display: 'block'}}>
-                  {errors.phone}
-                </span>
-              )}
+              {errors.phone && <span className="field-error" role="alert">{errors.phone}</span>}
             </div>
-            
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#374151' }}>
-                Email <span style={{color: '#ef4444'}}>*</span>
-              </label>
-              <input 
-                required 
-                name="email" 
-                type="email" 
-                placeholder="you@example.com"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  border: `2px solid ${errors.email ? '#ef4444' : '#e5e7eb'}`,
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  transition: 'border-color 0.2s'
-                }}
-              />
-              {errors.email && (
-                <span style={{color: '#ef4444', fontSize: '0.875rem', marginTop: '0.25rem', display: 'block'}}>
-                  {errors.email}
-                </span>
-              )}
+            <div className="field">
+              <label>Email<span>*</span></label>
+              <input required name="email" type="email" placeholder="you@example.com" aria-invalid={!!errors.email} />
+              {errors.email && <span className="field-error" role="alert">{errors.email}</span>}
             </div>
-            
-            <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#374151' }}>
-                Nationality <span style={{color: '#ef4444'}}>*</span>
-              </label>
-              <select 
-                required 
-                name="nationality" 
-                defaultValue="India"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  border: '2px solid #e5e7eb',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  transition: 'border-color 0.2s'
-                }}
-              >
+            <div className="field">
+              <label>Nationality<span>*</span></label>
+              <select required name="nationality" defaultValue="India">
                 <option value="India">India</option>
                 <option value="United States">United States</option>
                 <option value="Canada">Canada</option>
@@ -486,90 +279,144 @@ export default function Contact() {
                 <option value="Singapore">Singapore</option>
                 <option value="Germany">Germany</option>
                 <option value="France">France</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Russia">Russia</option>
+                <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Austria">Austria</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Poland">Poland</option>
+                <option value="Finland">Finland</option>
+                <option value="Norway">Norway</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Hungary">Hungary</option>
+                <option value="Slovenia">Slovenia</option>
+                <option value="Slovakia">Slovakia</option>
+                <option value="Ireland">Ireland</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="Turkey">Turkey</option>
+                <option value="UAE">UAE</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Malaysia">Malaysia</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="Kenya">Kenya</option>
+                <option value="Egypt">Egypt</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Argentina">Argentina</option>
               </select>
             </div>
           </div>
-          
-          <div style={{textAlign: 'center'}}>
+          <div className="consultation__actions" style={{display:'flex', justifyContent:'center', marginTop:'1.2rem'}}>
             <button
-              type="button"
+              className="btn btn-primary"
               disabled={status !== 'idle'}
-              onClick={async () => {
-                const form = document.querySelector('div[style*="background: #ffffff"]');
+              type="submit"
+              onClick={async (e) => {
+                if (status !== 'idle') return;
+                const form = (e.target as HTMLElement).closest('form');
                 if (!form) return;
-                const inputs = form.querySelectorAll('input, select');
-                const formData: Record<string, string> = {};
-                inputs.forEach((input: any) => {
-                  if (input.name) formData[input.name] = input.value;
+                e.preventDefault();
+                const formDataObj: Record<string, any> = {};
+                Array.from(form.elements).forEach((el: any) => {
+                  if (el.name) formDataObj[el.name] = el.value;
                 });
-                await handleSubmit(formData);
-              }}
-              style={{
-                background: status !== 'idle' ? '#9ca3af' : '#2563eb',
-                color: '#ffffff',
-                padding: '0.75rem 2rem',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: status !== 'idle' ? 'not-allowed' : 'pointer',
-                transition: 'background-color 0.2s'
+                const phoneVal = formDataObj.phone?.trim() || '';
+                const dialVal = formDataObj.dial_code || '';
+                const emailVal = formDataObj.email?.trim() || '';
+                const nextErrors: { phone?: string; email?: string } = {};
+                if(!validatePhone(phoneVal, dialVal)) {
+                  nextErrors.phone = dialVal === '+91' ? 'Enter a valid 10-digit Indian mobile starting 6-9' : 'Enter a valid phone number';
+                }
+                if(!validateEmail(emailVal)) {
+                  nextErrors.email = 'Enter a valid email address';
+                }
+                setErrors(nextErrors);
+                if(Object.keys(nextErrors).length) return;
+                setStatus('submitting');
+                try {
+                  await submitConsultationToExcel({
+                    ...formDataObj,
+                    timestamp: new Date().toISOString()
+                  });
+                  setStatus('submitted');
+                } catch {
+                  setStatus('idle');
+                }
               }}
             >
               {status === 'submitting' ? 'Submitting...' : status === 'submitted' ? 'Submitted!' : 'Submit'}
             </button>
           </div>
-          
           {status === 'submitted' && (
-            <div style={{textAlign:'center', marginTop:'1rem', color: '#059669', fontWeight: '600'}}>
-              Thanks! We will contact you soon.
+            <div style={{textAlign:'center', marginTop:'.7rem'}}>
+              <span className="form-success">Thanks! We will contact you soon.</span>
             </div>
           )}
-        </div>
-        
-        {/* Newsletter Section */}
-        <div style={{
-          background: '#ffffff',
-          borderRadius: '16px',
-          padding: '2rem',
-          boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-          textAlign: 'center'
-        }}>
-          <h3 style={{marginBottom:'0.7rem', fontWeight:'600', fontSize:'1.25rem', color:'#2563eb'}}>
-            Stay Updated
-          </h3>
-          <p style={{margin:'0 0 1.5rem 0', color:'#64748b', fontSize:'0.97rem'}}>
-            Subscribe to get the latest updates, tips, and university news.
-          </p>
-          <div style={{display:'flex', gap:'0.5rem', maxWidth: '400px', margin: '0 auto'}}>
+        </form>
+        <div
+          className="newsletter"
+          style={{
+            margin: '2.5rem auto 0',
+            maxWidth: 420,
+            borderRadius: 16,
+            boxShadow: '0 2px 16px 0 #e5e7eb',
+            padding: '2rem 1.5rem 1.5rem 1.5rem',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <h3 style={{marginBottom:'.7rem', fontWeight:600, fontSize:'1.25rem', color:'#2563eb'}}>Stay Updated</h3>
+          <p style={{margin:'0 0 1.1rem 0', color:'#64748b', fontSize:'.97rem'}}>Subscribe to get the latest updates, tips, and university news.</p>
+          <form
+            className="newsletter__form"
+            style={{display:'flex', gap:'.6rem', width:'100%', justifyContent:'center'}}
+            onSubmit={e => e.preventDefault()}
+          >
             <input
               type="email"
               placeholder="Email for updates"
+              required
               style={{
                 flex:1,
-                padding:'0.75rem 1rem',
+                minWidth:0,
+                padding:'.7rem 1rem',
                 borderRadius:'8px',
-                border:'2px solid #e5e7eb',
-                fontSize:'0.98rem'
+                border:'1px solid #d1d5db',
+                fontSize:'.98rem'
               }}
             />
             <button
+              className="btn"
               style={{
                 background:'#2563eb',
                 color:'#fff',
                 borderRadius:'8px',
-                padding:'0.75rem 1.2rem',
-                fontWeight:'600',
-                fontSize:'0.98rem',
-                border: 'none',
-                cursor: 'pointer'
+                padding:'.7rem 1.2rem',
+                fontWeight:600,
+                fontSize:'.98rem'
               }}
-            >
-              Subscribe
-            </button>
-          </div>
+            >Subscribe</button>
+          </form>
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+// No changes needed for this file regarding the 'uni is not defined' error.
+// The error is in UniversityDetailPage.tsx, not here.

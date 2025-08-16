@@ -66,171 +66,6 @@ const cardVariants = {
   })
 };
 
-// --- Section: Overview ---
-const overviewSection = (
-  <motion.section
-    variants={sectionVariants}
-    initial="hidden"
-    animate="visible"
-    style={{
-      padding:'2.2rem 2.7rem 0 2.7rem',
-      marginBottom:'1.7rem'
-    }}
-  >
-    <h2 style={{
-      marginBottom:'1.2rem',
-      fontWeight:800,
-      fontSize:'2rem',
-      color: 'var(--uni-title, #1e293b)',
-      letterSpacing:'-1px'
-    }}>Overview</h2>
-    <div style={{
-      fontSize:'1.13rem',
-      color: 'var(--uni-desc, #334155)',
-      lineHeight:1.8,
-      background: 'linear-gradient(90deg, #e0e7ff 0%, #f8fafc 100%)',
-      borderRadius: '14px',
-      padding: '1.3rem 1.5rem',
-      boxShadow: '0 1px 8px #e0e7eb',
-      marginBottom:'1.2rem',
-      ...(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? {
-            background: 'linear-gradient(90deg, #1e293b 0%, #0a1624 100%)',
-            color: '#e0e7ef',
-            boxShadow: '0 1px 8px #1e293b'
-          }
-        : {})
-    }}>
-      {/* ...existing code... */}
-    </div>
-    {/* ...existing code... */}
-  </motion.section>
-);
-
-// --- Section: Banner ---
-const bannerSection = (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.1, duration: 0.7 }}
-    style={{
-      width: '100%',
-      minHeight: 220,
-      background: uni.thumbnail_r2
-        ? `url(${uni.thumbnail_r2}) center/cover no-repeat`
-        : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'linear-gradient(90deg,#1e293b,#0a1624)'
-            : 'linear-gradient(90deg,#e0e7ff,#f1f5f9)'),
-      borderTopLeftRadius: '2.2rem',
-      borderTopRightRadius: '2.2rem',
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-start',
-      boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? '0 2px 24px #1e293b'
-        : '0 2px 24px #c7d2fe'
-    }}>
-    <div style={{
-      background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'linear-gradient(180deg,rgba(17,24,39,0.7) 60%,rgba(17,24,39,0.98) 100%)'
-        : 'linear-gradient(180deg,rgba(255,255,255,0.7) 60%,rgba(255,255,255,0.98) 100%)',
-      borderTopLeftRadius: '2.2rem',
-      borderTopRightRadius: '2.2rem',
-      width: '100%',
-      height: '100%',
-      position: 'absolute',
-      top: 0, left: 0
-    }} />
-    {/* ...existing code... */}
-  </motion.div>
-);
-
-// --- Info Card ---
-function InfoCard({ label, value, icon, color }: { label: string, value: React.ReactNode, icon?: React.ReactNode, color?: string }) {
-  return (
-    <motion.div
-      variants={cardVariants}
-      style={{
-        background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#1e293b' : '#fff',
-        borderRadius: 14,
-        boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? '0 1px 8px #0a1624'
-          : '0 1px 8px #e0e7eb',
-        padding: '1.1rem 1.2rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '.9rem',
-        fontSize: '1.05rem',
-        fontWeight: 500,
-        color: color || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#e0e7ef' : '#334155'),
-        minWidth: 180
-      }}
-    >
-      {icon && <span style={{fontSize:'1.3rem', color: color || '#2563eb'}}>{icon}</span>}
-      <span style={{fontWeight:700, color:'#2563eb'}}>{label}:</span>
-      <span style={{fontWeight:600}}>{value}</span>
-    </motion.div>
-  );
-}
-
-// --- Collapsible Section ---
-function CollapsibleSection({ title, children, defaultOpen = false }: { title: string, children: React.ReactNode, defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div style={{
-      marginBottom:'1.7rem',
-      borderRadius:14,
-      background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#111827' : '#f8fafc',
-      boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? '0 1px 8px #0a1624'
-        : '0 1px 8px #e0e7eb'
-    }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        style={{
-          width:'100%',
-          background:'none',
-          border:'none',
-          textAlign:'left',
-          padding:'1.1rem 1.5rem',
-          fontWeight:700,
-          fontSize:'1.13rem',
-          color:'#2563eb',
-          borderRadius:'14px',
-          cursor:'pointer',
-          display:'flex',
-          alignItems:'center',
-          gap:'.7rem'
-        }}
-        aria-expanded={open}
-      >
-        <span style={{
-          display:'inline-block',
-          transition:'transform .3s',
-          transform: open ? 'rotate(90deg)' : 'rotate(0deg)'
-        }}>▶</span>
-        {title}
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, type: "tween" }}
-            style={{overflow:'hidden'}}
-          >
-            <div style={{padding:'0 1.5rem 1.2rem 2.2rem'}}>
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 // --- Main Page ---
 export const UniversityDetailPage: React.FC = () => {
   const api = useApi();
@@ -265,34 +100,6 @@ export const UniversityDetailPage: React.FC = () => {
   const tuition = uni.tuition_fees_per_year || {};
   const rankings = uni.latest_rankings || {};
   const programs = parseJSONField(uni.programs);
-
-  // --- Info Card ---
-  function InfoCard({ label, value, icon, color }: { label: string, value: React.ReactNode, icon?: React.ReactNode, color?: string }) {
-    return (
-      <motion.div
-        variants={cardVariants}
-        style={{
-          background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#1e293b' : '#fff',
-          borderRadius: 14,
-          boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? '0 1px 8px #0a1624'
-            : '0 1px 8px #e0e7eb',
-          padding: '1.1rem 1.2rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '.9rem',
-          fontSize: '1.05rem',
-          fontWeight: 500,
-          color: color || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#e0e7ef' : '#334155'),
-          minWidth: 180
-        }}
-      >
-        {icon && <span style={{fontSize:'1.3rem', color: color || '#2563eb'}}>{icon}</span>}
-        <span style={{fontWeight:700, color:'#2563eb'}}>{label}:</span>
-        <span style={{fontWeight:600}}>{value}</span>
-      </motion.div>
-    );
-  }
 
   // --- Section: Overview ---
   const overviewSection = (
@@ -457,6 +264,91 @@ export const UniversityDetailPage: React.FC = () => {
       </motion.div>
     </motion.div>
   );
+
+  // --- Info Card ---
+  function InfoCard({ label, value, icon, color }: { label: string, value: React.ReactNode, icon?: React.ReactNode, color?: string }) {
+    return (
+      <motion.div
+        variants={cardVariants}
+        style={{
+          background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#1e293b' : '#fff',
+          borderRadius: 14,
+          boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? '0 1px 8px #0a1624'
+            : '0 1px 8px #e0e7eb',
+          padding: '1.1rem 1.2rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '.9rem',
+          fontSize: '1.05rem',
+          fontWeight: 500,
+          color: color || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#e0e7ef' : '#334155'),
+          minWidth: 180
+        }}
+      >
+        {icon && <span style={{fontSize:'1.3rem', color: color || '#2563eb'}}>{icon}</span>}
+        <span style={{fontWeight:700, color:'#2563eb'}}>{label}:</span>
+        <span style={{fontWeight:600}}>{value}</span>
+      </motion.div>
+    );
+  }
+
+  // --- Collapsible Section ---
+  function CollapsibleSection({ title, children, defaultOpen = false }: { title: string, children: React.ReactNode, defaultOpen?: boolean }) {
+    const [open, setOpen] = useState(defaultOpen);
+    return (
+      <div style={{
+        marginBottom:'1.7rem',
+        borderRadius:14,
+        background: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '#111827' : '#f8fafc',
+        boxShadow: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? '0 1px 8px #0a1624'
+          : '0 1px 8px #e0e7eb'
+      }}>
+        <button
+          onClick={() => setOpen(o => !o)}
+          style={{
+            width:'100%',
+            background:'none',
+            border:'none',
+            textAlign:'left',
+            padding:'1.1rem 1.5rem',
+            fontWeight:700,
+            fontSize:'1.13rem',
+            color:'#2563eb',
+            borderRadius:'14px',
+            cursor:'pointer',
+            display:'flex',
+            alignItems:'center',
+            gap:'.7rem'
+          }}
+          aria-expanded={open}
+        >
+          <span style={{
+            display:'inline-block',
+            transition:'transform .3s',
+            transform: open ? 'rotate(90deg)' : 'rotate(0deg)'
+          }}>▶</span>
+          {title}
+        </button>
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, type: "tween" }}
+              style={{overflow:'hidden'}}
+            >
+              <div style={{padding:'0 1.5rem 1.2rem 2.2rem'}}>
+                {children}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
 
   // --- Section: Quick Facts ---
   const quickFacts = [
@@ -745,5 +637,4 @@ export const UniversityDetailPage: React.FC = () => {
     </main>
   );
 };
-
-
+      
