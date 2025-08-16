@@ -371,7 +371,6 @@ export const Contact: React.FC = () => {
           style={{
             margin: '2.5rem auto 0',
             maxWidth: 420,
-            background: '#f8fafc',
             borderRadius: 16,
             boxShadow: '0 2px 16px 0 #e5e7eb',
             padding: '2rem 1.5rem 1.5rem 1.5rem',

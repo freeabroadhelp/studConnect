@@ -45,16 +45,20 @@ interface ShortlistItem { university:string; country:string; tuition:number; pro
 
 function UniversitiesGlobe() {
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      zIndex: 0,
-      pointerEvents: 'none',
-      opacity: 0.13
-    }}>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none',
+        opacity: 0.13,
+        transition: 'background 0.3s'
+      }}
+      className="dark:bg-[#0a1624]"
+    >
       <Canvas camera={{ position: [0, 0, 18], fov: 60 }}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[2, 2, 2]} intensity={0.7} />
@@ -137,38 +141,68 @@ export const UniversitiesPage: React.FC = () => {
   const filteredItems = items;
 
   return (
-    <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem', position:'relative', zIndex:1}}>
+    <main
+      style={{
+        background: 'var(--uni-bg, #f8fafc)',
+        minHeight: '100vh',
+        paddingBottom: '2rem',
+        position: 'relative',
+        zIndex: 1,
+        transition: 'background 0.3s'
+      }}
+      className="dark:bg-[#0a1624]"
+    >
       {/* 3D Globe background */}
       <UniversitiesGlobe />
-      <div style={{
-        maxWidth: 1280,
-        margin: '0 auto',
-        marginTop: '2.5rem',
-        borderRadius: '2.2rem',
-        background: '#fff',
-        boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
-        padding: '2.2rem 2.2rem 1.5rem 2.2rem',
-        position: 'relative',
-        zIndex: 2
-      }}>
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: '0 auto',
+          marginTop: '2.5rem',
+          borderRadius: '2.2rem',
+          background: 'var(--uni-card-bg, #fff)',
+          boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
+          padding: '2.2rem 2.2rem 1.5rem 2.2rem',
+          position: 'relative',
+          zIndex: 2,
+          transition: 'background 0.3s'
+        }}
+        className="dark:bg-[#162032] dark:text-slate-100"
+      >
         {/* Header */}
-        <div style={{
-          display:'flex',
-          flexWrap:'wrap',
-          alignItems:'center',
-          justifyContent:'space-between',
-          marginBottom:'2.2rem',
-          gap:'1.5rem'
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '2.2rem',
+            gap: '1.5rem'
+          }}
+        >
           <div>
-            <h1 style={{
-              fontSize:'2.2rem',
-              fontWeight:800,
-              margin:0,
-              letterSpacing:'-1px',
-              color:'#1e293b'
-            }}>Universities</h1>
-            <div style={{fontSize:'1.05rem', color:'#64748b', marginTop:'.3rem'}}>
+            <h1
+              style={{
+                fontSize: '2.2rem',
+                fontWeight: 800,
+                margin: 0,
+                letterSpacing: '-1px',
+                color: 'var(--uni-title, #1e293b)',
+                transition: 'color 0.3s'
+              }}
+              className="dark:text-white"
+            >
+              Universities
+            </h1>
+            <div
+              style={{
+                fontSize: '1.05rem',
+                color: 'var(--uni-desc, #64748b)',
+                marginTop: '.3rem',
+                transition: 'color 0.3s'
+              }}
+              className="dark:text-slate-300"
+            >
               Find and compare universities worldwide.
             </div>
           </div>
@@ -241,11 +275,13 @@ export const UniversitiesPage: React.FC = () => {
             >Reload</button>
           </div>
         </div>
-        <div style={{
-          display:'grid',
-          gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))',
-          gap:'1.7rem'
-        }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '1.7rem'
+          }}
+        >
           {loading && <div style={{gridColumn:'1/-1', textAlign:'center', color:'#64748b'}}>Loading universities...</div>}
           {error && <div style={{gridColumn:'1/-1', color:'#dc2626', textAlign:'center'}}>Error: {error}</div>}
           {!loading && !error && filteredItems.length===0 && (
@@ -254,22 +290,22 @@ export const UniversitiesPage: React.FC = () => {
           {!loading && !error && filteredItems.slice(0, showCount).map(u => (
             <div
               key={u.id}
-              className="uni-card"
+              className="uni-card dark:bg-[#1e293b] dark:text-slate-100"
               role="article"
               aria-label={u.name}
               style={{
-                cursor:'pointer',
-                display:'flex',
-                flexDirection:'column',
-                alignItems:'center',
-                padding:'1.2rem 1.2rem 1.2rem 1.2rem',
-                borderRadius:'18px',
-                background:'rgba(255,255,255,0.85)',
-                boxShadow:'0 2px 12px 0 #e5e7eb',
-                border:'1px solid #e0e7ef',
-                transition:'box-shadow .18s, transform .18s',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '1.2rem 1.2rem 1.2rem 1.2rem',
+                borderRadius: '18px',
+                background: 'var(--uni-card-bg, rgba(255,255,255,0.85))',
+                boxShadow: '0 2px 12px 0 #e5e7eb',
+                border: '1px solid #e0e7ef',
+                transition: 'box-shadow .18s, transform .18s, background 0.3s',
                 minHeight: '180px',
-                position:'relative',
+                position: 'relative',
                 zIndex: 2
               }}
               onMouseEnter={e => {
@@ -280,30 +316,50 @@ export const UniversitiesPage: React.FC = () => {
                 (e.currentTarget as HTMLDivElement).style.transform = '';
                 (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 12px 0 #e5e7eb';
               }}
-              onClick={()=>navigate(`/universities/${u.id}`)}
+              onClick={() => navigate(`/universities/${u.id}`)}
             >
-              <div style={{
-                width:96, height:96, borderRadius:16, background:'#fff',
-                display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', boxShadow:'0 1px 8px #e0e7eb', marginBottom:'1.1rem'
-              }}>
+              <div
+                style={{
+                  width: 96,
+                  height: 96,
+                  borderRadius: 16,
+                  background: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  boxShadow: '0 1px 8px #e0e7eb',
+                  marginBottom: '1.1rem'
+                }}
+                className="dark:bg-[#334155]"
+              >
                 {u.logo_r2 || u.thumbnail_r2
-                  ? <img src={u.logo_r2 || u.thumbnail_r2} alt={u.name} style={{width:'100%', height:'100%', objectFit:'contain'}} />
-                  : <span style={{fontSize:'2.2rem', color:'#888'}}>{u.name[0]}</span>
+                  ? <img src={u.logo_r2 || u.thumbnail_r2} alt={u.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                  : <span style={{ fontSize: '2.2rem', color: '#888' }}>{u.name[0]}</span>
                 }
               </div>
-              <div style={{
-                fontWeight:800,
-                fontSize:'1.13rem',
-                color:'#1e293b',
-                textAlign:'center',
-                marginBottom:'.3rem',
-                letterSpacing:'-.5px'
-              }}>{u.name}</div>
-              <div style={{
-                fontSize:'.97rem',
-                color:'#2563eb',
-                textAlign:'center'
-              }}>
+              <div
+                style={{
+                  fontWeight: 800,
+                  fontSize: '1.13rem',
+                  color: 'var(--uni-title, #1e293b)',
+                  textAlign: 'center',
+                  marginBottom: '.3rem',
+                  letterSpacing: '-.5px',
+                  transition: 'color 0.3s'
+                }}
+                className="dark:text-white"
+              >
+                {u.name}
+              </div>
+              <div
+                style={{
+                  fontSize: '.97rem',
+                  color: '#2563eb',
+                  textAlign: 'center'
+                }}
+                className="dark:text-blue-300"
+              >
                 {u.province ? `${u.province}, ` : ''}{u.country}
               </div>
             </div>
