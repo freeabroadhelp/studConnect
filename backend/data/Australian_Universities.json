@@ -1,0 +1,2969 @@
+[
+  {
+    "name": "Australian National University",
+    "state": "ACT",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1946,
+    "latest_rankings": {
+      "QS": 30,
+      "THE": 73
+    },
+    "official_website": "https://www.anu.edu.au/",
+    "official_email": "future.student@anu.edu.au",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "University of Canberra",
+    "state": "ACT",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1990,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.canberra.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "University of Sydney",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1850,
+    "latest_rankings": {
+      "QS": 25,
+      "THE": 61
+    },
+    "official_website": "https://www.sydney.edu.au/",
+    "official_email": "campus.assist@sydney.edu.au",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "UNSW Sydney",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1949,
+    "latest_rankings": {
+      "QS": 20,
+      "THE": 83
+    },
+    "official_website": "https://www.unsw.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@unsw.edu.au"
+  },
+  {
+    "name": "University of Technology Sydney",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1988,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.uts.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@uts.edu.au"
+  },
+  {
+    "name": "Macquarie University",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1964,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.mq.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "study@mq.edu.au"
+  },
+  {
+    "name": "Western Sydney University",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1989,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.westernsydney.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "University of Newcastle",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1965,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.newcastle.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "international-enquiries@newcastle.edu.au"
+  },
+  {
+    "name": "University of Wollongong",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1975,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.uow.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "futurestudents@uow.edu.au"
+  },
+  {
+    "name": "Charles Sturt University",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1989,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.csu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Southern Cross University",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1994,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.scu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "University of New England",
+    "state": "NSW",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1954,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.une.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Avondale University",
+    "state": "NSW",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 1897,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.avondale.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@avondale.edu.au"
+  },
+  {
+    "name": "The University of Notre Dame Australia",
+    "state": "WA/NSW",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 1989,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.notredame.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@notredame.edu.au"
+  },
+  {
+    "name": "Australian University of Theology",
+    "state": "NSW",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 2024,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://autheology.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@autheology.edu.au"
+  },
+  {
+    "name": "The University of Melbourne",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1853,
+    "latest_rankings": {
+      "QS": 19,
+      "THE": 39
+    },
+    "official_website": "https://www.unimelb.edu.au/",
+    "official_email": "info@unimelb.edu.au",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "Monash University",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1958,
+    "latest_rankings": {
+      "QS": 37,
+      "THE": 58
+    },
+    "official_website": "https://www.monash.edu/",
+    "official_email": "study@monash.edu",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "RMIT University",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1887,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.rmit.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "student.recruitment@rmit.edu.au"
+  },
+  {
+    "name": "Deakin University",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1974,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.deakin.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "La Trobe University",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1964,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.latrobe.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@latrobe.edu.au"
+  },
+  {
+    "name": "Swinburne University of Technology",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1908,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.swinburne.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Victoria University",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1916,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.vu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Federation University Australia",
+    "state": "VIC",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 2014,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://federation.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "University of Divinity",
+    "state": "VIC",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 1910,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://divinity.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@divinity.edu.au"
+  },
+  {
+    "name": "The University of Queensland",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1909,
+    "latest_rankings": {
+      "QS": 42,
+      "THE": 77
+    },
+    "official_email": "info@uq.edu.au",
+    "official_website": "https://www.uq.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "Queensland University of Technology",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1989,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.qut.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@qut.edu.au"
+  },
+  {
+    "name": "Griffith University",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1971,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.griffith.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "James Cook University",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1970,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.jcu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Central Queensland University (CQUniversity)",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": null,
+    "latest_rankings": {
+      "QS": "",
+      "THE": ""
+    },
+    "official_website": null,
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": ""
+  },
+  {
+    "name": "University of the Sunshine Coast (UniSC)",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": null,
+    "latest_rankings": {
+      "QS": "",
+      "THE": ""
+    },
+    "official_website": null,
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": ""
+  },
+  {
+    "name": "University of Southern Queensland (UniSQ)",
+    "state": "QLD",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": null,
+    "latest_rankings": {
+      "QS": "",
+      "THE": ""
+    },
+    "official_website": null,
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": ""
+  },
+  {
+    "name": "Bond University",
+    "state": "QLD",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 1987,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://bond.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "The University of Adelaide",
+    "state": "SA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1874,
+    "latest_rankings": {
+      "QS": 82,
+      "THE": 128
+    },
+    "official_website": "https://www.adelaide.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "info@adelaide.edu.au"
+  },
+  {
+    "name": "University of South Australia",
+    "state": "SA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1991,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.unisa.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Flinders University",
+    "state": "SA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1966,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.flinders.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Torrens University Australia",
+    "state": "SA",
+    "location": null,
+    "type": "Private",
+    "networks": null,
+    "established": 2012,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.torrens.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "The University of Western Australia",
+    "state": "WA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1911,
+    "latest_rankings": {
+      "QS": 77,
+      "THE": 149
+    },
+    "official_email": "info@uwa.edu.au",
+    "official_website": "https://www.uwa.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ]
+  },
+  {
+    "name": "Curtin University",
+    "state": "WA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1986,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.curtin.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Murdoch University",
+    "state": "WA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1973,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.murdoch.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Edith Cowan University",
+    "state": "WA",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1991,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.ecu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "University of Tasmania",
+    "state": "TAS",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 1890,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.utas.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": "course.info@utas.edu.au"
+  },
+  {
+    "name": "Charles Darwin University",
+    "state": "NT",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": 2003,
+    "latest_rankings": {
+      "QS": "Not in QS top listings / verify",
+      "THE": "Not in THE top listings / verify"
+    },
+    "official_website": "https://www.cdu.edu.au/",
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": null
+  },
+  {
+    "name": "Australian Catholic University (ACU)",
+    "state": "National",
+    "location": null,
+    "type": "Public",
+    "networks": null,
+    "established": null,
+    "latest_rankings": {
+      "QS": "",
+      "THE": ""
+    },
+    "official_website": null,
+    "popular_for_international_students": [
+      "Data/IT",
+      "Engineering",
+      "Business",
+      "Health"
+    ],
+    "levels_offered": [
+      "UG",
+      "PG (Coursework)",
+      "Research (Master/PhD)",
+      "Diplomas (varies)"
+    ],
+    "intakes": [
+      "February",
+      "July",
+      "Some Trimester/Nov starts"
+    ],
+    "mode_of_study": [
+      "On-campus",
+      "Selected online/hybrid options where available"
+    ],
+    "scholarships_highlight": [
+      "International Excellence/Merit-type awards (varies)"
+    ],
+    "tuition_fees_per_year": {
+      "UG_AUD": "30,000-50,000 (typical)",
+      "PG_AUD": "32,000-55,000 (typical)"
+    },
+    "living_costs_annual_AUD": 29710,
+    "application_fee_range_AUD": "0-150 (varies)",
+    "international_student_support": [
+      "Orientation and visa support",
+      "Career counselling",
+      "Clubs & societies",
+      "Part-time job guidance"
+    ],
+    "campus_life": {
+      "accommodation": "On-campus and off-campus options",
+      "facilities": [
+        "Libraries",
+        "Labs",
+        "Sports",
+        "Health services"
+      ]
+    },
+    "admission_requirements": {
+      "undergraduate": "Class 12 with competitive marks; English commonly IELTS 6.0–6.5 (no band <6.0)",
+      "postgraduate": "Recognized Bachelor's; English commonly IELTS 6.5–7.0 (no band <6.0/6.5); some programs require GMAT/GRE"
+    },
+    "why_choose": [
+      "Strong academic reputation",
+      "Industry links",
+      "Supportive international services",
+      "Vibrant campus life"
+    ],
+    "official_email": ""
+  }
+]

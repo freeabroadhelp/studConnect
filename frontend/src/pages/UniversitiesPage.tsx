@@ -7,38 +7,39 @@ import countriesData from './countries.json';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'; // Use http, not https, for local dev
 const PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 200;
 
 interface UniversityFull {
-  id: string;
+  id: number;
   name: string;
-  country: string;
-  url?: string;
-  province?: string;
-  thumbnail?: string;
-  average_tuition?: string;
-  average_tuition_currency?: string;
-  logo?: string;
+  state?: string;
+  country?: string;
+  location?: string | null;
   type?: string;
-  number_of_students?: string;
-  international_students?: string;
-  university_type?: string;
-  number_of_academician?: string;
-  erasmus?: string;
-  scholarship_ratio?: string;
-  urap_standings?: string;
-  placement_rate?: string;
-  technology_office?: string;
-  student_academician?: string;
-  entrepreneurship_index_score?: string;
-  library_area?: string;
-  ar_ge_expense?: string;
-  programs?: string;
-  features?: string;
-  address?: string;
-  thumbnail_r2?: string;
-  logo_r2?: string;
+  networks?: string | null;
+  established?: number;
+  latest_rankings?: any;
+  official_website?: string;
+  official_email?: string;
+  popular_for_international_students?: string[];
+  levels_offered?: string[];
+  intakes?: string[];
+  mode_of_study?: string[];
+  scholarships_highlight?: string[];
+  tuition_fees_per_year?: any;
+  living_costs_annual_aud?: number;
+  application_fee_range_aud?: string;
+  international_student_support?: string[];
+  campus_life?: any;
+  admission_requirements?: any;
+  why_choose?: string[];
+  logo_r2?: string | null;
+  thumbnail_r2?: string | null;
+  thumbnail_url?: string | null;
+  logo_url?: string | null;
+  // ...other fields as needed...
 }
 
 interface ShortlistItem { university:string; country:string; tuition:number; programs:string[]; match_score:number }
@@ -76,6 +77,7 @@ function UniversitiesGlobe() {
   );
 }
 
+// Update API endpoint and thumbnail/logo usage
 export const UniversitiesPage: React.FC = () => {
   const api = useApi();
   const navigate = useNavigate();
@@ -90,28 +92,83 @@ export const UniversitiesPage: React.FC = () => {
 
   const [search,setSearch] = useState('');
   const [country,setCountry] = useState('');
-  // const [sort,setSort] = useState<'rank'|'name'|'updated'>('rank');
-  // const [program,setProgram] = useState('');
   const [showCount, setShowCount] = useState(PAGE_SIZE);
 
-  // Detail modal
   const [detailId,setDetailId] = useState<string|null>(null);
-  const [detail,setDetail] = useState<any>(null);
-  const [detailLoading,setDetailLoading] = useState(false);
 
   const [refreshKey,setRefreshKey] = useState(0);
 
-  // Use static JSON for programs and countries
-  const [allPrograms] = useState<string[]>(
-    Array.isArray(programsData)
-      ? programsData
-      : (programsData.program_names || [])
-  );
-  const [countryOptions] = useState<string[]>(
-    Array.isArray(countriesData)
-      ? countriesData
-      : (countriesData.countries || [])
-  );
+  // Remove static countryOptions and allPrograms
+  // const [allPrograms] = useState<string[]>(...);
+  // const [countryOptions] = useState<string[]>(...);
+
+  const [countryOptions, setCountryOptions] = useState<string[]>([]);
+  const [allPrograms, setAllPrograms] = useState<string[]>([]);
+  const [currencyOptions, setCurrencyOptions] = useState<string[]>([]);
+  const [minFee, setMinFee] = useState<number>(0);
+  const [maxFee, setMaxFee] = useState<number>(0);
+
+  // Fetch all universities once to extract unique countries and programs
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/universities/all?page=1&page_size=200`)
+      .then(res => res.json())
+      .then(res => {
+        const items = res.items || [];
+        // Unique countries
+        const countriesSet = new Set<string>();
+        // Unique programs
+        const programsSet = new Set<string>();
+        const currencySet = new Set<string>();
+        let minFeeVal = Number.POSITIVE_INFINITY;
+        let maxFeeVal = Number.NEGATIVE_INFINITY;
+
+        items.forEach((u: any) => {
+          if (u.country) countriesSet.add(u.country);
+          if (Array.isArray(u.popular_for_international_students)) {
+            u.popular_for_international_students.forEach((p: string) => programsSet.add(p));
+          }
+          // Tuition fee extraction (AUD, USD, etc.)
+          if (u.tuition_fees_per_year && typeof u.tuition_fees_per_year === 'object') {
+            Object.entries(u.tuition_fees_per_year).forEach(([key, val]) => {
+              // Try to extract currency from key, e.g., UG_AUD, PG_USD
+              const match = key.match(/_([A-Z]{3})$/);
+              if (match) currencySet.add(match[1]);
+              // Try to extract min/max from value string, e.g., "30,000-50,000 (typical)"
+              if (typeof val === 'string') {
+                const feeMatch = val.replace(/,/g, '').match(/(\d{4,6})\s*-\s*(\d{4,6})/);
+                if (feeMatch) {
+                  const min = parseInt(feeMatch[1], 10);
+                  const max = parseInt(feeMatch[2], 10);
+                  if (!isNaN(min) && min < minFeeVal) minFeeVal = min;
+                  if (!isNaN(max) && max > maxFeeVal) maxFeeVal = max;
+                } else {
+                  // If only one value, treat as both min and max
+                  const singleFee = val.replace(/,/g, '').match(/(\d{4,6})/);
+                  if (singleFee) {
+                    const fee = parseInt(singleFee[1], 10);
+                    if (!isNaN(fee)) {
+                      if (fee < minFeeVal) minFeeVal = fee;
+                      if (fee > maxFeeVal) maxFeeVal = fee;
+                    }
+                  }
+                }
+              }
+            });
+          }
+        });
+        setCountryOptions(Array.from(countriesSet).sort());
+        setAllPrograms(Array.from(programsSet).sort());
+        setCurrencyOptions(Array.from(currencySet).sort());
+        setMinFee(isFinite(minFeeVal) ? minFeeVal : 0);
+        setMaxFee(isFinite(maxFeeVal) ? maxFeeVal : 0);
+      });
+  }, []);
+
+  // Add filter state
+  const [programType, setProgramType] = useState('');
+  const [tuitionMin, setTuitionMin] = useState('');
+  const [tuitionMax, setTuitionMax] = useState('');
+  const [currencyType, setCurrencyType] = useState('');
 
   useEffect(() => {
     // Only fetch if not already loaded in this session and not a refresh
@@ -123,9 +180,12 @@ export const UniversitiesPage: React.FC = () => {
     };
     if (country) params.country = country;
     if (search) params.q = search;
-    api.get<{items: UniversityFull[], total: number}>(
-      '/api/universities/all?' + new URLSearchParams(params as any).toString()
-    )
+    if (programType) params.program = programType;
+    if (tuitionMin) params.tuition_min = tuitionMin;
+    if (tuitionMax) params.tuition_max = tuitionMax;
+    if (currencyType) params.currency = currencyType;
+    fetch(`${BASE_URL}/api/universities/all?${new URLSearchParams(params as any).toString()}`)
+      .then(res => res.json())
       .then(res => {
         setItems(res.items);
         setTotal(res.total);
@@ -136,39 +196,42 @@ export const UniversitiesPage: React.FC = () => {
       .catch(e => setError(e.message || 'Failed loading universities'))
       .finally(()=>setLoading(false));
   // eslint-disable-next-line
-  }, [refreshKey, country, search]);
+  }, [refreshKey, country, search, programType, tuitionMin, tuitionMax, currencyType]);
 
   const filteredItems = items;
 
+  const [detail, setDetail] = useState<any>(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+
+  useEffect(() => {
+    if (!detailId) {
+      setDetail(null);
+      setDetailLoading(false);
+      return;
+    }
+    setDetailLoading(true);
+    fetch(`/api/universities/${detailId}`)
+      .then(res => res.json())
+      .then(setDetail)
+      .catch(() => setDetail(null))
+      .finally(() => setDetailLoading(false));
+  }, [detailId]);
+
   return (
-    <main
-      style={{
-        background: 'var(--uni-bg, #f8fafc)',
-        minHeight: '100vh',
-        paddingBottom: '2rem',
-        position: 'relative',
-        zIndex: 1,
-        transition: 'background 0.3s'
-      }}
-      className="dark:bg-[#0a1624]"
-    >
+    <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem', position:'relative', zIndex:1}}>
       {/* 3D Globe background */}
       <UniversitiesGlobe />
-      <div
-        style={{
-          maxWidth: 1280,
-          margin: '0 auto',
-          marginTop: '2.5rem',
-          borderRadius: '2.2rem',
-          background: 'var(--uni-card-bg, #fff)',
-          boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
-          padding: '2.2rem 2.2rem 1.5rem 2.2rem',
-          position: 'relative',
-          zIndex: 2,
-          transition: 'background 0.3s'
-        }}
-        className="dark:bg-[#162032] dark:text-slate-100"
-      >
+      <div style={{
+        maxWidth: 1280,
+        margin: '0 auto',
+        marginTop: '2.5rem',
+        borderRadius: '2.2rem',
+        background: '#fff',
+        boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
+        padding: '2.2rem 2.2rem 1.5rem 2.2rem',
+        position: 'relative',
+        zIndex: 2
+      }}>
         {/* Header */}
         <div
           style={{
@@ -235,7 +298,7 @@ export const UniversitiesPage: React.FC = () => {
                 <option key={c} value={c}>{c}</option>
               ))}
             </select>
-            {/* <select value={sort} onChange={e=>setSort(e.target.value as any)}
+            <select value={programType} onChange={e=>setProgramType(e.target.value)}
               style={{
                 padding:'.55rem 1.1rem',
                 borderRadius:'10px',
@@ -244,23 +307,57 @@ export const UniversitiesPage: React.FC = () => {
                 minWidth:120,
                 background:'#f8fafc'
               }}>
-              <option value="rank">Sort by Rank</option>
-              <option value="name">Sort by Name</option>
-            </select> */}
-            {/* <select value={program} onChange={e=>setProgram(e.target.value)}
+              <option value="">Any Program Type</option>
+              {allPrograms.map((p) => (
+                <option key={p} value={p}>{p}</option>
+              ))}
+            </select>
+            <select value={currencyType} onChange={e=>setCurrencyType(e.target.value)}
+              style={{
+                padding:'.55rem 1.1rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontWeight:500,
+                minWidth:100,
+                background:'#f8fafc'
+              }}>
+              <option value="">Any Currency</option>
+              {currencyOptions.map((cur) => (
+                <option key={cur} value={cur}>{cur}</option>
+              ))}
+            </select>
+            <input
+              type="number"
+              placeholder={`Min Tuition (${currencyType || (currencyOptions[0] || 'AUD')})`}
+              min={minFee}
+              max={maxFee}
+              value={tuitionMin}
+              onChange={e=>setTuitionMin(e.target.value)}
               style={{
                 padding:'.55rem .9rem',
                 borderRadius:'10px',
                 border:'1px solid #e5e7eb',
                 fontWeight:500,
-                minWidth:180,
+                minWidth:100,
                 background:'#f8fafc'
-              }}>
-              <option value="">Any Program</option>
-              {allPrograms.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select> */}
+              }}
+            />
+            <input
+              type="number"
+              placeholder={`Max Tuition (${currencyType || (currencyOptions[0] || 'AUD')})`}
+              min={minFee}
+              max={maxFee}
+              value={tuitionMax}
+              onChange={e=>setTuitionMax(e.target.value)}
+              style={{
+                padding:'.55rem .9rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontWeight:500,
+                minWidth:100,
+                background:'#f8fafc'
+              }}
+            />
             <button
               className="btn btn-small"
               type="button"
@@ -275,13 +372,11 @@ export const UniversitiesPage: React.FC = () => {
             >Reload</button>
           </div>
         </div>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '1.7rem'
-          }}
-        >
+        <div style={{
+          display:'grid',
+          gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))',
+          gap:'1.7rem'
+        }}>
           {loading && <div style={{gridColumn:'1/-1', textAlign:'center', color:'#64748b'}}>Loading universities...</div>}
           {error && <div style={{gridColumn:'1/-1', color:'#dc2626', textAlign:'center'}}>Error: {error}</div>}
           {!loading && !error && filteredItems.length===0 && (
@@ -290,22 +385,22 @@ export const UniversitiesPage: React.FC = () => {
           {!loading && !error && filteredItems.slice(0, showCount).map(u => (
             <div
               key={u.id}
-              className="uni-card dark:bg-[#1e293b] dark:text-slate-100"
+              className="uni-card"
               role="article"
               aria-label={u.name}
               style={{
-                cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '1.2rem 1.2rem 1.2rem 1.2rem',
-                borderRadius: '18px',
-                background: 'var(--uni-card-bg, rgba(255,255,255,0.85))',
-                boxShadow: '0 2px 12px 0 #e5e7eb',
-                border: '1px solid #e0e7ef',
-                transition: 'box-shadow .18s, transform .18s, background 0.3s',
+                cursor:'pointer',
+                display:'flex',
+                flexDirection:'column',
+                alignItems:'center',
+                padding:'1.2rem 1.2rem 1.2rem 1.2rem',
+                borderRadius:'18px',
+                background:'rgba(255,255,255,0.85)',
+                boxShadow:'0 2px 12px 0 #e5e7eb',
+                border:'1px solid #e0e7ef',
+                transition:'box-shadow .18s, transform .18s',
                 minHeight: '180px',
-                position: 'relative',
+                position:'relative',
                 zIndex: 2
               }}
               onMouseEnter={e => {
@@ -316,51 +411,31 @@ export const UniversitiesPage: React.FC = () => {
                 (e.currentTarget as HTMLDivElement).style.transform = '';
                 (e.currentTarget as HTMLDivElement).style.boxShadow = '0 2px 12px 0 #e5e7eb';
               }}
-              onClick={() => navigate(`/universities/${u.id}`)}
+              onClick={()=>navigate(`/universityDetailPage/${u.id}`)}
             >
-              <div
-                style={{
-                  width: 96,
-                  height: 96,
-                  borderRadius: 16,
-                  background: '#fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  boxShadow: '0 1px 8px #e0e7eb',
-                  marginBottom: '1.1rem'
-                }}
-                className="dark:bg-[#334155]"
-              >
-                {u.logo_r2 || u.thumbnail_r2
-                  ? <img src={u.logo_r2 || u.thumbnail_r2} alt={u.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                  : <span style={{ fontSize: '2.2rem', color: '#888' }}>{u.name[0]}</span>
+              <div style={{
+                width:96, height:96, borderRadius:16, background:'#fff',
+                display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', boxShadow:'0 1px 8px #e0e7eb', marginBottom:'1.1rem'
+              }}>
+                {u.logo_url || u.logo_r2
+                  ? <img src={u.logo_url || u.logo_r2 || ''} alt={u.name} style={{width:'100%', height:'100%', objectFit:'contain'}} />
+                  : <span style={{fontSize:'2.2rem', color:'#888'}}>{u.name[0]}</span>
                 }
               </div>
-              <div
-                style={{
-                  fontWeight: 800,
-                  fontSize: '1.13rem',
-                  color: 'var(--uni-title, #1e293b)',
-                  textAlign: 'center',
-                  marginBottom: '.3rem',
-                  letterSpacing: '-.5px',
-                  transition: 'color 0.3s'
-                }}
-                className="dark:text-white"
-              >
-                {u.name}
-              </div>
-              <div
-                style={{
-                  fontSize: '.97rem',
-                  color: '#2563eb',
-                  textAlign: 'center'
-                }}
-                className="dark:text-blue-300"
-              >
-                {u.province ? `${u.province}, ` : ''}{u.country}
+              <div style={{
+                fontWeight:800,
+                fontSize:'1.13rem',
+                color:'#1e293b',
+                textAlign:'center',
+                marginBottom:'.3rem',
+                letterSpacing:'-.5px'
+              }}>{u.name}</div>
+              <div style={{
+                fontSize:'.97rem',
+                color:'#2563eb',
+                textAlign:'center'
+              }}>
+                {u.state}, {u.country}
               </div>
             </div>
           ))}

@@ -1,6 +1,7 @@
 import os
 import csv
 import requests
+from bs4 import BeautifulSoup
 import boto3
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
@@ -8,6 +9,8 @@ import json
 from db import Base, engine, get_db
 from sqlalchemy import text, inspect
 from models.models import AustraliaScholarship
+import psycopg2
+from psycopg2.extras import execute_values
 
 load_dotenv()
 
@@ -51,197 +54,7 @@ def upload_to_r2(url, key):
     )
     return f"{R2_PUBLIC_URL}/{key}"
 
-def ensure_universities_table():
-    with engine.connect() as conn:
-        conn.execute(text("""
-        CREATE TABLE IF NOT EXISTS public.universities (
-            id SERIAL PRIMARY KEY,
-            name TEXT NOT NULL,
-            url TEXT,
-            country TEXT,
-            province TEXT,
-            thumbnail TEXT,
-            average_tuition TEXT,
-            average_tuition_currency TEXT,
-            logo TEXT,
-            type TEXT,
-            number_of_students TEXT,
-            international_students TEXT,
-            university_type TEXT,
-            number_of_academician TEXT,
-            erasmus TEXT,
-            scholarship_ratio TEXT,
-            urap_standings TEXT,
-            placement_rate TEXT,
-            technology_office TEXT,
-            student_academician TEXT,
-            entrepreneurship_index_score TEXT,
-            library_area TEXT,
-            ar_ge_expense TEXT,
-            programs TEXT,
-            features TEXT,
-            address TEXT,
-            thumbnail_r2 TEXT,
-            logo_r2 TEXT,
-            UNIQUE(name, country)
-        );
-        """))
-        conn.commit()
-        
-def upsert_university(db: Session, row, thumbnail_r2, logo_r2):
-    def safe(row, key):
-        return row.get(key) or row.get(key.replace("_", " ").title()) or None
-
-    db.execute(
-    text("""
-    INSERT INTO universities (
-        name, url, country, province, thumbnail, thumbnail_r2,
-        logo, logo_r2, average_tuition, average_tuition_currency, type,
-        number_of_students, international_students, university_type,
-        number_of_academician, erasmus, scholarship_ratio, urap_standings,
-        placement_rate, technology_office, student_academician,
-        entrepreneurship_index_score, library_area, ar_ge_expense,
-        programs, features, address
-    ) VALUES (
-        :name, :url, :country, :province, :thumbnail, :thumbnail_r2,
-        :logo, :logo_r2, :average_tuition, :average_tuition_currency, :type,
-        :number_of_students, :international_students, :university_type,
-        :number_of_academician, :erasmus, :scholarship_ratio, :urap_standings,
-        :placement_rate, :technology_office, :student_academician,
-        :entrepreneurship_index_score, :library_area, :ar_ge_expense,
-        :programs, :features, :address
-    )
-    ON CONFLICT (name, country)
-    DO UPDATE SET
-        url=EXCLUDED.url,
-        province=EXCLUDED.province,
-        thumbnail=EXCLUDED.thumbnail,
-        thumbnail_r2=EXCLUDED.thumbnail_r2,
-        logo=EXCLUDED.logo,
-        logo_r2=EXCLUDED.logo_r2,
-        average_tuition=EXCLUDED.average_tuition,
-        average_tuition_currency=EXCLUDED.average_tuition_currency,
-        type=EXCLUDED.type,
-        number_of_students=EXCLUDED.number_of_students,
-        international_students=EXCLUDED.international_students,
-        university_type=EXCLUDED.university_type,
-        number_of_academician=EXCLUDED.number_of_academician,
-        erasmus=EXCLUDED.erasmus,
-        scholarship_ratio=EXCLUDED.scholarship_ratio,
-        urap_standings=EXCLUDED.urap_standings,
-        placement_rate=EXCLUDED.placement_rate,
-        technology_office=EXCLUDED.technology_office,
-        student_academician=EXCLUDED.student_academician,
-        entrepreneurship_index_score=EXCLUDED.entrepreneurship_index_score,
-        library_area=EXCLUDED.library_area,
-        ar_ge_expense=EXCLUDED.ar_ge_expense,
-        programs=EXCLUDED.programs,
-        features=EXCLUDED.features,
-        address=EXCLUDED.address
-    """),
-    {
-        "name": safe(row, "name"),
-        "url": safe(row, "url"),
-        "country": safe(row, "country"),
-        "province": safe(row, "province"),
-        "thumbnail": safe(row, "thumbnail"),
-        "thumbnail_r2": thumbnail_r2,
-        "logo": safe(row, "logo"),
-        "logo_r2": logo_r2,
-        "average_tuition": safe(row, "average_tuition"),
-        "average_tuition_currency": safe(row, "average_tuition_currency"),
-        "type": safe(row, "type"),
-        "number_of_students": safe(row, "number_of_students"),
-        "international_students": safe(row, "international_students"),
-        "university_type": safe(row, "university_type"),
-        "number_of_academician": safe(row, "number_of_academician"),
-        "erasmus": safe(row, "erasmus"),
-        "scholarship_ratio": safe(row, "scholarship_ratio"),
-        "urap_standings": safe(row, "urap_standings"),
-        "placement_rate": safe(row, "placement_rate"),
-        "technology_office": safe(row, "technology_office"),
-        "student_academician": safe(row, "student_academician"),
-        "entrepreneurship_index_score": safe(row, "entrepreneurship_index_score"),
-        "library_area": safe(row, "library_area"),
-        "ar_ge_expense": safe(row, "ar_ge_expense"),
-        "programs": json.dumps(safe(row, "programs"), ensure_ascii=False),
-        "features": json.dumps(safe(row, "features"), ensure_ascii=False),
-        "address": safe(row, "address")
-    }
-)
-
-
-def upload_universities():
-    print("Connecting to database...")
-    with get_db() as db:
-        print("Ensuring universities table exists...")
-        ensure_universities_table()
-        with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for i, row in enumerate(reader, 1):
-                if not row.get("name") or row["name"].strip().lower() == "name":
-                    continue
-                thumbnail_r2 = None
-                logo_r2 = None
-                if row.get("thumbnail"):
-                    ext = row["thumbnail"].split(".")[-1].split("?")[0]
-                    key = f"thumbnails/{row['name'].replace(' ','_')}.{ext}"
-                    try:
-                        thumbnail_r2 = upload_to_r2(row["thumbnail"], key)
-                    except Exception as e:
-                        print(f"Thumbnail upload failed for {row['name']}: {e}")
-                if row.get("logo"):
-                    ext = row["logo"].split(".")[-1].split("?")[0]
-                    key = f"logos/{row['name'].replace(' ','_')}.{ext}"
-                    try:
-                        logo_r2 = upload_to_r2(row["logo"], key)
-                    except Exception as e:
-                        print(f"Logo upload failed for {row['name']}: {e}")
-
-                try:
-                    upsert_university(db, row, thumbnail_r2, logo_r2)
-                except Exception as e:
-                    print(f"Upsert failed for {row['name']}: {e}")
-                if i % 10 == 0:
-                    db.commit()
-                print("Upserted:", row["name"])
-        db.commit()
-        print("Committed changes to DB.")
-    print("Done.")
-
-def update_features_and_address():
-    print("Updating features and address from CSV...")
-    with get_db() as db:
-        with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for i, row in enumerate(reader, 1):
-                name = row.get("name")
-                if not name or name.strip().lower() == "name":
-                    continue
-
-                features = json.dumps(row.get("features") or row.get("Features") or [], ensure_ascii=False)
-                address = row.get("address") or row.get("Address") or None
-
-                try:
-                    db.execute(
-                        text("""
-                        UPDATE universities
-                        SET features = :features,
-                            address = :address
-                        WHERE name = :name
-                        """),
-                        {"features": features, "address": address, "name": name}
-                    )
-                except Exception as e:
-                    print(f"Update failed for {name}: {e}")
-
-                if i % 10 == 0:
-                    db.commit()
-        db.commit()
-        print("Finished updating all universities.")
-        
 def ensure_australia_scholarships_table():
-    # Use the AustraliaScholarship.__table__ object directly to avoid KeyError
     AustraliaScholarship.__table__.create(bind=engine, checkfirst=True)
 
 def import_data():
@@ -264,3 +77,257 @@ def import_data():
     db.commit()
     db.close()
 
+def upload_all_universities_json_to_postgres():
+    json_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "backend/data/Australian_Universities.json")
+    with open(json_path, encoding='utf-8') as f:
+        universities = json.load(f)
+
+    PG_CONN = {
+        'host': os.environ.get('PGHOST', 'localhost'),
+        'port': int(os.environ.get('PGPORT', 5432)),
+        'dbname': os.environ.get('PGDATABASE', 'your_db_name'),
+        'user': os.environ.get('PGUSER', 'your_db_user'),
+        'password': os.environ.get('PGPASSWORD', 'your_db_password')
+    }
+
+    CREATE_TABLE_SQL = """
+    CREATE TABLE IF NOT EXISTS all_universities (
+        id SERIAL PRIMARY KEY,
+        name TEXT,
+        state TEXT,
+        location TEXT,
+        type TEXT,
+        networks TEXT,
+        established INTEGER,
+        latest_rankings JSONB,
+        official_website TEXT,
+        official_email TEXT,
+        popular_for_international_students TEXT[],
+        levels_offered TEXT[],
+        intakes TEXT[],
+        mode_of_study TEXT[],
+        scholarships_highlight TEXT[],
+        tuition_fees_per_year JSONB,
+        living_costs_annual_AUD NUMERIC,
+        application_fee_range_AUD TEXT,
+        international_student_support TEXT[],
+        campus_life JSONB,
+        admission_requirements JSONB,
+        why_choose TEXT[],
+        thumbnail_r2 TEXT,
+        logo_r2 TEXT,
+        UNIQUE(name)
+    );
+    """
+
+    def to_pg_array(val):
+        return val if isinstance(val, list) else []
+
+    rows = []
+    for uni in universities:
+        rows.append((
+            uni.get('name'),
+            uni.get('state'),
+            uni.get('location'),
+            uni.get('type'),
+            uni.get('networks'),
+            uni.get('established'),
+            json.dumps(uni.get('latest_rankings')) if uni.get('latest_rankings') else None,
+            uni.get('official_website'),
+            uni.get('official_email'),
+            to_pg_array(uni.get('popular_for_international_students')),
+            to_pg_array(uni.get('levels_offered')),
+            to_pg_array(uni.get('intakes')),
+            to_pg_array(uni.get('mode_of_study')),
+            to_pg_array(uni.get('scholarships_highlight')),
+            json.dumps(uni.get('tuition_fees_per_year')) if uni.get('tuition_fees_per_year') else None,
+            uni.get('living_costs_annual_AUD'),
+            uni.get('application_fee_range_AUD'),
+            to_pg_array(uni.get('international_student_support')),
+            json.dumps(uni.get('campus_life')) if uni.get('campus_life') else None,
+            json.dumps(uni.get('admission_requirements')) if uni.get('admission_requirements') else None,
+            to_pg_array(uni.get('why_choose')),
+            uni.get('thumbnail_r2'),
+            uni.get('logo_r2')
+        ))
+
+    INSERT_SQL = """
+    INSERT INTO all_universities (
+        name, state, location, type, networks, established, latest_rankings, official_website, official_email,
+        popular_for_international_students, levels_offered, intakes, mode_of_study, scholarships_highlight,
+        tuition_fees_per_year, living_costs_annual_AUD, application_fee_range_AUD, international_student_support,
+        campus_life, admission_requirements, why_choose, thumbnail_r2, logo_r2
+    ) VALUES %s
+    ON CONFLICT (name) DO NOTHING;
+    """
+
+    conn = psycopg2.connect(**PG_CONN)
+    cur = conn.cursor()
+    cur.execute(CREATE_TABLE_SQL)
+    execute_values(
+        cur, INSERT_SQL, rows,
+        template="""(
+            %s, %s, %s, %s, %s, %s, %s, %s, %s,
+            %s, %s, %s, %s, %s,
+            %s, %s, %s, %s,
+            %s, %s, %s, %s, %s
+        )"""
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+    print("Upload complete.")
+
+def extract_logo_and_thumbnail(website_url):
+    """
+    Given a university official website, try to extract logo and thumbnail image URLs.
+    Returns (logo_url, thumbnail_url) or (None, None) if not found.
+    """
+    try:
+        resp = requests.get(website_url, timeout=10)
+        if resp.status_code != 200:
+            return None, None
+        soup = BeautifulSoup(resp.text, "html.parser")
+        # Try to find logo: look for <img> with 'logo' in class or alt or src
+        logo = None
+        for img in soup.find_all("img"):
+            attrs = " ".join([str(img.get("class", "")), str(img.get("alt", "")), str(img.get("src", ""))]).lower()
+            if "logo" in attrs:
+                logo = img.get("src")
+                break
+        # Try to find thumbnail: look for <meta property="og:image">
+        thumbnail = None
+        og = soup.find("meta", property="og:image")
+        if og and og.get("content"):
+            thumbnail = og["content"]
+        # Make URLs absolute if needed
+        def abs_url(url):
+            if not url:
+                return None
+            if url.startswith("http"):
+                return url
+            if url.startswith("//"):
+                return "https:" + url
+            return website_url.rstrip("/") + "/" + url.lstrip("/")
+        return abs_url(logo), abs_url(thumbnail)
+    except Exception as e:
+        print(f"Failed to extract logo/thumbnail from {website_url}: {e}")
+        return None, None
+
+def upload_to_r2_from_url(url, key, r2, bucket, public_url):
+    try:
+        r2.head_object(Bucket=bucket, Key=key)
+        return f"{public_url}/{key}"
+    except r2.exceptions.ClientError as e:
+        if int(e.response['Error']['Code']) != 404:
+            raise
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        raise Exception(f"Failed to fetch image: {url}")
+    r2.put_object(
+        Bucket=bucket,
+        Key=key,
+        Body=resp.content,
+        ContentType=resp.headers.get("content-type", "application/octet-stream"),
+        ACL="public-read"
+    )
+    return f"{public_url}/{key}"
+
+def update_all_universities_logo_thumbnail():
+    # Load config and R2 client
+    R2_BUCKET = os.environ.get("R2_BUCKET")
+    R2_ACCESS_KEY = os.environ.get("R2_ACCESS_KEY")
+    R2_SECRET_KEY = os.environ.get("R2_SECRET_KEY")
+    R2_ENDPOINT = os.environ.get("R2_ENDPOINT")
+    R2_PUBLIC_URL = os.environ.get("R2_PUBLIC_URL")
+    session = boto3.session.Session()
+    r2 = session.client(
+        service_name="s3",
+        aws_access_key_id=R2_ACCESS_KEY,
+        aws_secret_access_key=R2_SECRET_KEY,
+        endpoint_url=R2_ENDPOINT,
+    )
+
+    # Load universities JSON
+    json_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "backend/data/Australian_Universities.json")
+    with open(json_path, encoding='utf-8') as f:
+        universities = json.load(f)
+
+    # Connect to Postgres
+    PG_CONN = {
+        'host': os.environ.get('PGHOST', 'localhost'),
+        'port': int(os.environ.get('PGPORT', 5432)),
+        'dbname': os.environ.get('PGDATABASE', 'your_db_name'),
+        'user': os.environ.get('PGUSER', 'your_db_user'),
+        'password': os.environ.get('PGPASSWORD', 'your_db_password')
+    }
+    conn = psycopg2.connect(**PG_CONN)
+    cur = conn.cursor()
+
+    # Ensure columns exist before updating
+    cur.execute("""
+        DO $$
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name='all_universities' AND column_name='logo_r2'
+            ) THEN
+                ALTER TABLE all_universities ADD COLUMN logo_r2 TEXT;
+            END IF;
+            IF NOT EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_name='all_universities' AND column_name='thumbnail_r2'
+            ) THEN
+                ALTER TABLE all_universities ADD COLUMN thumbnail_r2 TEXT;
+            END IF;
+        END$$;
+    """)
+    conn.commit()
+
+    for uni in universities:
+        name = uni.get('name')
+        website = uni.get('official_website')
+        if not website:
+            print(f"Skipping {name}: no official_website")
+            continue
+
+        print(f"Processing {name} ({website}) ...")
+        logo_url, thumb_url = extract_logo_and_thumbnail(website)
+        logo_r2_url = None
+        thumb_r2_url = None
+
+        if logo_url:
+            ext = logo_url.split(".")[-1].split("?")[0][:5]
+            key = f"logos/{name.replace(' ','_')}.{ext}"
+            try:
+                logo_r2_url = upload_to_r2_from_url(logo_url, key, r2, R2_BUCKET, R2_PUBLIC_URL)
+                print(f"  Uploaded logo to {logo_r2_url}")
+            except Exception as e:
+                print(f"  Logo upload failed: {e}")
+
+        if thumb_url:
+            ext = thumb_url.split(".")[-1].split("?")[0][:5]
+            key = f"thumbnails/{name.replace(' ','_')}.{ext}"
+            try:
+                thumb_r2_url = upload_to_r2_from_url(thumb_url, key, r2, R2_BUCKET, R2_PUBLIC_URL)
+                print(f"  Uploaded thumbnail to {thumb_r2_url}")
+            except Exception as e:
+                print(f"  Thumbnail upload failed: {e}")
+
+        # Update all_universities table
+        cur.execute(
+            """
+            UPDATE all_universities
+            SET logo_r2 = %s, thumbnail_r2 = %s
+            WHERE name = %s
+            """,
+            (logo_r2_url, thumb_r2_url, name)
+        )
+        conn.commit()
+
+    cur.close()
+    conn.close()
+    print("All logo/thumbnail updates complete.")
+
+# To run:
+update_all_universities_logo_thumbnail()

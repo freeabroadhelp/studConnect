@@ -6,6 +6,7 @@ import random, string
 from typing import Optional
 import os
 import psycopg2
+from fastapi.responses import JSONResponse
 import boto3
 from google.oauth2 import service_account
 import gspread
@@ -217,20 +218,20 @@ def get_all_universities(
         params: list = []
 
         if country:
-            where_clauses.append("country = %s")
+            where_clauses.append("state = %s")
             params.append(country.strip())
 
         if q:
             where_clauses.append("name ILIKE %s")
             params.append(f"%{q.strip()}%")
 
-        sql = "SELECT * FROM universities"
+        sql = "SELECT * FROM all_universities"
         if where_clauses:
             sql += " WHERE " + " AND ".join(where_clauses)
 
         # sorting
         if sort == "rank":
-            order_by = "CASE WHEN urap_standings ~ '^[0-9]+$' THEN urap_standings::int END ASC NULLS LAST, name ASC"
+            order_by = "CASE WHEN (latest_rankings->>'QS') ~ '^[0-9]+$' THEN (latest_rankings->>'QS')::int END ASC NULLS LAST, name ASC"
         else:
             order_by = "name ASC"
 
@@ -244,12 +245,19 @@ def get_all_universities(
         formatted = []
         for row in rows:
             d = dict(zip(colnames, row))
-            d["thumbnail_url"] = d.get("thumbnail_r2") or d.get("thumbnail")
-            d["logo_url"] = d.get("logo_r2") or d.get("logo")
-
+            d["thumbnail_url"] = d.get("thumbnail_r2")
+            d["logo_url"] = d.get("logo_r2")
             formatted.append(d)
 
-        total = len(formatted)
+        # Get total count with same filters
+        count_sql = "SELECT COUNT(*) FROM all_universities"
+        count_params = []
+        if where_clauses:
+            count_sql += " WHERE " + " AND ".join(where_clauses)
+            count_params = params[:-2]  # Remove LIMIT/OFFSET
+
+        cur.execute(count_sql, count_params)
+        total = cur.fetchone()[0]
         return {
             "items": formatted,
             "total": total,
@@ -271,7 +279,7 @@ def get_university(
     try:
         conn = psycopg2.connect(DB_URL)
         cur = conn.cursor()
-        cur.execute("SELECT * FROM universities WHERE id = %s", (uni_id,))
+        cur.execute("SELECT * FROM all_universities WHERE id = %s", (uni_id,))
         row = cur.fetchone()
         if not row:
             cur.close()
@@ -279,8 +287,8 @@ def get_university(
             raise HTTPException(status_code=404, detail="University not found")
         colnames = [desc[0] for desc in cur.description]
         d = dict(zip(colnames, row))
-        d["thumbnail_url"] = d.get("thumbnail_r2") or None
-        d["logo_url"] = d.get("logo_r2") or None
+        d["thumbnail_url"] = d.get("thumbnail_r2")
+        d["logo_url"] = d.get("logo_r2")
         cur.close()
         conn.close()
         return d
