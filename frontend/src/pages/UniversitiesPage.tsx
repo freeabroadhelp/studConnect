@@ -4,9 +4,7 @@ import { Modal } from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
 const PAGE_SIZE = 20;
-const COUNTRY_FILTERS = [
-  'United States','Canada','United Kingdom','Germany','France','Australia','Singapore','India','Netherlands','Sweden'
-];
+const MAX_PAGE_SIZE = 200;
 
 interface UniversityFull {
   id: string;
@@ -49,15 +47,11 @@ export const UniversitiesPage: React.FC = () => {
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState<string|null>(null);
 
-  // Filters
   const [search,setSearch] = useState('');
   const [country,setCountry] = useState('');
   const [sort,setSort] = useState<'rank'|'name'|'updated'>('rank');
-  const [page,setPage] = useState(1);
-
-  // Program filter (client-side)
   const [program,setProgram] = useState('');
-  const [allPrograms,setAllPrograms] = useState<string[]>([]);
+  const [showCount, setShowCount] = useState(PAGE_SIZE);
 
   // Shortlist modal
   const [shortlistOpen,setShortlistOpen] = useState(false);
@@ -68,57 +62,43 @@ export const UniversitiesPage: React.FC = () => {
 
   // Detail modal
   const [detailId,setDetailId] = useState<string|null>(null);
-  const [detail,setDetail] = useState<CatalogDetail|null>(null);
+  const [detail,setDetail] = useState<any>(null);
   const [detailLoading,setDetailLoading] = useState(false);
 
   const [refreshKey,setRefreshKey] = useState(0);
 
-  // Fetch paginated universities (full data)
+  // Country options
+  const [countryOptions, setCountryOptions] = useState<string[]>([]);
+
   useEffect(() => {
     setLoading(true); setError(null);
     const params: Record<string, string|number> = {
-      page,
-      page_size: PAGE_SIZE,
+      page: 1,
+      page_size: MAX_PAGE_SIZE,
     };
     if (country) params.country = country;
     if (search) params.q = search;
-    api.get<{items: UniversityFull[], total: number, page: number, page_size: number, total_pages: number}>(
+    api.get<{items: UniversityFull[], total: number}>(
       '/api/universities/all?' + new URLSearchParams(params as any).toString()
     )
       .then(res => {
         setItems(res.items);
         setTotal(res.total);
+        setShowCount(PAGE_SIZE);
       })
       .catch(e => setError(e.message || 'Failed loading universities'))
       .finally(()=>setLoading(false));
-  }, [refreshKey, page, country, search]);
+  }, [refreshKey, country, search]);
 
-  // Fetch all programs for filter (client-side, from details of first 30 unis on page)
   useEffect(() => {
-    if (!items.length) { setAllPrograms([]); return; }
-    let cancelled = false;
-    Promise.all(
-      items.slice(0, 30).map(u =>
-        api.get<CatalogDetail>(`/catalog/universities/${u.id}`).catch(()=>null)
-      )
-    ).then(details => {
-      if (cancelled) return;
-      const set = new Set<string>();
-      details.forEach(d => d?.programs?.forEach(p => set.add(p.discipline || p.name)));
-      setAllPrograms(Array.from(set).filter(Boolean).sort());
-    });
-    return () => { cancelled = true; };
-  }, [items]);
+    api.get<{countries: string[]}>('/api/universities/countries')
+      .then(res => setCountryOptions(res.countries))
+      .catch(() => setCountryOptions([]));
+  }, []);
 
-  // Reset page when filters change
-  useEffect(()=>{ setPage(1); }, [country, search, sort]);
-
-  // Program filter (client-side)
-  const filteredItems = program
-    ? items.filter(u => u.name && u.programs && u.programs.toLowerCase().includes(program.toLowerCase()))
-    : items;
-
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const filteredItems = items.filter(u =>
+    (!program || (u.programs && u.programs.toLowerCase().includes(program.toLowerCase())))
+  );
 
   async function generateShortlist(e:FormEvent){
     e.preventDefault();
@@ -137,114 +117,209 @@ export const UniversitiesPage: React.FC = () => {
     }
   }
 
-  // Detail modal fetch
   useEffect(() => {
     if (!detailId) { setDetail(null); return; }
     setDetailLoading(true);
-    api.get<CatalogDetail>(`/catalog/universities/${detailId}`)
+    api.get<any>(`/catalog/universities/${detailId}`)
       .then(setDetail)
       .catch(()=>setDetail(null))
       .finally(()=>setDetailLoading(false));
   }, [detailId]);
 
   return (
-    <main className="universities-page">
-      <div className="universities-page__header">
-        <h1 className="gradient-text" style={{margin:0}}>Universities</h1>
-        <div className="uni-toolbar">
-          <div className="uni-search">
+    <main style={{background:'#f8fafc', minHeight:'100vh', paddingBottom:'2rem'}}>
+      <div style={{
+        maxWidth: 1280,
+        margin: '0 auto',
+        marginTop: '2.5rem',
+        borderRadius: '2.2rem',
+        background: '#fff',
+        boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
+        padding: '2.2rem 2.2rem 1.5rem 2.2rem',
+        position: 'relative'
+      }}>
+        {/* Header */}
+        <div style={{
+          display:'flex',
+          flexWrap:'wrap',
+          alignItems:'center',
+          justifyContent:'space-between',
+          marginBottom:'2.2rem',
+          gap:'1.5rem'
+        }}>
+          <div>
+            <h1 style={{
+              fontSize:'2.2rem',
+              fontWeight:800,
+              margin:0,
+              letterSpacing:'-1px',
+              color:'#1e293b'
+            }}>Universities</h1>
+            <div style={{fontSize:'1.05rem', color:'#64748b', marginTop:'.3rem'}}>
+              Find and compare universities worldwide.
+            </div>
+          </div>
+          <div style={{display:'flex', gap:'.9rem', flexWrap:'wrap', alignItems:'center'}}>
             <input
               placeholder="Search universities..."
               value={search}
               onChange={e=>setSearch(e.target.value)}
               aria-label="Search universities"
+              style={{
+                padding:'.7rem 1.1rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontSize:'1rem',
+                minWidth:220,
+                background:'#f8fafc'
+              }}
             />
-          </div>
-          <div className="uni-filters" role="group" aria-label="Country filter">
-            <button className={!country ? 'uni-filter--active' : ''} onClick={()=>setCountry('')}>All</button>
-            {COUNTRY_FILTERS.map(c=>(
-              <button
-                key={c}
-                className={country===c?'uni-filter--active':''}
-                onClick={()=>setCountry(c)}
-              >{c}</button>
-            ))}
-          </div>
-          <div className="uni-sort">
-            <span>Sort</span>
-            <select value={sort} onChange={e=>setSort(e.target.value as any)} aria-label="Sort universities">
-              <option value="rank">Rank</option>
-              <option value="name">Name A–Z</option>
-              <option value="updated">Recently Updated</option>
+            <select value={country} onChange={e=>setCountry(e.target.value)}
+              style={{
+                padding:'.55rem 1.1rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontWeight:500,
+                minWidth:140,
+                background:'#f8fafc'
+              }}>
+              <option value="">All Countries</option>
+              {countryOptions.map(c => (
+                <option key={c} value={c}>{c}</option>
+              ))}
             </select>
+            <select value={sort} onChange={e=>setSort(e.target.value as any)}
+              style={{
+                padding:'.55rem 1.1rem',
+                borderRadius:'10px',
+                border:'1px solid #e5e7eb',
+                fontWeight:500,
+                minWidth:120,
+                background:'#f8fafc'
+              }}>
+              <option value="rank">Sort by Rank</option>
+              <option value="name">Sort by Name</option>
+            </select>
+            <select value={program} onChange={e=>setProgram(e.target.value)}
+            style={{
+              padding:'.55rem .9rem',
+              borderRadius:'10px',
+              border:'1px solid #e5e7eb',
+              fontWeight:500,
+              minWidth:180,
+              background:'#f8fafc'
+            }}>
+            <option value="">Any Program</option>
+            {/* You can populate with static or dynamic options if needed */}
+          </select>
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={()=>setShortlistOpen(true)}
+              style={{
+                background:'#2563eb',
+                color:'#fff',
+                borderRadius:'8px',
+                padding:'.6rem 1.2rem',
+                fontWeight:600,
+                border:'none'
+              }}
+            >Shortlist</button>
+            <button
+              className="btn btn-small"
+              type="button"
+              onClick={()=> setRefreshKey(k=>k+1)}
+              style={{
+                background:'#e2e8f0',
+                borderRadius:'8px',
+                padding:'.6rem 1.2rem',
+                fontWeight:600,
+                border:'none'
+              }}
+            >Reload</button>
           </div>
         </div>
-        <div style={{display:'flex', flexWrap:'wrap', gap:'.6rem', marginTop:'.7rem'}}>
-          <select value={program} onChange={e=>setProgram(e.target.value)} style={{padding:'.55rem .7rem', borderRadius:'10px', border:'1px solid var(--border)'}}>
-            <option value="">Any Program</option>
-            {allPrograms.map(p=> <option key={p}>{p}</option>)}
-          </select>
-          <button className="btn btn-small" type="button" onClick={()=>setShortlistOpen(true)}>Shortlist</button>
-          <button
-            className="btn btn-small"
-            type="button"
-            onClick={()=> setRefreshKey(k=>k+1)}
-            style={{background:'#e2e8f0'}}
-          >Reload</button>
-        </div>
-      </div>
-
-      {loading && <div className="uni-empty">Loading universities...</div>}
-      {error && <div className="uni-empty" style={{color:'#dc2626'}}>Error: {error}</div>}
-      {!loading && !error && filteredItems.length===0 && (
-        <div className="uni-empty">
-          No universities found.<br />
-        </div>
-      )}
-
-      {!loading && !error && filteredItems.length>0 && (
-        <div className="unilist">
-          {filteredItems.map(u => (
+        <div style={{
+          display:'grid',
+          gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))',
+          gap:'1.7rem'
+        }}>
+          {loading && <div style={{gridColumn:'1/-1', textAlign:'center', color:'#64748b'}}>Loading universities...</div>}
+          {error && <div style={{gridColumn:'1/-1', color:'#dc2626', textAlign:'center'}}>Error: {error}</div>}
+          {!loading && !error && filteredItems.length===0 && (
+            <div style={{gridColumn:'1/-1', textAlign:'center', color:'#64748b'}}>No universities found.</div>
+          )}
+          {!loading && !error && filteredItems.slice(0, showCount).map(u => (
             <div
               key={u.id}
               className="uni-card"
               role="article"
               aria-label={u.name}
-              style={{cursor:'pointer', display:'flex', alignItems:'center', gap:'1rem', padding:'.8rem 1rem'}}
+              style={{
+                cursor:'pointer',
+                display:'flex',
+                flexDirection:'column',
+                alignItems:'center',
+                padding:'1.2rem 1.2rem 1.2rem 1.2rem',
+                borderRadius:'18px',
+                background:'#f9fafb',
+                boxShadow:'0 2px 12px 0 #e5e7eb',
+                border:'1px solid #e0e7ef',
+                transition:'box-shadow .18s',
+                minHeight: '180px',
+                position:'relative'
+              }}
               onClick={()=>navigate(`/universities/${u.id}`)}
             >
-              {/* Thumbnail */}
-              <div style={{width:56, height:56, borderRadius:12, background:'#f3f4f6', display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden'}}>
-                {u.thumbnail_r2
-                  ? <img src={u.thumbnail_r2} alt={u.name} style={{width:'100%', height:'100%', objectFit:'cover'}} />
-                  : <span style={{fontSize:'2rem', color:'#888'}}>{u.name[0]}</span>
+              <div style={{
+                width:96, height:96, borderRadius:16, background:'#fff',
+                display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', boxShadow:'0 1px 8px #e0e7eb', marginBottom:'1.1rem'
+              }}>
+                {u.logo_r2 || u.thumbnail_r2
+                  ? <img src={u.logo_r2 || u.thumbnail_r2} alt={u.name} style={{width:'100%', height:'100%', objectFit:'contain'}} />
+                  : <span style={{fontSize:'2.2rem', color:'#888'}}>{u.name[0]}</span>
                 }
               </div>
-              {/* Name and Type */}
-              <div style={{flex:1, minWidth:0}}>
-                <div style={{fontWeight:600, fontSize:'1.1rem', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>{u.name}</div>
-                <div style={{fontSize:'.95rem', color:'#555', marginTop:'.2rem'}}>
-                  {u.type ? u.type : <span style={{opacity:.5}}>Type N/A</span>}
-                </div>
+              <div style={{
+                fontWeight:800,
+                fontSize:'1.13rem',
+                color:'#1e293b',
+                textAlign:'center',
+                marginBottom:'.3rem',
+                letterSpacing:'-.5px'
+              }}>{u.name}</div>
+              <div style={{
+                fontSize:'.97rem',
+                color:'#2563eb',
+                textAlign:'center'
+              }}>
+                {u.province ? `${u.province}, ` : ''}{u.country}
               </div>
             </div>
           ))}
         </div>
-      )}
-
-      {!loading && !error && totalPages>1 && (
-        <div className="universities-page__paging" aria-label="Pagination">
-          {Array.from({length: totalPages}, (_,i)=>i+1).map(p=>(
+        {/* Show More Button */}
+        {showCount < filteredItems.length && (
+          <div style={{textAlign:'center', margin:'2.5rem 0 0 0'}}>
             <button
-              key={p}
-              className={p===page?'page--active':''}
-              onClick={()=>setPage(p)}
-              aria-current={p===page}
-            >{p}</button>
-          ))}
-        </div>
-      )}
-
+              className="btn btn-primary"
+              style={{
+                padding:'0.9rem 2.7rem',
+                fontSize:'1.13rem',
+                borderRadius:'12px',
+                background:'#2563eb',
+                color:'#fff',
+                fontWeight:700,
+                border:'none',
+                boxShadow:'0 1px 8px #e0e7eb'
+              }}
+              onClick={() => setShowCount(c => Math.min(c + PAGE_SIZE, filteredItems.length))}
+            >
+              Show More
+            </button>
+          </div>
+        )}
+      </div>
       {/* Detail Modal */}
       <Modal open={!!detailId} onClose={()=>setDetailId(null)} title={detail?.name || 'University Details'}>
         {detailLoading && <div>Loading...</div>}
@@ -265,7 +340,7 @@ export const UniversitiesPage: React.FC = () => {
               <div>
                 <strong>Rankings:</strong>
                 <ul style={{margin:'.3rem 0 0', paddingLeft:'1.1rem', fontSize:'.9em'}}>
-                  {detail.rankings.map(r => (
+                  {detail.rankings.map((r:any) => (
                     <li key={r.provider+r.year}>{r.provider} {r.year}: #{r.world_rank}</li>
                   ))}
                 </ul>
@@ -275,7 +350,7 @@ export const UniversitiesPage: React.FC = () => {
               <div>
                 <strong>Programs:</strong>
                 <ul style={{margin:'.3rem 0 0', paddingLeft:'1.1rem', fontSize:'.9em'}}>
-                  {detail.programs.map(p => (
+                  {detail.programs.map((p:any) => (
                     <li key={p.id}>
                       {p.name} ({p.level}) {p.discipline && `- ${p.discipline}`} {p.annual_fee && `- $${p.annual_fee} ${p.currency || ''}`}
                     </li>
@@ -287,7 +362,7 @@ export const UniversitiesPage: React.FC = () => {
               <div>
                 <strong>Images:</strong>
                 <div style={{display:'flex', gap:'.5rem', flexWrap:'wrap', marginTop:'.3rem'}}>
-                  {detail.images.map(img =>
+                  {detail.images.map((img:any) =>
                     img.r2_key
                       ? <img key={img.r2_key} src={img.r2_key} alt={detail.name} style={{width:48, height:48, borderRadius:8}} />
                       : null
@@ -304,13 +379,12 @@ export const UniversitiesPage: React.FC = () => {
           </div>
         )}
       </Modal>
-
       {/* Shortlist Modal */}
       <Modal open={shortlistOpen} onClose={()=>setShortlistOpen(false)} title="Generate Shortlist">
         <form onSubmit={generateShortlist} style={{display:'flex', flexDirection:'column', gap:'.7rem'}}>
           <select value={prefs.country} onChange={e=>setPrefs(p=>({...p, country:e.target.value}))}>
             <option value="">Preferred Country (optional)</option>
-            {COUNTRY_FILTERS.map(c=> <option key={c}>{c}</option>)}
+            {countryOptions.map(c=> <option key={c}>{c}</option>)}
           </select>
           <input
             placeholder="Budget (USD)"
@@ -345,4 +419,3 @@ export const UniversitiesPage: React.FC = () => {
     </main>
   );
 };
-         

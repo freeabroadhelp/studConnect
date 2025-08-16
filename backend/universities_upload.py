@@ -209,3 +209,33 @@ def upload_universities():
         print("Committed changes to DB.")
     print("Done.")
 
+def update_features_and_address():
+    print("Updating features and address from CSV...")
+    with get_db() as db:
+        with open(CSV_PATH, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for i, row in enumerate(reader, 1):
+                name = row.get("name")
+                if not name or name.strip().lower() == "name":
+                    continue
+
+                features = json.dumps(row.get("features") or row.get("Features") or [], ensure_ascii=False)
+                address = row.get("address") or row.get("Address") or None
+
+                try:
+                    db.execute(
+                        text("""
+                        UPDATE universities
+                        SET features = :features,
+                            address = :address
+                        WHERE name = :name
+                        """),
+                        {"features": features, "address": address, "name": name}
+                    )
+                except Exception as e:
+                    print(f"Update failed for {name}: {e}")
+
+                if i % 10 == 0:
+                    db.commit()
+        db.commit()
+        print("Finished updating all universities.")

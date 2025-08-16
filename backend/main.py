@@ -9,6 +9,7 @@ import csv
 import psycopg2
 import requests
 import boto3
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 from models.models import (
@@ -244,12 +245,19 @@ def get_all_universities(
     page: int = Query(1, ge=1),
     page_size: int = Query(50, ge=1, le=200),
     country: Optional[str] = Query(None),
-    q: Optional[str] = Query(None)
+    q: Optional[str] = Query(None),
+    sort: Optional[str] = Query("rank")
 ):
     offset = (page - 1) * page_size
     conn = psycopg2.connect(DB_URL)
     cur = conn.cursor()
-    sql = "SELECT * FROM universities"
+    # Always sort by rank (urap_standings as integer), fallback to name
+    # This ensures default and explicit sort=rank both use rank sorting
+    order_by = (
+        "CASE WHEN urap_standings ~ '^[0-9]+$' THEN urap_standings::int ELSE NULL END ASC NULLS LAST, name ASC"
+        if sort == "rank" or not sort else "name ASC"
+    )
+    sql = f"SELECT * FROM universities"
     params = []
     where = []
     if country:
@@ -260,23 +268,27 @@ def get_all_universities(
         params.append(f"%{q}%")
     if where:
         sql += " WHERE " + " AND ".join(where)
-    sql += " ORDER BY name ASC LIMIT %s OFFSET %s"
+    sql += f" ORDER BY {order_by} LIMIT %s OFFSET %s"
     params.extend([page_size, offset])
-    cur.execute(sql, params)
-    rows = cur.fetchall()
-    colnames = [desc[0] for desc in cur.description]
-    # Format thumbnail/logo URLs for frontend
-    formatted = []
-    for row in rows:
-        d = dict(zip(colnames, row))
-        d["thumbnail_url"] = d.get("thumbnail_r2") or None
-        d["logo_url"] = d.get("logo_r2") or None
-        formatted.append(d)
-    count_sql = "SELECT COUNT(*) FROM universities"
-    if where:
-        count_sql += " WHERE " + " AND ".join(where)
-    cur.execute(count_sql, params[:-2])
-    total = cur.fetchone()[0]
+    try:
+        cur.execute(sql, params)
+        rows = cur.fetchall()
+        colnames = [desc[0] for desc in cur.description]
+        formatted = []
+        for row in rows:
+            d = dict(zip(colnames, row))
+            d["thumbnail_url"] = d.get("thumbnail_r2") or None
+            d["logo_url"] = d.get("logo_r2") or None
+            formatted.append(d)
+        count_sql = "SELECT COUNT(*) FROM universities"
+        if where:
+            count_sql += " WHERE " + " AND ".join(where)
+        cur.execute(count_sql, params[:-2])
+        total = cur.fetchone()[0]
+    except Exception as e:
+        cur.close()
+        conn.close()
+        return JSONResponse(status_code=500, content={"error": str(e)})
     cur.close()
     conn.close()
     return {
@@ -286,3 +298,58 @@ def get_all_universities(
         "page_size": page_size,
         "total_pages": (total + page_size - 1) // page_size
     }
+
+@app.get("/api/universities/countries")
+def get_university_countries():
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    cur.execute("SELECT DISTINCT country FROM universities WHERE country IS NOT NULL AND country <> '' ORDER BY country ASC")
+    countries = [row[0] for row in cur.fetchall()]
+    cur.close()
+    conn.close()
+    return {"countries": countries}
+
+@app.get("/api/universities/by-name/{name_slug}")
+def get_university_by_name(name_slug: str):
+    """
+    Fetch university details by slugified name (case-insensitive, spaces/underscores/hyphens ignored).
+    """
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    # Normalize the name for matching (replace -/_/space with space, lower)
+    cur.execute("""
+        SELECT * FROM universities
+        WHERE
+            LOWER(REPLACE(REPLACE(REPLACE(name, '-', ' '), '_', ' '), '  ', ' ')) = %s
+        LIMIT 1
+    """, (name_slug.replace('-', ' ').replace('_', ' ').lower(),))
+    row = cur.fetchone()
+    if not row:
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="University not found")
+    colnames = [desc[0] for desc in cur.description]
+    d = dict(zip(colnames, row))
+    d["thumbnail_url"] = d.get("thumbnail_r2") or None
+    d["logo_url"] = d.get("logo_r2") or None
+    cur.close()
+    conn.close()
+    return JSONResponse(content=jsonable_encoder(d))
+
+@app.get("/api/universities/{uni_id}")
+def get_university(uni_id: int):
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM universities WHERE id = %s", (uni_id,))
+    row = cur.fetchone()
+    if not row:
+        cur.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="University not found")
+    colnames = [desc[0] for desc in cur.description]
+    d = dict(zip(colnames, row))
+    d["thumbnail_url"] = d.get("thumbnail_r2") or None
+    d["logo_url"] = d.get("logo_r2") or None
+    cur.close()
+    conn.close()
+    return d
