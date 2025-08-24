@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, Query, Path, Request
+from fastapi import FastAPI, Depends, HTTPException, Depends, Header, Query, Path, Request, Body
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -11,9 +11,12 @@ import boto3
 from google.oauth2 import service_account
 import gspread
 from fastapi.responses import JSONResponse
+import json
+from sqlalchemy import cast, Integer
+from sqlalchemy.exc import SQLAlchemyError
 
 from models.models import (
-    Service, Scholarship, LeadIn, LeadOut, Booking, BookingCreate, AustraliaScholarship
+    Program,Service, Scholarship, LeadIn, LeadOut, Booking, BookingCreate, AustraliaScholarship, UniversityModel 
 )
 from db import Base, engine, get_db
 from models.models_user import User
@@ -38,8 +41,6 @@ app.add_middleware(
 SERVICES = [
     Service(code="peer", name="Peer Counselling", category="counselling", description="Connect with current international students."),
     Service(code="rep", name="University Representative", category="counselling", description="Official sessions with university reps."),
-    Service(code="shortlist", name="University Shortlisting", category="planning", description="Data-guided personalized shortlist."),
-    Service(code="application", name="Application Assistance", category="application", description="Documents, SOP, tracking."),
     Service(code="visa", name="Visa Guidance", category="compliance", description="Checklist & mock interviews."),
     Service(code="scholarship", name="Scholarship Assistance", category="funding", description="Identify & apply for scholarships."),
 ]
@@ -199,104 +200,6 @@ def smtp_debug(current: UserOut = Depends(auth_user)):
     return smtp_diagnostics()
 
 
-@app.get("/api/universities/all")
-def get_all_universities(
-    page: int = Query(1, ge=1),
-    page_size: int = Query(50, ge=1, le=200),
-    country: str | None = Query(None),
-    q: str | None = Query(None),
-    sort: str = Query("rank")
-):
-    offset = (page - 1) * page_size
-
-    conn = None
-    try:
-        conn = psycopg2.connect(DB_URL)
-        cur = conn.cursor()
-
-        where_clauses = []
-        params: list = []
-
-        if country:
-            where_clauses.append("state = %s")
-            params.append(country.strip())
-
-        if q:
-            where_clauses.append("name ILIKE %s")
-            params.append(f"%{q.strip()}%")
-
-        sql = "SELECT * FROM all_universities"
-        if where_clauses:
-            sql += " WHERE " + " AND ".join(where_clauses)
-
-        # sorting
-        if sort == "rank":
-            order_by = "CASE WHEN (latest_rankings->>'QS') ~ '^[0-9]+$' THEN (latest_rankings->>'QS')::int END ASC NULLS LAST, name ASC"
-        else:
-            order_by = "name ASC"
-
-        sql += f" ORDER BY {order_by} LIMIT %s OFFSET %s"
-        params.extend([page_size, offset])
-
-        cur.execute(sql, params)
-        rows = cur.fetchall()
-        colnames = [desc[0] for desc in cur.description]
-
-        formatted = []
-        for row in rows:
-            d = dict(zip(colnames, row))
-            d["thumbnail_url"] = d.get("thumbnail_r2")
-            d["logo_url"] = d.get("logo_r2")
-            formatted.append(d)
-
-        # Get total count with same filters
-        count_sql = "SELECT COUNT(*) FROM all_universities"
-        count_params = []
-        if where_clauses:
-            count_sql += " WHERE " + " AND ".join(where_clauses)
-            count_params = params[:-2]  # Remove LIMIT/OFFSET
-
-        cur.execute(count_sql, count_params)
-        total = cur.fetchone()[0]
-        return {
-            "items": formatted,
-            "total": total,
-            "page": page,
-            "page_size": page_size,
-            "total_pages": (total + page_size - 1) // page_size
-        }
-
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
-    finally:
-        if conn:
-            conn.close()
-
-@app.get("/api/universities/{uni_id}")
-def get_university(
-    uni_id: int = Path(..., description="University ID")
-):
-    try:
-        conn = psycopg2.connect(DB_URL)
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM all_universities WHERE id = %s", (uni_id,))
-        row = cur.fetchone()
-        if not row:
-            cur.close()
-            conn.close()
-            raise HTTPException(status_code=404, detail="University not found")
-        colnames = [desc[0] for desc in cur.description]
-        d = dict(zip(colnames, row))
-        d["thumbnail_url"] = d.get("thumbnail_r2")
-        d["logo_url"] = d.get("logo_r2")
-        cur.close()
-        conn.close()
-        return d
-    except Exception as e:
-        import traceback
-        return JSONResponse(status_code=500, content={"error": str(e), "trace": traceback.format_exc()})
-
-
 @app.post("/api/consultation-excel")
 async def consultation_to_excel(request: Request):
     try:
@@ -336,19 +239,193 @@ async def consultation_to_excel(request: Request):
         import traceback
         return JSONResponse(status_code=500, content={"error": str(e), "trace": traceback.format_exc()})
 
-@app.get("/api/australia-scholarships", tags=["scholarships"])
-def get_australia_scholarships(db_session=Depends(get_db)):
+
+# @app.get("/api/programs")
+# def get_programs(
+#     min_tuition: int = Query(None, description="Minimum tuition fee"),
+#     max_tuition: int = Query(None, description="Maximum tuition fee"),
+#     program_name: str = Query(None, description="Program name (partial match)"),
+#     university_name: str = Query(None, description="University name (partial match)"),
+#     country: str = Query(None, description="Country code (exact match, e.g. 'CA')"),
+#     page: int = Query(1, ge=1),
+#     page_size: int = Query(50, ge=1, le=200),
+#     db: Session = Depends(get_db),
+# ):
+#     query = db.query(Program)
+
+#     # Tuition filters
+#     if min_tuition is not None:
+#         query = query.filter(
+#             cast(Program.attributes["tuition"].astext, Integer) >= min_tuition
+#         )
+#     if max_tuition is not None:
+#         query = query.filter(
+#             cast(Program.attributes["tuition"].astext, Integer) <= max_tuition
+#         )
+
+#     # Program name filter (attributes.name)
+#     if program_name:
+#         query = query.filter(
+#             Program.attributes["name"].astext.ilike(f"%{program_name}%")
+#         )
+
+#     if university_name:
+#         query = query.filter(
+#             Program.attributes["school"]["name"].astext.ilike(f"%{university_name}%")
+#         )
+
+#     if country:
+#         query = query.filter(
+#             Program.attributes["school"]["countryCode"].astext == country
+#         )
+
+#     total = query.count()
+#     offset = (page - 1) * page_size
+#     results = query.offset(offset).limit(page_size).all()
+
+#     items = [
+#         {
+#             "id": prog.id,
+#             "type": prog.type,
+#             "attributes": prog.attributes,
+#         }
+#         for prog in results
+#     ]
+
+#     return {
+#         "items": items,
+#         "total": total,
+#         "page": page,
+#         "page_size": page_size,
+#         "total_pages": (total + page_size - 1) // page_size,
+#     }
+    
+    
+@app.get("/universities/{school_id}")
+def get_university_by_school_id(
+    school_id: str,
+    db_session=Depends(get_db)
+):
+   
     db: Session
     with db_session as db:
-        results = db.query(AustraliaScholarship).all()
+        uni = db.query(UniversityModel).filter(UniversityModel.id == str(school_id)).first()
+        if not uni:
+            raise HTTPException(status_code=404, detail="University not found")
+        return {
+            "id": uni.id,
+            "type": uni.type,
+            "attributes": uni.attributes,
+            "relationships": uni.relationships,
+            "included": getattr(uni, "included", None)
+        }
+
+@app.get("/scholarships/{school_id}")
+def get_scholarships_by_school_id(
+    school_id: str,
+    db_session=Depends(get_db)
+):
+
+    db: Session
+    with db_session as db:
+        from models.models import ScholarshipModel
+        scholarships = db.query(ScholarshipModel).filter(ScholarshipModel.schoolGroupId == int(school_id)).all()
         return [
             {
-                "university": result.university,
-                "state": result.state,
-                "type": result.type,
-                "scholarships": result.scholarships,
-                "common_programs": result.common_programs,
-                "updated_at": result.updated_at
+                "id": sch.id,
+                "title": sch.title,
+                "description": sch.description,
+                "awardAmountFrom": sch.awardAmountFrom,
+                "awardAmountTo": sch.awardAmountTo,
+                "awardAmountType": sch.awardAmountType,
+                "schoolGroupId": sch.schoolGroupId,
+                "schoolGroupName": sch.schoolGroupName,
+                "sourceUrl": sch.sourceUrl,
+                "updatedAt": sch.updatedAt,
             }
-            for result in results
+            for sch in scholarships
         ]
+
+@app.get("/api/programs/by-school/{school_id}")
+def get_programs_by_school_id(
+    school_id: str,
+    db_session=Depends(get_db)
+):
+    db: Session
+    with db_session as db:
+        from models.models import ProgramDetail
+        programs = db.query(ProgramDetail).filter(ProgramDetail.school_id == str(school_id)).all()
+        return [
+            {
+                "id": prog.id,
+                "type": prog.type,
+                "attributes": prog.attributes,
+                "school": prog.school,
+                "program": prog.program,
+                "program_requirements": prog.program_requirements
+            }
+            for prog in programs
+        ]
+
+@app.get("/api/programs/filter")
+def filter_programs(
+    school_name: str = Query(None, description="School/University name (partial match)"),
+    country: str = Query(None, description="Country (partial match)"),
+    min_fees: int = Query(None, description="Minimum tuition fee"),
+    max_fees: int = Query(None, description="Maximum tuition fee"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=200),
+    db_session=Depends(get_db),
+):
+    try:
+        with db_session as db:
+            query = db.query(Program)
+
+            # Filter by school/university name
+            if school_name:
+                query = query.filter(
+                    Program.attributes["school"]["name"].astext.ilike(f"%{school_name}%")
+                )
+
+            # Filter by country
+            if country:
+                query = query.filter(
+                    Program.attributes["school"]["country"].astext.ilike(f"%{country}%")
+                )
+
+            # Filter by tuition fees (assumes tuition is stored as integer in attributes['tuition'])
+            if min_fees is not None:
+                query = query.filter(
+                    cast(Program.attributes["tuition"].astext, Integer) >= min_fees
+                )
+            if max_fees is not None:
+                query = query.filter(
+                    cast(Program.attributes["tuition"].astext, Integer) <= max_fees
+                )
+
+            total = query.count()
+            offset = (page - 1) * page_size
+            results = query.offset(offset).limit(page_size).all()
+
+            items = [
+                {
+                    "id": prog.id,
+                    "type": prog.type,
+                    "attributes": prog.attributes,
+                }
+                for prog in results
+            ]
+
+            return {
+                "items": items,
+                "total": total,
+                "page": page,
+                "page_size": page_size,
+                "total_pages": (total + page_size - 1) // page_size,
+            }
+    except SQLAlchemyError as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    finally:
+        # If we opened a context manager, close it
+        if hasattr(db_session, "__exit__"):
+            db_session.__exit__(None, None, None)

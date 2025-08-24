@@ -1,7 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
 
-// Simple count-up component that animates when visible
+// 3D Animation using @react-three/fiber and drei
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Float, Html } from '@react-three/drei';
+
+// Custom 3D Globe Component (simple animated sphere with world map texture)
+const Globe: React.FC = () => (
+  <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
+    <mesh>
+      <sphereGeometry args={[1.6, 64, 64]} />
+      <meshStandardMaterial
+        color="#2D4EF5"
+        roughness={0.5}
+        metalness={0.2}
+        // Optionally, add a world map texture here for more realism
+      />
+    </mesh>
+    <ambientLight intensity={0.7} />
+    <directionalLight position={[5, 5, 5]} intensity={0.7} />
+  </Float>
+);
+
 const CountUp: React.FC<{ value: number; duration?: number; suffix?: string; label: string }> = ({ value, duration = 1400, suffix = '', label }) => {
   const [display, setDisplay] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -36,159 +56,195 @@ const CountUp: React.FC<{ value: number; duration?: number; suffix?: string; lab
 };
 
 export const AboutPage: React.FC = () => {
-  // Tabs for mission / vision / values
-  const [tab, setTab] = useState<'mission' | 'vision' | 'values'>('mission');
-  // Accordion open items (why choose us)
-  const [openAcc, setOpenAcc] = useState<string | null>('support');
-  // Timeline active index
-  const [timelineIndex, setTimelineIndex] = useState(0);
-  // Team filter
-  const [teamFilter, setTeamFilter] = useState<'all' | 'counsellors' | 'alumni' | 'support'>('all');
-
   const aboutRef = useReveal();
 
-  const tabContent: Record<typeof tab, JSX.Element> = {
-    mission: <p>Empower every aspiring international student with transparent guidance, actionable data, and ethical mentorship so they can make confident decisions and unlock global opportunities.</p>,
-    vision: <p>Become the most trusted global companion for study-abroad journeys—seamlessly blending human empathy and intelligence with powerful, adaptive technology.</p>,
-    values: <ul className="values-list"><li>Transparency first</li><li>Student success over shortcuts</li><li>Diversity & inclusion</li><li>Continuous learning</li><li>Data with empathy</li></ul>
-  };
-
-  const accordionItems = [
-    { key: 'support', title: 'End-to-end Support', body: 'Guidance across discovery, shortlisting, tests, applications, scholarships, visa, and pre-departure.' },
-    { key: 'verified', title: 'Verified Experts', body: 'Curated counsellors, alumni mentors, and university liaisons—quality & integrity checked.' },
-    { key: 'data', title: 'Data-Driven Decisions', body: 'Smart shortlists and strategy using success patterns, admissions trends, and scholarship insights.' },
-    { key: 'ethics', title: 'Transparent & Ethical', body: 'No hidden agendas—just honest advice that aligns with your goals and financial realities.' }
-  ];
-
-  const timeline = [
-    { year: 'Discovery', detail: 'Understand aspirations, budget, eligibility & timelines.' },
-    { year: 'Shortlist', detail: 'Curated matches balancing dream, competitive & safe universities.' },
-    { year: 'Applications', detail: 'SOP/LOR refinement, documentation tracking, and deadline management.' },
-    { year: 'Scholarships', detail: 'Identify & apply to merit / need-based / location-specific funding.' },
-    { year: 'Visa & Prep', detail: 'Interview prep, document checks, accommodation & orientation.' }
-  ];
-
-  const team = [
-    { name: 'Aisha Khan', role: 'Senior Counsellor', type: 'counsellors', exp: 8 },
-    { name: 'Rohan Patel', role: 'Alumni Mentor (Canada)', type: 'alumni', exp: 4 },
-    { name: 'Emily Chen', role: 'Scholarship Advisor', type: 'support', exp: 5 },
-    { name: 'Liam O\'Connor', role: 'Visa Specialist', type: 'support', exp: 6 },
-    { name: 'Sofia Martinez', role: 'Alumni Mentor (UK)', type: 'alumni', exp: 3 },
-  ];
-
-  const filteredTeam = team.filter(m => teamFilter === 'all' || m.type === teamFilter);
-
   return (
-    <main className="page container about" ref={aboutRef as any}>
-      <h1 className="gradient-text">About Us</h1>
-
-      {/* Tabs */}
-      <section className="about-section about-section--tabs">
-        <div className="about-tabs" role="tablist" aria-label="About navigation">
-          {['mission','vision','values'].map(t => (
-            <button
-              key={t}
-              role="tab"
-              aria-selected={tab === t}
-              className={"about-tab" + (tab === t ? ' about-tab--active' : '')}
-              onClick={() => setTab(t as any)}
-            >{t.charAt(0).toUpperCase()+t.slice(1)}</button>
-          ))}
+    <main
+      className="page container about"
+      ref={aboutRef as any}
+      style={{
+        fontFamily: 'Inter, Roboto, Arial, sans-serif',
+        background: '#F9FAFB',
+        color: '#111827',
+        minHeight: '100vh',
+        padding: 0,
+        margin: 0,
+        width: '100vw', // Add this line to ensure full viewport width
+        boxSizing: 'border-box', // Prevent overflow
+      }}
+    >
+      {/* Hero Section */}
+      <section
+        style={{
+          width: '100%',
+          minHeight: 420,
+          background: 'linear-gradient(120deg, #2D4EF5 0%, #7D5FFF 100%)',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          borderRadius: '0 0 2.5rem 2.5rem',
+          boxShadow: '0 8px 32px 0 rgba(31,41,55,0.10), 0 1.5px 8px 0 #c7d2fe',
+        }}
+      >
+        {/* 3D Globe Animation */}
+        <div
+          style={{
+            width: 340,
+            height: 340,
+            position: 'absolute',
+            right: 60,
+            top: 40,
+            zIndex: 2,
+            display: 'none',
+          }}
+          className="about-hero-3d"
+        >
+          <Canvas camera={{ position: [0, 0, 5] }}>
+            <Globe />
+            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1.2} />
+          </Canvas>
         </div>
-        <div className="about-tabpanel" role="tabpanel">{tabContent[tab]}</div>
+        {/* Hero Content */}
+        <div
+          style={{
+            maxWidth: 700,
+            margin: '0 auto',
+            padding: '3.5rem 1.5rem 2.5rem 1.5rem',
+            textAlign: 'center',
+            zIndex: 3,
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: 'Poppins, Inter, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '2.8rem',
+              color: '#fff',
+              letterSpacing: '-1.5px',
+              marginBottom: '1.2rem',
+              textShadow: '0 2px 16px #2D4EF5, 0 1px 2px #7D5FFF',
+            }}
+          >
+            Study Abroad. Made Simple.
+          </h1>
+          <p
+            style={{
+              fontFamily: 'Inter, Roboto, Arial, sans-serif',
+              fontSize: '1.25rem',
+              color: '#F9FAFB',
+              marginBottom: '2.2rem',
+              fontWeight: 500,
+              textShadow: '0 1px 8px #2D4EF5',
+            }}
+          >
+            We call Ourselves the <span style={{ color: '#28C76F', fontWeight: 700 }}>Amazon for Studying Abroad</span>
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '1.2rem', marginBottom: '1.5rem' }}>
+            <a
+              href="/programs"
+              style={{
+                background: '#2D4EF5',
+                color: '#fff',
+                fontFamily: 'Poppins, Inter, Arial, sans-serif',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                borderRadius: '12px',
+                padding: '1rem 2.5rem',
+                border: 'none',
+                boxShadow: '0 2px 8px #2D4EF5',
+                textDecoration: 'none',
+                transition: 'background 0.2s',
+              }}
+            >
+              Explore Programs
+            </a>
+            <a
+              href="/counsellors"
+              style={{
+                background: '#fff',
+                color: '#2D4EF5',
+                fontFamily: 'Poppins, Inter, Arial, sans-serif',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                borderRadius: '12px',
+                padding: '1rem 2.5rem',
+                border: '2px solid #fff',
+                boxShadow: '0 2px 8px #7D5FFF',
+                textDecoration: 'none',
+                transition: 'background 0.2s, color 0.2s',
+              }}
+            >
+              Meet Mentors
+            </a>
+          </div>
+        </div>
+        {/* Subtle World Map Illustration (SVG, behind content) */}
+        <svg
+          width="900"
+          height="340"
+          viewBox="0 0 900 340"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            opacity: 0.13,
+            zIndex: 1,
+          }}
+        >
+          <ellipse cx="450" cy="170" rx="440" ry="150" fill="#fff" />
+        </svg>
       </section>
 
-      {/* Counters */}
-      <section className="about-section">
-        <h2>Impact Stats</h2>
-        <div className="about-counters">
-          <CountUp value={12000} label="Students Guided" />
-          <CountUp value={97} label="Visa Success %" suffix="%" />
-          <CountUp value={850} label="Scholarships Won" />
-          <CountUp value={32} label="Countries Covered" />
-        </div>
-      </section>
-
-      {/* Accordion */}
-      <section className="about-section">
-        <h2>Why Choose Us</h2>
-        <div className="accordion" role="list">
-          {accordionItems.map(item => {
-            const open = openAcc === item.key;
-            return (
-              <div key={item.key} className={"accordion__item" + (open ? ' accordion__item--open' : '')}>
-                <button
-                  className="accordion__trigger"
-                  aria-expanded={open}
-                  onClick={() => setOpenAcc(open ? null : item.key)}
-                >
-                  <span>{item.title}</span>
-                  <span className="accordion__icon" aria-hidden>▾</span>
-                </button>
-                <div className="accordion__panel" role="region" aria-hidden={!open}>{item.body}</div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="about-section">
-        <h2>Student Journey</h2>
-        <div className="timeline" role="list">
-          <div className="timeline__rail" />
-          {timeline.map((step, idx) => {
-            const active = idx === timelineIndex;
-            return (
-              <button
-                key={step.year}
-                role="listitem"
-                className={"timeline__item" + (active ? ' timeline__item--active' : '')}
-                onClick={() => setTimelineIndex(idx)}
-              >
-                <span className="timeline__dot" />
-                <span className="timeline__label">{step.year}</span>
-              </button>
-            );
-          })}
-        </div>
-        <div className="timeline__detail">
-          <p>{timeline[timelineIndex].detail}</p>
-        </div>
-      </section>
-
-      {/* Team Filter */}
-      <section className="about-section">
-        <h2>Our Team</h2>
-        <div className="chips" style={{ marginBottom: '.9rem' }}>
-          {([
-            { key:'all', label:'All' },
-            { key:'counsellors', label:'Counsellors' },
-            { key:'alumni', label:'Alumni Mentors' },
-            { key:'support', label:'Support & Advisors' },
-          ] as const).map(c => (
-            <span
-              key={c.key}
-              role="button"
-              tabIndex={0}
-              onClick={() => setTeamFilter(c.key)}
-              onKeyDown={(e) => { if(e.key === 'Enter' || e.key===' ') { e.preventDefault(); setTeamFilter(c.key);} }}
-              className={"chip" + (teamFilter === c.key ? ' chip--active' : '')}
-            >{c.label}</span>
-          ))}
-        </div>
-        <div className="team-grid">
-          {filteredTeam.map(m => (
-            <div key={m.name} className="team-card" role="article">
-              <div className="team-avatar" aria-hidden>{m.name.split(' ').map(p=>p[0]).join('').slice(0,2)}</div>
-              <h3>{m.name}</h3>
-              <p className="muted">{m.role}</p>
-              <span className="team-exp" aria-label={`Experience ${m.exp} years`}>{m.exp} yrs</span>
-            </div>
-          ))}
-        </div>
+      {/* Main Content Section */}
+      <section
+        className="about-section about-section--intro"
+        style={{
+          background: '#fff',
+          borderRadius: '2.2rem',
+          margin: '2.5rem auto',
+          boxShadow: '0 2px 12px 0 #e5e7eb',
+          padding: '2.2rem 2.2rem 1.5rem 2.2rem',
+          width: '100%',
+          maxWidth: '1200px',
+          display: 'flex',              // Add flex
+          flexDirection: 'column',      // Stack children vertically
+          alignItems: 'center',         // Center children horizontally
+        }}
+      >
+        <p style={{ fontFamily: 'Inter, Roboto, Arial, sans-serif', color: '#111827', fontSize: '1.15rem', marginBottom: '1.2rem' }}>
+          We didn’t build <b>XXX</b> because we wanted to be another consultancy. We built it because we got tired of watching students get lost in a system full of half-truths, hidden costs, and overhyped promises.
+        </p>
+        <p style={{ color: '#6B7280', fontSize: '1.08rem' }}>
+          We’ve sat in the university offices. We’ve worked as official representatives for many International Universities. We’ve seen firsthand how students are pushed into courses they don’t need, charged for services they never asked for, and left clueless once they land abroad.
+        </p>
+        <p style={{ color: '#6B7280', fontSize: '1.08rem' }}>
+          So, we decided to flip the script.<br />
+          <b>XXX</b> is not a consultancy—it’s a marketplace. Think of us as the Amazon for studying abroad.
+        </p>
+        <ul style={{ margin: '1.5rem 0', color: '#111827', fontSize: '1.08rem', lineHeight: 1.7 }}>
+          <li> Explore universities across 8+ countries, like you’re shopping for your dream course.</li>
+          <li> Book real students and alumni as mentors—people who’ve lived the journey, not just sold it.</li>
+          <li> Secure verified housing before you even board the flight.</li>
+          <li> Compare loans, find scholarships, and manage your finances smartly.</li>
+        </ul>
+        <p style={{ color: '#6B7280', fontSize: '1.08rem' }}>
+          No packages. No pressure. No sales pitch. Just choice, clarity, and control.<br />
+          We built this for the students who value honesty over hype, who want to learn from people who’ve actually been there, done that, and who want studying abroad to feel as easy as adding items to a cart.
+        </p>
+        <p style={{ color: '#FF6B35', fontWeight: 600, fontFamily: 'Poppins, Inter, Arial, sans-serif', fontSize: '1.13rem', marginTop: '1.5rem' }}>
+           We’re not here to “sell” you a dream.<br />
+          We’re here to help you live it.
+        </p>
+        <h3 style={{ color: '#2D4EF5', fontFamily: 'Poppins, Inter, Arial, sans-serif', fontWeight: 700, marginTop: '2.2rem' }}>Short Bio</h3>
+        <p style={{ color: '#7D5FFF', fontStyle: 'italic', fontFamily: 'Poppins, Inter, Arial, sans-serif', fontWeight: 500 }}>
+          “We’re XXX— the Amazon for Studying Abroad. Tired of overpriced packages, fake promises, and confusing agents? We give you real students, verified housing, scholarships, and guidance that actually works. Pick what you need. Skip the hype. Own your journey.”
+        </p>
       </section>
     </main>
   );
 };
-
