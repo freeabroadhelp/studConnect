@@ -24,30 +24,6 @@ const services = [
     path: '/services/university-representative'
   },
   {
-    code: 'university-shortlisting',
-    name: 'University Shortlisting',
-    desc: 'Get a strategic shortlist of universities tailored to your profile.',
-    path: '/services/university-shortlisting'
-  },
-  {
-    code: 'application-assistance',
-    name: 'Application Assistance',
-    desc: 'End-to-end help with SOPs, LORs, resumes, and application tracking.',
-    path: '/services/application-assistance'
-  },
-  {
-    code: 'visa-guidance',
-    name: 'Visa Guidance',
-    desc: 'Personalized document checklists, mock interviews, and compliance support.',
-    path: '/services/visa-guidance'
-  },
-  {
-    code: 'pre-departure-support',
-    name: 'Pre-Departure Support',
-    desc: 'Orientation, packing, travel, and last-mile guidance before you fly.',
-    path: '/services/pre-departure-support'
-  },
-  {
     code: 'accommodation-assistance',
     name: 'Accommodation Assistance',
     desc: 'Find and secure student accommodation in your destination country.',

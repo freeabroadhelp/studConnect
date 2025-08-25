@@ -13,8 +13,8 @@ import PeerCounsellingPage from './pages/PeerCounsellingPage';
 import AuthRegisterPage from './pages/AuthRegisterPage';
 import AuthVerifyPage from './pages/AuthVerifyPage';
 import AuthLoginPage from './pages/AuthLoginPage';
-import { UniversityDetailPage } from './pages/UniversityDetailPage';
 import { FinancialServicesPage } from './pages/FinancialServicesPage';
+import UniversityDetailPage from './pages/UniversityDetailPage';
 
 export const App: React.FC = () => (
   <AuthProvider>
@@ -26,13 +26,13 @@ export const App: React.FC = () => (
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/peer-counselling" element={<PeerCounsellingPage />} />
         <Route path="/universities" element={<UniversitiesPage />} />
+        <Route path="/universities/:id" element={<UniversityDetailPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/student" element={<StudentDashboard />} />
         <Route path="/counsellor" element={<CounsellorDashboard />} />
         <Route path="/auth/register" element={<AuthRegisterPage />} />
         <Route path="/auth/verify" element={<AuthVerifyPage />} />
         <Route path="/auth/login" element={<AuthLoginPage />} />
-        <Route path="/universityDetailPage/:id" element={<UniversityDetailPage />} />
         <Route path="/financial-services" element={<FinancialServicesPage />} />
         <Route path="*" element={<div style={{padding:'4rem',textAlign:'center'}}>Page Not Found</div>} />
       </Routes>

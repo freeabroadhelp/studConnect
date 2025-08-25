@@ -418,5 +418,3 @@ export const Contact: React.FC = () => {
   );
 };
 
-// No changes needed for this file regarding the 'uni is not defined' error.
-// The error is in UniversityDetailPage.tsx, not here.
